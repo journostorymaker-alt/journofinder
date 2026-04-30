@@ -1,0 +1,74 @@
+name: Scrape UK press
+
+on:
+  schedule:
+    # Daily at 04:00 UTC — quiet time for most UK servers
+    - cron: '0 4 * * *'
+  workflow_dispatch:  # allow manual triggering from GitHub UI
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # needed to commit the updated DB back
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4 feedparser
+      
+      - name: Restore previous database
+        # The DB is committed to the repo so each run builds on the last,
+        # which means we accumulate journalists over time even from outlets
+        # that fail on a given day.
+        run: ls -la data/ || echo "No data dir yet"
+      
+      - name: Run scrape
+        run: python scraper/scrape.py
+        timeout-minutes: 90
+      
+      - name: Run consolidation
+        run: python scraper/consolidate.py
+      
+      - name: Print summary
+        run: |
+          python -c "
+          import sqlite3
+          c = sqlite3.connect('data/journalists.db')
+          for q, label in [
+              ('SELECT COUNT(*) FROM journalists', 'Journalists'),
+              ('SELECT COUNT(*) FROM bylines', 'Bylines'),
+              ('SELECT COUNT(*) FROM journalist_emails', 'Emails'),
+              ('SELECT COUNT(*) FROM newsroom_contacts', 'Newsroom contacts'),
+          ]:
+              n = c.execute(q).fetchone()[0]
+              print(f'{label}: {n}')
+          "
+      
+      - name: Commit updated database
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/journalists.db
+          # Don't commit the cache directory — it's enormous and ephemeral
+          git diff --quiet --cached || git commit -m "Daily scrape: $(date -u +%Y-%m-%d)"
+          git push
+      
+      # Optionally deploy to Netlify here. Set NETLIFY_AUTH_TOKEN and 
+      # NETLIFY_SITE_ID as repo secrets if you want auto-deploy.
+      # - name: Deploy to Netlify
+      #   uses: nwtgck/actions-netlify@v3.0
+      #   with:
+      #     publish-dir: './dashboard'
+      #     production-deploy: true
+      #   env:
+      #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      #     NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

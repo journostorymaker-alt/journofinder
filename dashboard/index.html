@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JournoFinder — UK Press Database</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
+<style>
+:root {
+  --ink: #1a1a1a;
+  --ink-soft: #3d3d3d;
+  --muted: #6b6b6b;
+  --muted-soft: #9a9a9a;
+  --paper: #f5f1e8;
+  --paper-deep: #ebe5d3;
+  --rule: #2a2a2a;
+  --rule-soft: #d4cdb8;
+  --accent: #b8341c;
+  --accent-soft: #e85d3f;
+  --green: #2d5530;
+  --amber: #b88817;
+  --red: #8b2417;
+  --highlight: #fde88a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ===== Masthead ===== */
+.masthead {
+  border-bottom: 3px double var(--rule);
+  padding: 24px 32px 18px;
+  background: var(--paper);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.masthead-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.masthead h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: clamp(36px, 5vw, 56px);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.masthead h1 em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent);
+}
+.subtitle {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  font-style: italic;
+  color: var(--ink-soft);
+  margin-top: 6px;
+  max-width: 700px;
+}
+
+/* ===== Status bar ===== */
+.statusbar {
+  display: flex;
+  gap: 24px;
+  padding: 10px 32px;
+  background: var(--paper-deep);
+  border-bottom: 1px solid var(--rule-soft);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-soft);
+  flex-wrap: wrap;
+}
+.statusbar .stat strong { color: var(--ink); font-weight: 600; }
+
+/* ===== Layout ===== */
+.app {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 0;
+  min-height: calc(100vh - 200px);
+}
+
+/* ===== Filters ===== */
+.filters {
+  background: var(--paper-deep);
+  border-right: 1px solid var(--rule-soft);
+  padding: 24px 22px;
+  overflow-y: auto;
+}
+.filters h2 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.filter-group { margin-bottom: 24px; }
+.filter-group label {
+  display: block;
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+.filter-group input[type="text"],
+.filter-group select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--rule-soft);
+  background: var(--paper);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--ink);
+}
+.filter-group input[type="text"]:focus,
+.filter-group select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.checkboxes { display: flex; flex-direction: column; gap: 4px; }
+.checkboxes label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-bottom: 0;
+  padding: 3px 0;
+}
+.checkboxes input { margin: 0; }
+.cb-count {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.btn-clear {
+  width: 100%;
+  padding: 8px;
+  background: transparent;
+  border: 1px solid var(--rule-soft);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+  cursor: pointer;
+  margin-top: 12px;
+}
+.btn-clear:hover { background: var(--paper); border-color: var(--rule); color: var(--ink); }
+
+/* ===== Main ===== */
+.main {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 32px;
+  border-bottom: 1px solid var(--rule-soft);
+  background: var(--paper);
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.results-count {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 500;
+}
+.results-count strong { color: var(--accent); font-weight: 600; }
+.export-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn {
+  padding: 8px 14px;
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--ink);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+}
+.btn:hover { background: var(--accent); border-color: var(--accent); }
+.btn-secondary { background: transparent; color: var(--ink); }
+.btn-secondary:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+/* ===== Table ===== */
+.table-wrapper { overflow-x: auto; flex: 1; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+thead th {
+  position: sticky;
+  top: 0;
+  background: var(--paper);
+  border-bottom: 2px solid var(--rule);
+  text-align: left;
+  padding: 12px 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+thead th:hover { color: var(--accent); }
+thead th .sort-arrow { color: var(--muted-soft); margin-left: 4px; }
+thead th.active .sort-arrow { color: var(--accent); }
+tbody tr {
+  border-bottom: 1px solid var(--rule-soft);
+  transition: background 0.1s;
+}
+tbody tr:hover { background: var(--paper-deep); }
+tbody td {
+  padding: 12px 16px;
+  vertical-align: top;
+}
+.col-name { font-weight: 600; min-width: 160px; font-family: 'Fraunces', serif; font-size: 15px; }
+.col-name small {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.col-outlet { min-width: 180px; }
+.col-outlet small {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.col-region { color: var(--ink-soft); font-size: 12px; }
+.col-email {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  word-break: break-all;
+  min-width: 220px;
+}
+.col-email a { color: var(--accent); text-decoration: none; }
+.col-email a:hover { text-decoration: underline; }
+.col-bylines { font-family: 'JetBrains Mono', monospace; text-align: right; font-size: 12px; }
+
+.confidence-pill {
+  display: inline-block;
+  padding: 2px 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 2px;
+  margin-left: 4px;
+  white-space: nowrap;
+}
+.conf-verified { background: var(--green); color: white; }
+.conf-pattern_high { background: #2d5530; color: white; }
+.conf-pattern_med { background: var(--amber); color: white; }
+.conf-guess { background: #c4b896; color: var(--ink); }
+
+.classification-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 2px;
+}
+.cls-local_staff { background: var(--green); color: white; }
+.cls-regional_staff { background: #4a7048; color: white; }
+.cls-network_reporter { background: var(--amber); color: white; }
+.cls-national { background: var(--ink); color: var(--paper); }
+.cls-unclear { background: var(--rule-soft); color: var(--ink-soft); }
+
+.specialism-tag {
+  display: inline-block;
+  padding: 1px 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  background: var(--paper-deep);
+  border: 1px solid var(--rule-soft);
+  margin: 1px 2px 1px 0;
+  border-radius: 2px;
+  color: var(--ink-soft);
+}
+
+/* ===== Loading + empty ===== */
+.loading, .empty {
+  padding: 80px 32px;
+  text-align: center;
+  color: var(--muted);
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 18px;
+}
+.empty p { margin: 0 auto 12px; max-width: 500px; }
+.empty code {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  background: var(--paper-deep);
+  padding: 2px 6px;
+  font-style: normal;
+}
+
+/* ===== Newsroom contacts panel ===== */
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--rule-soft);
+  background: var(--paper);
+}
+.tab {
+  padding: 12px 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+.tab.active { color: var(--ink); border-bottom-color: var(--accent); }
+.tab:hover { color: var(--ink); }
+
+@media (max-width: 900px) {
+  .app { grid-template-columns: 1fr; }
+  .filters { border-right: none; border-bottom: 1px solid var(--rule-soft); max-height: 300px; }
+  .masthead { padding: 16px 20px 12px; }
+  .toolbar { padding: 12px 20px; }
+  thead th, tbody td { padding: 8px 12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="masthead-top">
+    <span>JournoFinder &mdash; UK Press Contacts Database</span>
+    <span id="last-updated">Loading database&hellip;</span>
+  </div>
+  <h1>The <em>Press</em> Index</h1>
+  <p class="subtitle">A searchable database of UK news bylines, refreshed by automated scrapers across national, regional, local and specialist outlets in Great Britain.</p>
+</div>
+
+<div class="statusbar">
+  <span class="stat"><strong id="stat-journalists">&mdash;</strong> journalists</span>
+  <span class="stat"><strong id="stat-outlets">&mdash;</strong> outlets</span>
+  <span class="stat"><strong id="stat-bylines">&mdash;</strong> bylines tracked</span>
+  <span class="stat"><strong id="stat-regions">&mdash;</strong> regions</span>
+  <span class="stat"><strong id="stat-newsdesks">&mdash;</strong> newsroom contacts</span>
+</div>
+
+<div class="tabs">
+  <button class="tab active" data-tab="journalists">Journalists</button>
+  <button class="tab" data-tab="newsrooms">Newsroom Contacts</button>
+</div>
+
+<div class="app">
+  <aside class="filters" id="filters">
+    <h2>Search</h2>
+    <div class="filter-group">
+      <label>Name, outlet or email</label>
+      <input type="text" id="search-text" placeholder="e.g. Edwards, salmon, Yorkshire&hellip;">
+    </div>
+
+    <h2>Region</h2>
+    <div class="filter-group">
+      <select id="filter-region"><option value="">All regions</option></select>
+    </div>
+
+    <h2>Tier</h2>
+    <div class="filter-group">
+      <div class="checkboxes" id="filter-tier"></div>
+    </div>
+
+    <h2>Classification</h2>
+    <div class="filter-group">
+      <div class="checkboxes" id="filter-classification"></div>
+    </div>
+
+    <h2>Specialism</h2>
+    <div class="filter-group">
+      <select id="filter-specialism"><option value="">All specialisms</option></select>
+    </div>
+
+    <h2>Email confidence</h2>
+    <div class="filter-group">
+      <div class="checkboxes" id="filter-confidence"></div>
+    </div>
+
+    <button class="btn-clear" id="clear-filters">Clear all filters</button>
+  </aside>
+
+  <main class="main">
+    <div class="toolbar">
+      <div class="results-count">
+        <strong id="results-n">0</strong> matching contact<span id="results-plural">s</span>
+      </div>
+      <div class="export-buttons">
+        <button class="btn btn-secondary" id="copy-emails">Copy emails</button>
+        <button class="btn" id="export-csv">Export CSV (Outlook)</button>
+      </div>
+    </div>
+    <div class="table-wrapper" id="table-container">
+      <div class="loading">Loading database&hellip;</div>
+    </div>
+  </main>
+</div>
+
+<script>
+let db = null;
+let allJournalists = [];
+let allNewsrooms = [];
+let activeTab = 'journalists';
+let filters = {
+  text: '',
+  region: '',
+  tiers: new Set(),
+  classifications: new Set(),
+  specialism: '',
+  confidences: new Set(),
+};
+let sortBy = { col: 'total_bylines', dir: 'desc' };
+
+// ---------- Init ----------
+async function init() {
+  try {
+    const SQL = await initSqlJs({
+      locateFile: f => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/${f}`
+    });
+    
+    let dbData;
+    try {
+      const r = await fetch('./data/journalists.db');
+      if (!r.ok) throw new Error('No database file yet — run the scraper first.');
+      dbData = new Uint8Array(await r.arrayBuffer());
+    } catch (e) {
+      showEmpty(e.message);
+      return;
+    }
+    
+    db = new SQL.Database(dbData);
+    loadData();
+    setupFilters();
+    render();
+    updateLastUpdated();
+  } catch (e) {
+    console.error(e);
+    showEmpty('Could not load database: ' + e.message);
+  }
+}
+
+function showEmpty(msg) {
+  document.getElementById('table-container').innerHTML = `
+    <div class="empty">
+      <p>${msg}</p>
+      <p style="font-size:13px; color: var(--muted);">
+        To populate: run <code>python scraper/scrape.py</code> then 
+        <code>python scraper/consolidate.py</code> and place the resulting 
+        <code>data/journalists.db</code> alongside this file.
+      </p>
+    </div>`;
+}
+
+function loadData() {
+  // Load journalists with all needed joins
+  const jRows = db.exec(`
+    SELECT 
+      j.id, j.full_name, j.first_name, j.last_name,
+      j.classification, j.total_bylines, j.distinct_outlets,
+      j.syndication_score, j.primary_region, j.primary_tier,
+      o.name as outlet_name, o.tier, o.region, o.group_name,
+      (SELECT email FROM journalist_emails WHERE journalist_id = j.id AND is_primary = 1 LIMIT 1) as primary_email,
+      (SELECT confidence FROM journalist_emails WHERE journalist_id = j.id AND is_primary = 1 LIMIT 1) as primary_confidence,
+      (SELECT GROUP_CONCAT(email || '|' || confidence, ';;') FROM journalist_emails WHERE journalist_id = j.id) as all_emails,
+      (SELECT GROUP_CONCAT(specialism, ',') FROM journalist_specialisms WHERE journalist_id = j.id ORDER BY score DESC) as specialisms
+    FROM journalists j
+    JOIN outlets o ON j.primary_outlet_id = o.id
+  `);
+  
+  if (jRows.length === 0) {
+    allJournalists = [];
+  } else {
+    const cols = jRows[0].columns;
+    allJournalists = jRows[0].values.map(row => {
+      const obj = {};
+      cols.forEach((c, i) => obj[c] = row[i]);
+      obj.specialisms_arr = obj.specialisms ? obj.specialisms.split(',') : [];
+      obj.all_emails_arr = obj.all_emails ? obj.all_emails.split(';;').map(e => {
+        const [email, conf] = e.split('|');
+        return { email, conf };
+      }) : [];
+      return obj;
+    });
+  }
+  
+  // Load newsrooms
+  const nRows = db.exec(`
+    SELECT n.id, n.role, n.email, n.confidence, n.contact_name,
+           o.name as outlet_name, o.region, o.tier
+    FROM newsroom_contacts n
+    JOIN outlets o ON n.outlet_id = o.id
+    ORDER BY o.name, n.role
+  `);
+  if (nRows.length > 0) {
+    const cols = nRows[0].columns;
+    allNewsrooms = nRows[0].values.map(row => {
+      const obj = {};
+      cols.forEach((c, i) => obj[c] = row[i]);
+      return obj;
+    });
+  }
+  
+  // Stats
+  const stats = db.exec("SELECT COUNT(*) as j FROM journalists")[0]?.values[0]?.[0] || 0;
+  const outlets = db.exec("SELECT COUNT(*) as o FROM outlets")[0]?.values[0]?.[0] || 0;
+  const bylines = db.exec("SELECT COUNT(*) as b FROM bylines")[0]?.values[0]?.[0] || 0;
+  const regions = db.exec("SELECT COUNT(DISTINCT region) FROM outlets")[0]?.values[0]?.[0] || 0;
+  
+  document.getElementById('stat-journalists').textContent = stats.toLocaleString();
+  document.getElementById('stat-outlets').textContent = outlets.toLocaleString();
+  document.getElementById('stat-bylines').textContent = bylines.toLocaleString();
+  document.getElementById('stat-regions').textContent = regions;
+  document.getElementById('stat-newsdesks').textContent = allNewsrooms.length;
+}
+
+function updateLastUpdated() {
+  // Try to find the most recent scrape
+  const r = db.exec("SELECT MAX(scraped_at) FROM scrape_log");
+  const ts = r[0]?.values[0]?.[0];
+  if (ts) {
+    const d = new Date(ts);
+    document.getElementById('last-updated').textContent = 
+      'Updated ' + d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+  }
+}
+
+// ---------- Filters ----------
+function setupFilters() {
+  // Region dropdown
+  const regions = [...new Set(allJournalists.map(j => j.region).filter(Boolean))].sort();
+  const regionSel = document.getElementById('filter-region');
+  regions.forEach(r => {
+    const opt = document.createElement('option');
+    opt.value = r; opt.textContent = r;
+    regionSel.appendChild(opt);
+  });
+  
+  // Tier checkboxes
+  const tiers = ['national', 'regional', 'local', 'hyperlocal', 'broadcast', 'specialist'];
+  const tierBox = document.getElementById('filter-tier');
+  tiers.forEach(t => {
+    const count = allJournalists.filter(j => j.tier === t).length;
+    if (count === 0) return;
+    const lbl = document.createElement('label');
+    lbl.innerHTML = `<input type="checkbox" value="${t}"> ${t} <span class="cb-count">${count}</span>`;
+    tierBox.appendChild(lbl);
+  });
+  
+  // Classification checkboxes
+  const cls = ['local_staff', 'regional_staff', 'network_reporter', 'national', 'unclear'];
+  const clsBox = document.getElementById('filter-classification');
+  cls.forEach(c => {
+    const count = allJournalists.filter(j => j.classification === c).length;
+    if (count === 0) return;
+    const lbl = document.createElement('label');
+    lbl.innerHTML = `<input type="checkbox" value="${c}"> ${c.replace('_', ' ')} <span class="cb-count">${count}</span>`;
+    clsBox.appendChild(lbl);
+  });
+  
+  // Specialism dropdown
+  const specs = new Set();
+  allJournalists.forEach(j => j.specialisms_arr.forEach(s => specs.add(s)));
+  const specSel = document.getElementById('filter-specialism');
+  [...specs].sort().forEach(s => {
+    const opt = document.createElement('option');
+    opt.value = s; opt.textContent = s;
+    specSel.appendChild(opt);
+  });
+  
+  // Confidence checkboxes
+  const confs = ['verified', 'pattern_high', 'pattern_med', 'guess'];
+  const confBox = document.getElementById('filter-confidence');
+  confs.forEach(c => {
+    const count = allJournalists.filter(j => j.primary_confidence === c).length;
+    const lbl = document.createElement('label');
+    lbl.innerHTML = `<input type="checkbox" value="${c}"> ${c.replace('_', ' ')} <span class="cb-count">${count}</span>`;
+    confBox.appendChild(lbl);
+  });
+  
+  // Wire up events
+  document.getElementById('search-text').addEventListener('input', e => {
+    filters.text = e.target.value.toLowerCase();
+    render();
+  });
+  document.getElementById('filter-region').addEventListener('change', e => {
+    filters.region = e.target.value; render();
+  });
+  document.getElementById('filter-specialism').addEventListener('change', e => {
+    filters.specialism = e.target.value; render();
+  });
+  ['filter-tier', 'filter-classification', 'filter-confidence'].forEach(id => {
+    const key = id === 'filter-tier' ? 'tiers' : id === 'filter-classification' ? 'classifications' : 'confidences';
+    document.getElementById(id).addEventListener('change', e => {
+      const val = e.target.value;
+      if (e.target.checked) filters[key].add(val);
+      else filters[key].delete(val);
+      render();
+    });
+  });
+  
+  document.getElementById('clear-filters').addEventListener('click', () => {
+    filters = { text: '', region: '', tiers: new Set(), classifications: new Set(), specialism: '', confidences: new Set() };
+    document.getElementById('search-text').value = '';
+    document.getElementById('filter-region').value = '';
+    document.getElementById('filter-specialism').value = '';
+    document.querySelectorAll('.checkboxes input').forEach(cb => cb.checked = false);
+    render();
+  });
+  
+  document.querySelectorAll('.tab').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      activeTab = t.dataset.tab;
+      render();
+    });
+  });
+  
+  document.getElementById('export-csv').addEventListener('click', exportCSV);
+  document.getElementById('copy-emails').addEventListener('click', copyEmails);
+}
+
+// ---------- Render ----------
+function getFiltered() {
+  if (activeTab === 'newsrooms') {
+    return allNewsrooms.filter(n => {
+      if (filters.text && !(`${n.outlet_name} ${n.role} ${n.email}`.toLowerCase().includes(filters.text))) return false;
+      if (filters.region && n.region !== filters.region) return false;
+      if (filters.tiers.size && !filters.tiers.has(n.tier)) return false;
+      return true;
+    });
+  }
+  return allJournalists.filter(j => {
+    if (filters.text) {
+      const blob = `${j.full_name} ${j.outlet_name} ${j.primary_email || ''} ${j.specialisms || ''} ${j.region}`.toLowerCase();
+      if (!blob.includes(filters.text)) return false;
+    }
+    if (filters.region && j.region !== filters.region) return false;
+    if (filters.tiers.size && !filters.tiers.has(j.tier)) return false;
+    if (filters.classifications.size && !filters.classifications.has(j.classification)) return false;
+    if (filters.specialism && !j.specialisms_arr.includes(filters.specialism)) return false;
+    if (filters.confidences.size && !filters.confidences.has(j.primary_confidence)) return false;
+    return true;
+  });
+}
+
+function render() {
+  const data = getFiltered();
+  
+  // Sort
+  data.sort((a, b) => {
+    const av = a[sortBy.col]; const bv = b[sortBy.col];
+    if (av == null && bv == null) return 0;
+    if (av == null) return 1;
+    if (bv == null) return -1;
+    const cmp = (typeof av === 'number') ? (av - bv) : String(av).localeCompare(String(bv));
+    return sortBy.dir === 'desc' ? -cmp : cmp;
+  });
+  
+  document.getElementById('results-n').textContent = data.length.toLocaleString();
+  document.getElementById('results-plural').textContent = data.length === 1 ? '' : 's';
+  
+  const c = document.getElementById('table-container');
+  if (data.length === 0) {
+    c.innerHTML = '<div class="empty"><p>No matches. Try clearing some filters.</p></div>';
+    return;
+  }
+  
+  if (activeTab === 'journalists') renderJournalists(data, c);
+  else renderNewsrooms(data, c);
+}
+
+function renderJournalists(data, container) {
+  const headers = [
+    { key: 'full_name', label: 'Name / Outlet' },
+    { key: 'region', label: 'Region' },
+    { key: 'classification', label: 'Type' },
+    { key: 'specialisms', label: 'Specialisms' },
+    { key: 'primary_email', label: 'Email (best guess)' },
+    { key: 'total_bylines', label: 'Bylines' },
+  ];
+  
+  let html = '<table><thead><tr>';
+  headers.forEach(h => {
+    const active = sortBy.col === h.key ? 'active' : '';
+    const arrow = sortBy.col === h.key ? (sortBy.dir === 'desc' ? '▼' : '▲') : '↕';
+    html += `<th class="${active}" data-sort="${h.key}">${h.label}<span class="sort-arrow">${arrow}</span></th>`;
+  });
+  html += '</tr></thead><tbody>';
+  
+  data.forEach(j => {
+    html += '<tr>';
+    html += `<td class="col-name">${esc(j.full_name)}<small>${esc(j.outlet_name)}</small></td>`;
+    html += `<td class="col-region">${esc(j.region || '—')}</td>`;
+    html += `<td><span class="classification-tag cls-${j.classification || 'unclear'}">${(j.classification || 'unclear').replace('_', ' ')}</span></td>`;
+    html += `<td>${j.specialisms_arr.slice(0, 4).map(s => `<span class="specialism-tag">${esc(s)}</span>`).join('')}</td>`;
+    if (j.primary_email) {
+      html += `<td class="col-email"><a href="mailto:${esc(j.primary_email)}">${esc(j.primary_email)}</a><span class="confidence-pill conf-${j.primary_confidence}">${j.primary_confidence.replace('_', ' ')}</span></td>`;
+    } else {
+      html += `<td class="col-email" style="color:var(--muted-soft)">—</td>`;
+    }
+    html += `<td class="col-bylines">${j.total_bylines}</td>`;
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+  
+  container.querySelectorAll('th[data-sort]').forEach(th => {
+    th.addEventListener('click', () => {
+      const col = th.dataset.sort;
+      if (sortBy.col === col) sortBy.dir = sortBy.dir === 'desc' ? 'asc' : 'desc';
+      else { sortBy.col = col; sortBy.dir = 'desc'; }
+      render();
+    });
+  });
+}
+
+function renderNewsrooms(data, container) {
+  let html = '<table><thead><tr><th>Outlet</th><th>Role</th><th>Email</th><th>Region</th></tr></thead><tbody>';
+  data.forEach(n => {
+    html += `<tr>`;
+    html += `<td class="col-name">${esc(n.outlet_name)}</td>`;
+    html += `<td>${esc(n.role.replace('_', ' '))}</td>`;
+    html += `<td class="col-email"><a href="mailto:${esc(n.email)}">${esc(n.email)}</a></td>`;
+    html += `<td class="col-region">${esc(n.region)}</td>`;
+    html += `</tr>`;
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+function esc(s) {
+  if (s == null) return '';
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+}
+
+// ---------- Export ----------
+function exportCSV() {
+  const data = getFiltered();
+  if (data.length === 0) { alert('No data to export.'); return; }
+  
+  // Outlook-friendly column order
+  const headers = ['First Name', 'Last Name', 'E-mail Address', 'Company', 'Job Title', 'Categories', 'Notes'];
+  const rows = data.map(j => {
+    if (activeTab === 'newsrooms') {
+      return [
+        '', '',
+        j.email,
+        j.outlet_name,
+        j.role,
+        'UK Press; Newsroom',
+        `Region: ${j.region}; Confidence: ${j.confidence}`
+      ];
+    }
+    const specs = j.specialisms_arr.join('; ');
+    const cats = ['UK Press', j.classification?.replace('_', ' ') || '', j.tier || ''].filter(Boolean).join('; ');
+    const notes = [
+      `Region: ${j.region || '—'}`,
+      `Bylines tracked: ${j.total_bylines}`,
+      `Email confidence: ${j.primary_confidence || 'n/a'}`,
+      specs ? `Specialisms: ${specs}` : '',
+      `All emails tried: ${j.all_emails_arr.map(e => `${e.email} (${e.conf})`).join(' | ')}`
+    ].filter(Boolean).join('\n');
+    return [
+      j.first_name || '', j.last_name || '',
+      j.primary_email || '',
+      j.outlet_name, '',
+      cats, notes
+    ];
+  });
+  
+  const csv = [headers, ...rows].map(r => 
+    r.map(cell => {
+      const s = String(cell == null ? '' : cell);
+      return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+    }).join(',')
+  ).join('\r\n');
+  
+  // Add UTF-8 BOM so Excel/Outlook reads accents correctly
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `journofinder-${activeTab}-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function copyEmails() {
+  const data = getFiltered();
+  const emails = activeTab === 'newsrooms' 
+    ? data.map(n => n.email).filter(Boolean)
+    : data.map(j => j.primary_email).filter(Boolean);
+  if (emails.length === 0) { alert('No emails to copy.'); return; }
+  navigator.clipboard.writeText(emails.join('; ')).then(() => {
+    const btn = document.getElementById('copy-emails');
+    const orig = btn.textContent;
+    btn.textContent = `Copied ${emails.length}!`;
+    setTimeout(() => btn.textContent = orig, 1500);
+  });
+}
+
+init();
+</script>
+</body>
+</html>
