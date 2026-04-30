@@ -55,14 +55,14 @@ jobs:
       
       - name: Copy database into dashboard folder
         run: |
-          mkdir -p dashboard/data
-          cp data/journalists.db dashboard/data/journalists.db
+          mkdir -p docs/data
+          cp data/journalists.db docs/data/journalists.db
       
       - name: Commit updated database
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/journalists.db dashboard/data/journalists.db
+          git add data/journalists.db docs/data/journalists.db
           git diff --quiet --cached || git commit -m "Daily scrape: $(date -u +%Y-%m-%d)"
           git push
       
