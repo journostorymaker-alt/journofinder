@@ -1,4 +1,4 @@
-"""
+last_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"""
 Database schema and connection helpers.
 
 The schema is deliberately denormalised in a few places (region cached on
@@ -54,6 +54,9 @@ CREATE TABLE IF NOT EXISTS journalists (
     -- Computed from the spread of bylines across outlets vs concentration on one.
     syndication_score INTEGER DEFAULT 0,
     classification TEXT,  -- 'local_staff', 'regional_staff', 'network_reporter', 'national', 'freelance', 'unclear'
+    last_active_outlet_id INTEGER,  -- where most recent bylines are concentrated
+    moved_from_outlet_id INTEGER,  -- if this differs from primary, journalist may have moved
+    days_since_last_byline INTEGER,  -- cached for dashboard sort
     first_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE(name_normalised, primary_outlet_id),
