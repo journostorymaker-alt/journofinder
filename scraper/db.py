@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS journalists (
     days_since_last_byline INTEGER,  -- cached for dashboard sort
     first_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE(name_normalised, primary_outlet_id),
+    UNIQUE(name_normalised),
     FOREIGN KEY (primary_outlet_id) REFERENCES outlets(id)
 );
 
