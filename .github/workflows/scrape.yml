@@ -64,7 +64,8 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/journalists.db docs/data/journalists.db
           git diff --quiet --cached || git commit -m "Daily scrape: $(date -u +%Y-%m-%d)"
-          git push
+          git pull --rebase || true
+          git push || (sleep 5 && git pull --rebase && git push)
       
       # Optionally deploy to Netlify here. Set NETLIFY_AUTH_TOKEN and 
       # NETLIFY_SITE_ID as repo secrets if you want auto-deploy.
