@@ -33,7 +33,7 @@ jobs:
       
       - name: Run scrape
         run: python scraper/scrape.py
-        timeout-minutes: 90
+        timeout-minutes: 300
       
       - name: Run consolidation
         run: python scraper/consolidate.py
