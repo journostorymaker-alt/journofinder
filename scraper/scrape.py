@@ -367,17 +367,24 @@ def _classify_email_role(email):
 
 
 def _record_byline(outlet_row, name, article, keywords):
-    """Insert/update journalist + byline rows."""
+    """Insert/update journalist + byline rows.
+    
+    Matches journalists across outlets — if 'Helen Smith' has bylined at
+    Manchester Evening News before, scraping her byline at Liverpool Echo
+    today merges the two records rather than creating a duplicate.
+    The 'primary_outlet' will be reset by consolidate.py based on weighted
+    byline counts, so we just use whatever outlet we first saw them at.
+    """
     name = name.strip()
     name_norm = _normalise_name(name)
     first, last = _split_name(name)
     keywords_str = ",".join(keywords) if keywords else ""
     
     with get_conn() as conn:
-        # Find or create journalist (matching on normalised name + outlet)
+        # Find journalist by normalised name (regardless of outlet)
         existing = conn.execute("""
-            SELECT id FROM journalists WHERE name_normalised = ? AND primary_outlet_id = ?
-        """, (name_norm, outlet_row["id"])).fetchone()
+            SELECT id FROM journalists WHERE name_normalised = ?
+        """, (name_norm,)).fetchone()
         
         if existing:
             jid = existing["id"]
