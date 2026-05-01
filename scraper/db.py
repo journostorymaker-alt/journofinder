@@ -154,9 +154,27 @@ def get_conn():
 
 
 def init_db():
-    """Create all tables. Idempotent."""
+    """Create all tables. Idempotent. Migrates older databases by adding any
+    columns that exist in the current schema but not in the existing tables."""
     with get_conn() as conn:
         conn.executescript(SCHEMA)
+        
+        # Migration: add columns that may be missing from older databases.
+        # SQLite's CREATE TABLE IF NOT EXISTS won't add new columns to an
+        # existing table, so we check what's there and ALTER if needed.
+        existing_cols = {row["name"] for row in conn.execute("PRAGMA table_info(journalists)").fetchall()}
+        migrations = [
+            ("last_active_outlet_id", "INTEGER"),
+            ("moved_from_outlet_id", "INTEGER"),
+            ("days_since_last_byline", "INTEGER"),
+        ]
+        for col_name, col_type in migrations:
+            if col_name not in existing_cols:
+                try:
+                    conn.execute(f"ALTER TABLE journalists ADD COLUMN {col_name} {col_type}")
+                    print(f"Migrated: added column journalists.{col_name}")
+                except Exception as e:
+                    print(f"Migration warning for {col_name}: {e}")
 
 
 def sync_outlets(outlets_list):
