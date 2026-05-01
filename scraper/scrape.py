@@ -49,7 +49,7 @@ CACHE_DIR.mkdir(parents=True, exist_ok=True)
 CACHE_TTL = timedelta(hours=24)
 
 REQUEST_DELAY = 2.0  # seconds between requests to same domain
-MAX_ARTICLES_PER_OUTLET = 30
+MAX_ARTICLES_PER_OUTLET = 100
 REQUEST_TIMEOUT = 20
 
 # Bylines to ignore — generic newsroom names, not real journalists
