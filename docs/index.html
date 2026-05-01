@@ -459,7 +459,14 @@ tbody td {
       <select id="filter-specialism"><option value="">All specialisms</option></select>
     </div>
 
-    <h2>Email confidence</h2>
+    <h2>Activity</h2>
+    <div class="filter-group">
+      <div class="checkboxes">
+        <label><input type="checkbox" id="hide-stale"> Hide stale (over 90 days) <span class="cb-count" id="stale-count">—</span></label>
+        <label><input type="checkbox" id="hide-very-stale" checked> Hide very stale (over 180 days) <span class="cb-count" id="very-stale-count">—</span></label>
+        <label><input type="checkbox" id="show-moved-only"> Only show "moved" journalists <span class="cb-count" id="moved-count">—</span></label>
+      </div>
+    </div><h2>Email confidence</h2>
     <div class="filter-group">
       <div class="checkboxes" id="filter-confidence"></div>
     </div>
@@ -495,6 +502,9 @@ let filters = {
   classifications: new Set(),
   specialism: '',
   confidences: new Set(),
+  hideStale: false,
+  hideVeryStale: true,
+  showMovedOnly: false,
 };
 let sortBy = { col: 'total_bylines', dir: 'desc' };
 
@@ -687,7 +697,23 @@ function setupFilters() {
     });
   });
   
-  document.getElementById('clear-filters').addEventListener('click', () => {
+  document.getElementById('hide-stale').addEventListener('change', e => {
+    filters.hideStale = e.target.checked; render();
+  });
+  document.getElementById('hide-very-stale').addEventListener('change', e => {
+    filters.hideVeryStale = e.target.checked; render();
+  });
+  document.getElementById('show-moved-only').addEventListener('change', e => {
+    filters.showMovedOnly = e.target.checked; render();
+  });
+  
+  // Populate counts for activity filters
+  const stale = allJournalists.filter(j => j.days_since_last_byline > 90).length;
+  const veryStale = allJournalists.filter(j => j.days_since_last_byline > 180).length;
+  const moved = allJournalists.filter(j => j.moved_from_outlet).length;
+  document.getElementById('stale-count').textContent = stale;
+  document.getElementById('very-stale-count').textContent = veryStale;
+  document.getElementById('moved-count').textContent = moved;document.getElementById('clear-filters').addEventListener('click', () => {
     filters = { text: '', region: '', tiers: new Set(), classifications: new Set(), specialism: '', confidences: new Set() };
     document.getElementById('search-text').value = '';
     document.getElementById('filter-region').value = '';
@@ -729,6 +755,9 @@ function getFiltered() {
     if (filters.classifications.size && !filters.classifications.has(j.classification)) return false;
     if (filters.specialism && !j.specialisms_arr.includes(filters.specialism)) return false;
     if (filters.confidences.size && !filters.confidences.has(j.primary_confidence)) return false;
+    if (filters.hideStale && j.days_since_last_byline != null && j.days_since_last_byline > 90) return false;
+    if (filters.hideVeryStale && j.days_since_last_byline != null && j.days_since_last_byline > 180) return false;
+    if (filters.showMovedOnly && !j.moved_from_outlet) return false;
     return true;
   });
 }
@@ -766,6 +795,7 @@ function renderJournalists(data, container) {
     { key: 'classification', label: 'Type' },
     { key: 'specialisms', label: 'Specialisms' },
     { key: 'primary_email', label: 'Email (best guess)' },
+    { key: 'days_since_last_byline', label: 'Last byline' },
     { key: 'total_bylines', label: 'Bylines' },
   ];
   
@@ -788,6 +818,9 @@ function renderJournalists(data, container) {
     } else {
       html += `<td class="col-email" style="color:var(--muted-soft)">—</td>`;
     }
+    const dsb = j.days_since_last_byline;
+    const dsbDisplay = dsb == null ? '—' : (dsb === 0 ? 'today' : `${dsb}d ago`);
+    html += `<td class="col-bylines">${dsbDisplay}</td>`;
     html += `<td class="col-bylines">${j.total_bylines}</td>`;
     html += '</tr>';
   });
