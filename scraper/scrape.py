@@ -60,8 +60,38 @@ NON_JOURNALIST_BYLINES = {
     "editor", "editorial team", "the editor", "our reporter",
     "our political editor", "anonymous", "admin", "user", "test",
     "sponsored content", "promoted content", "bbc news", "sky news",
-    "itv news", "channel 4 news", "wire services",
+    "itv news", "channel 4 news", "channel 5 news", "wire services",
+    "bbc sport", "bbc cymru fyw", "bbc weather", "bbc travel",
+    "bbc reporter", "bbc correspondent", "bbc breakfast",
+    "letters the editor", "letters editor", "letters to the editor",
+    "the team", "our team", "newsroom", "the newsroom",
+    "comment", "comments", "leader", "letter writer",
+    "press release", "press team", "communications team",
+    "guardian staff", "telegraph staff", "times staff",
 }
+
+
+def _looks_like_organisation(name):
+    """Detect names that are organisation/section labels rather than people.
+    
+    Examples: 'BBC Sport', 'BBC Birmingham', 'PA Media News'.
+    These often slip past the literal-string filter because they're not
+    in NON_JOURNALIST_BYLINES verbatim.
+    """
+    lower = name.lower()
+    # Names starting with a media organisation prefix are sections, not people
+    org_prefixes = ("bbc ", "itv ", "sky ", "pa ", "reuters ", "channel ",
+                    "guardian ", "times ", "sun ", "mirror ")
+    for prefix in org_prefixes:
+        if lower.startswith(prefix):
+            return True
+    # Names that are just a single capitalised section word
+    section_words = {"sport", "news", "comment", "weather", "business",
+                     "politics", "culture", "lifestyle"}
+    parts = name.lower().split()
+    if len(parts) == 1 and parts[0] in section_words:
+        return True
+    return False
 
 # Robots cache: domain -> RobotFileParser
 _robots_cache = {}
@@ -137,6 +167,8 @@ def _looks_like_real_name(name):
     if not name or len(name) < 4 or len(name) > 60:
         return False
     if _normalise_name(name) in NON_JOURNALIST_BYLINES:
+        return False
+    if _looks_like_organisation(name):
         return False
     parts = name.strip().split()
     if len(parts) < 2:
