@@ -314,6 +314,35 @@ tbody td {
 .cls-national { background: var(--ink); color: var(--paper); }
 .cls-unclear { background: var(--rule-soft); color: var(--ink-soft); }
 
+  .recency-badge {
+  display: inline-block;
+  padding: 1px 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 2px;
+  margin-left: 4px;
+}
+.recency-fresh { background: var(--green); color: white; }
+.recency-recent { background: var(--paper-deep); color: var(--ink-soft); border: 1px solid var(--rule-soft); }
+.recency-stale { background: var(--amber); color: white; }
+.recency-very-stale { background: var(--red); color: white; }
+.moved-badge {
+  display: inline-block;
+  padding: 1px 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 2px;
+  background: var(--accent);
+  color: white;
+  margin-left: 4px;
+}
+
 .specialism-tag {
   display: inline-block;
   padding: 1px 6px;
@@ -520,6 +549,8 @@ function loadData() {
       (SELECT email FROM journalist_emails WHERE journalist_id = j.id AND is_primary = 1 LIMIT 1) as primary_email,
       (SELECT confidence FROM journalist_emails WHERE journalist_id = j.id AND is_primary = 1 LIMIT 1) as primary_confidence,
       (SELECT GROUP_CONCAT(email || '|' || confidence, ';;') FROM journalist_emails WHERE journalist_id = j.id) as all_emails,
+      j.days_since_last_byline,
+      (SELECT name FROM outlets WHERE id = j.moved_from_outlet_id) as moved_from_outlet,
       (SELECT GROUP_CONCAT(specialism, ',') FROM journalist_specialisms WHERE journalist_id = j.id ORDER BY score DESC) as specialisms
     FROM journalists j
     JOIN outlets o ON j.primary_outlet_id = o.id
@@ -750,7 +781,7 @@ function renderJournalists(data, container) {
     html += '<tr>';
     html += `<td class="col-name">${esc(j.full_name)}<small>${esc(j.outlet_name)}</small></td>`;
     html += `<td class="col-region">${esc(j.region || '—')}</td>`;
-    html += `<td><span class="classification-tag cls-${j.classification || 'unclear'}">${(j.classification || 'unclear').replace('_', ' ')}</span></td>`;
+    html += `<td><span class="classification-tag cls-${j.classification || 'unclear'}">${(j.classification || 'unclear').replace('_', ' ')}</span>${recencyBadge(j)}${movedBadge(j)}</td>`;
     html += `<td>${j.specialisms_arr.slice(0, 4).map(s => `<span class="specialism-tag">${esc(s)}</span>`).join('')}</td>`;
     if (j.primary_email) {
       html += `<td class="col-email"><a href="mailto:${esc(j.primary_email)}">${esc(j.primary_email)}</a><span class="confidence-pill conf-${j.primary_confidence}">${j.primary_confidence.replace('_', ' ')}</span></td>`;
@@ -787,7 +818,20 @@ function renderNewsrooms(data, container) {
   container.innerHTML = html;
 }
 
-function esc(s) {
+function recencyBadge(j) {
+  const d = j.days_since_last_byline;
+  if (d == null) return '';
+  if (d <= 14) return `<span class="recency-badge recency-fresh">${d}d</span>`;
+  if (d <= 90) return `<span class="recency-badge recency-recent">${d}d</span>`;
+  if (d <= 180) return `<span class="recency-badge recency-stale">stale ${d}d</span>`;
+  return `<span class="recency-badge recency-very-stale">very stale ${d}d</span>`;
+}
+
+function movedBadge(j) {
+  if (!j.moved_from_outlet) return '';
+  return `<span class="moved-badge" title="Last 30 days mostly at ${esc(j.outlet_name)}, prior 30-180 days mostly at ${esc(j.moved_from_outlet)}">moved?</span>`;
+}
+  function esc(s) {
   if (s == null) return '';
   return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
 }
