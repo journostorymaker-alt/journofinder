@@ -203,7 +203,10 @@ def _classify_journalist(jid, conn):
     
     return (classification, total_bylines, distinct_outlets, distinct_groups, synd,
             primary_meta["name"], primary_meta["region"],
-            most_recent_outlet_id, moved_from_oid, days_since)def _extract_specialisms(jid, conn):
+            most_recent_outlet_id, moved_from_oid, days_since)
+   
+
+def _extract_specialisms(jid, conn):
     """Aggregate keywords from journalist's bylines."""
     rows = conn.execute("""
         SELECT keywords FROM bylines WHERE journalist_id = ? AND keywords != ''
