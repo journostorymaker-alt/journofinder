@@ -168,6 +168,38 @@ def init_db():
             ("moved_from_outlet_id", "INTEGER"),
             ("days_since_last_byline", "INTEGER"),
         ]
+
+      # Migration: deduplicate journalists across outlets.
+        # The old schema allowed multiple records for the same name as long as
+        # they were on different outlets. The new schema is name-only unique.
+        # Merge duplicates: keep the oldest record (lowest id), reassign all
+        # bylines and emails to it, delete the duplicates.
+        try:
+            dupes = conn.execute("""
+                SELECT name_normalised, MIN(id) as keep_id, COUNT(*) as n
+                FROM journalists GROUP BY name_normalised HAVING COUNT(*) > 1
+            """).fetchall()
+            if dupes:
+                print(f"Migrating: merging {len(dupes)} duplicated journalist names")
+                for d in dupes:
+                    keep_id = d["keep_id"]
+                    name = d["name_normalised"]
+                    other_ids = [r["id"] for r in conn.execute(
+                        "SELECT id FROM journalists WHERE name_normalised = ? AND id != ?",
+                        (name, keep_id)
+                    ).fetchall()]
+                    if other_ids:
+                        placeholders = ",".join("?" for _ in other_ids)
+                        conn.execute(f"UPDATE bylines SET journalist_id = ? WHERE journalist_id IN ({placeholders})",
+                                     [keep_id] + other_ids)
+                        conn.execute(f"DELETE FROM journalist_emails WHERE journalist_id IN ({placeholders})",
+                                     other_ids)
+                        conn.execute(f"DELETE FROM journalist_specialisms WHERE journalist_id IN ({placeholders})",
+                                     other_ids)
+                        conn.execute(f"DELETE FROM journalists WHERE id IN ({placeholders})",
+                                     other_ids)
+        except Exception as e:
+            print(f"Dedup migration warning: {e}")
         for col_name, col_type in migrations:
             if col_name not in existing_cols:
                 try:
