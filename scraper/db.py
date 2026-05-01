@@ -1,4 +1,4 @@
-last_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"""
+"""
 Database schema and connection helpers.
 
 The schema is deliberately denormalised in a few places (region cached on
