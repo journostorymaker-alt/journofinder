@@ -16,7 +16,7 @@ Politeness:
   - Custom user agent identifying us
   - Respect robots.txt for the article paths
   - Cache successful fetches for 24h
-  - Hard cap of 30 articles per outlet per scrape run
+  - Hard cap of 100 articles per outlet per scrape run
 
 Resilience:
   - Every outlet wrapped in try/except so one failure doesn't kill the run
