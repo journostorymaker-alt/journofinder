@@ -69,11 +69,23 @@ CACHE_DIR.mkdir(parents=True, exist_ok=True)
 CACHE_TTL = timedelta(hours=24)
 
 # Polite scraping params
-MIN_DELAY = 2.0
-MAX_DELAY = 5.0
-MAX_ARTICLES_PER_OUTLET = 100
+# Lowered from 2-5s to 1.5-3s — still well within polite scraping norms
+# (a human user clicks around at maybe 1 click per 2-5s, so we're not
+# asking for unreasonable bandwidth). Each outlet's per-domain rate limit
+# means we never sustain high request rates against any one server.
+MIN_DELAY = 1.5
+MAX_DELAY = 3.0
+# Lowered from 100 to 40 — diminishing returns on bylines past ~30. Most
+# regular reporters will be picked up in the first 30-40 articles; the rest
+# is one-off contributors and re-bylines we already have.
+MAX_ARTICLES_PER_OUTLET = 40
 REQUEST_TIMEOUT = 25
 MAX_RETRIES_ON_429 = 2
+
+# Dormancy: outlets get marked dormant after this many consecutive zero
+# byline runs, and skipped until the dormant_until timestamp.
+DORMANCY_THRESHOLD = 3      # zero-runs in a row before marking dormant
+DORMANCY_RECHECK_DAYS = 7   # how often to retry dormant outlets
 
 CHECKPOINT_EVERY_N_OUTLETS = 10
 
@@ -495,13 +507,14 @@ def _looks_like_article_url(url):
 
 def _strategy_sitemap(outlet_data, max_articles):
     domain = outlet_data["domain"].split("/")[0]
+    # Reduced from 6 candidates to the 3 most common patterns. The other
+    # patterns (google-news-sitemap, sitemap-news, sitemap_index) are rare
+    # enough that the time saved across 199 outlets outweighs the few
+    # outlets where they'd succeed.
     candidates = [
         f"https://{domain}/sitemap_news.xml",
         f"https://{domain}/news-sitemap.xml",
-        f"https://{domain}/google-news-sitemap.xml",
-        f"https://{domain}/sitemap-news.xml",
         f"https://{domain}/sitemap.xml",
-        f"https://{domain}/sitemap_index.xml",
     ]
     
     article_urls = []
@@ -728,11 +741,30 @@ def scrape_outlet(outlet_row):
                 f"strategy: {strategy_used}, articles: {len(article_urls)}, bylines: {bylines_found}")
     
     with get_conn() as conn:
-        conn.execute("""
-            UPDATE outlets SET last_scraped = CURRENT_TIMESTAMP,
-                last_scrape_status = ?, last_scrape_count = ?
-            WHERE id = ?
-        """, (f"ok:{strategy_used}" if bylines_found else "no_bylines", bylines_found, outlet_id))
+        # Update dormancy counter: increment if zero, reset if any bylines found
+        if bylines_found > 0:
+            conn.execute("""
+                UPDATE outlets SET last_scraped = CURRENT_TIMESTAMP,
+                    last_scrape_status = ?, last_scrape_count = ?,
+                    consecutive_zero_runs = 0,
+                    dormant_until = NULL
+                WHERE id = ?
+            """, (f"ok:{strategy_used}", bylines_found, outlet_id))
+        else:
+            # Increment consecutive_zero_runs; if it hits the threshold,
+            # set dormant_until so we skip this outlet for a week.
+            conn.execute("""
+                UPDATE outlets SET last_scraped = CURRENT_TIMESTAMP,
+                    last_scrape_status = ?,
+                    last_scrape_count = 0,
+                    consecutive_zero_runs = COALESCE(consecutive_zero_runs, 0) + 1,
+                    dormant_until = CASE
+                        WHEN COALESCE(consecutive_zero_runs, 0) + 1 >= ?
+                        THEN datetime(CURRENT_TIMESTAMP, ?)
+                        ELSE NULL
+                    END
+                WHERE id = ?
+            """, ("no_bylines", DORMANCY_THRESHOLD, f'+{DORMANCY_RECHECK_DAYS} days', outlet_id))
     
     return "ok" if bylines_found else "no_bylines", bylines_found
 
@@ -801,12 +833,17 @@ def _log_scrape(outlet_id, url, status, count, notes):
 # Main run loop
 # =============================================================================
 
-def run_full_scrape(limit=None, region_filter=None, skip_recent_hours=None):
+def run_full_scrape(limit=None, region_filter=None, skip_recent_hours=None,
+                    include_dormant=False):
     """Scrape outlets, ordered by last_scraped ASC (oldest/never first).
     
     skip_recent_hours: if set (e.g. 12), outlets scraped more recently than
     this number of hours are skipped entirely. Useful for "top up" runs that
     only finish what a previous run missed. Leave None for full daily refreshes.
+    
+    include_dormant: by default, outlets that have returned zero bylines on
+    3+ consecutive runs are skipped for a week (dormant). Set True to force
+    a full scrape of everything including dormant ones.
     """
     init_db()
     sync_outlets(OUTLETS)
@@ -820,10 +857,24 @@ def run_full_scrape(limit=None, region_filter=None, skip_recent_hours=None):
         if region_filter:
             query += " AND region LIKE ?"
             params.append(f"%{region_filter}%")
+        # Skip dormant outlets unless override flag passed. An outlet is dormant
+        # if dormant_until is in the future.
+        if not include_dormant:
+            query += " AND (dormant_until IS NULL OR dormant_until < CURRENT_TIMESTAMP)"
         # Order: never-scraped first (NULL), then oldest scraped first.
         # This means a partial recovery run picks up where it left off.
         query += " ORDER BY last_scraped IS NOT NULL, last_scraped ASC"
         outlets = conn.execute(query, params).fetchall()
+        
+        # Report on dormancy state
+        if not include_dormant:
+            n_dormant = conn.execute("""
+                SELECT COUNT(*) FROM outlets WHERE dormant_until > CURRENT_TIMESTAMP
+            """).fetchone()[0]
+            if n_dormant:
+                print(f"Skipping {n_dormant} dormant outlets "
+                      f"(zero bylines for {DORMANCY_THRESHOLD}+ runs, "
+                      f"will retry after {DORMANCY_RECHECK_DAYS} days)", flush=True)
     
     # Optionally skip outlets recently scraped (for manual top-up runs)
     if skip_recent_hours is not None:

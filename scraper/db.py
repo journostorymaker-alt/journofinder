@@ -30,7 +30,12 @@ CREATE TABLE IF NOT EXISTS outlets (
     email_pattern TEXT,
     last_scraped TIMESTAMP,
     last_scrape_status TEXT,
-    last_scrape_count INTEGER DEFAULT 0
+    last_scrape_count INTEGER DEFAULT 0,
+    -- Dormancy tracking: outlets that consistently return zero bylines
+    -- get marked dormant and skipped on most runs to save time. They
+    -- get one re-check per week so they can come back if their site changes.
+    consecutive_zero_runs INTEGER DEFAULT 0,
+    dormant_until TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS journalists (
@@ -207,6 +212,20 @@ def init_db():
                     print(f"Migrated: added column journalists.{col_name}")
                 except Exception as e:
                     print(f"Migration warning for {col_name}: {e}")
+        
+        # Migration: outlets dormancy columns
+        outlet_cols = {row["name"] for row in conn.execute("PRAGMA table_info(outlets)").fetchall()}
+        outlet_migrations = [
+            ("consecutive_zero_runs", "INTEGER DEFAULT 0"),
+            ("dormant_until", "TIMESTAMP"),
+        ]
+        for col_name, col_type in outlet_migrations:
+            if col_name not in outlet_cols:
+                try:
+                    conn.execute(f"ALTER TABLE outlets ADD COLUMN {col_name} {col_type}")
+                    print(f"Migrated: added column outlets.{col_name}")
+                except Exception as e:
+                    print(f"Migration warning for outlets.{col_name}: {e}")
 
 
 def sync_outlets(outlets_list):

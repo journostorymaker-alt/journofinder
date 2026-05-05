@@ -2,7 +2,10 @@ name: Scrape UK press
 
 on:
   schedule:
-    - cron: '0 4 * * *'
+    # Twice weekly: Tuesday and Friday at 04:00 UTC
+    # (free GitHub Actions tier gives 2,000 minutes/month — daily 5h scrapes
+    # would burn 9,000+ minutes; twice-weekly keeps us well within budget)
+    - cron: '0 4 * * 2,5'
   workflow_dispatch:
 
 jobs:
@@ -38,7 +41,11 @@ jobs:
         id: scrape
         continue-on-error: true
         run: python scraper/scrape.py
-        timeout-minutes: 300
+        # Reduced from 300 to 180 minutes — with the speed optimisations
+        # (dormancy skip, lower article cap, tighter sitemap fallback,
+        # tighter delays) a full scrape should complete in 1-2 hours
+        # instead of the 5-hour previous max.
+        timeout-minutes: 180
       
       - name: Run consolidation
         if: always()
