@@ -3,492 +3,858 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JournoFinder — UK Press Database</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>JournoFinder — UK Press Database — GBF</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
 <style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --ink: #1a1a1a;
-  --ink-soft: #3d3d3d;
-  --muted: #6b6b6b;
-  --muted-soft: #9a9a9a;
-  --paper: #f5f1e8;
-  --paper-deep: #ebe5d3;
-  --rule: #2a2a2a;
-  --rule-soft: #d4cdb8;
-  --accent: #b8341c;
-  --accent-soft: #e85d3f;
-  --green: #2d5530;
-  --amber: #b88817;
-  --red: #8b2417;
-  --highlight: #fde88a;
+  --green: #97C221;
+  --gd: #7aa018;
+  --gpale: #f0f7e0;
+  --navy: #131820;
+  --white: #fff;
+  --off: #f8f9f5;
+  --grey: #eef0ea;
+  --bdr: #dde0d6;
+  --txt: #1a1f14;
+  --txm: #4a5440;
+  --txl: #7a8870;
+  --fh: 'Arial Black', Arial, sans-serif;
+  --fb: Arial, sans-serif;
+  --fmono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --rust: #c0392b;
+  --amber: #d97706;
 }
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  background: var(--paper);
-  color: var(--ink);
-  font-family: 'Inter', -apple-system, sans-serif;
-  font-size: 14px;
+  font-family: var(--fb);
+  background: var(--off);
+  color: var(--txt);
+  font-size: 15px;
   line-height: 1.5;
   min-height: 100vh;
 }
 
-/* ===== Masthead ===== */
-.masthead {
-  border-bottom: 3px double var(--rule);
-  padding: 24px 32px 18px;
-  background: var(--paper);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-.masthead-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 8px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-.masthead h1 {
-  font-family: 'Fraunces', serif;
-  font-weight: 900;
-  font-size: clamp(36px, 5vw, 56px);
-  line-height: 0.95;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-}
-.masthead h1 em {
-  font-style: italic;
-  font-weight: 500;
-  color: var(--accent);
-}
-.subtitle {
-  font-family: 'Fraunces', serif;
-  font-size: 16px;
-  font-style: italic;
-  color: var(--ink-soft);
-  margin-top: 6px;
-  max-width: 700px;
-}
-
-/* ===== Status bar ===== */
-.statusbar {
-  display: flex;
-  gap: 24px;
-  padding: 10px 32px;
-  background: var(--paper-deep);
-  border-bottom: 1px solid var(--rule-soft);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  color: var(--ink-soft);
-  flex-wrap: wrap;
-}
-.statusbar .stat strong { color: var(--ink); font-weight: 600; }
-
-/* ===== Layout ===== */
-.app {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 0;
-  min-height: calc(100vh - 200px);
-}
-
-/* ===== Filters ===== */
-.filters {
-  background: var(--paper-deep);
-  border-right: 1px solid var(--rule-soft);
-  padding: 24px 22px;
-  overflow-y: auto;
-}
-.filters h2 {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 12px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid var(--rule-soft);
-}
-.filter-group { margin-bottom: 24px; }
-.filter-group label {
-  display: block;
-  font-size: 12px;
-  color: var(--ink-soft);
-  margin-bottom: 6px;
-  font-weight: 500;
-}
-.filter-group input[type="text"],
-.filter-group select {
-  width: 100%;
-  padding: 8px 10px;
-  border: 1px solid var(--rule-soft);
-  background: var(--paper);
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  color: var(--ink);
-}
-.filter-group input[type="text"]:focus,
-.filter-group select:focus {
-  outline: none;
-  border-color: var(--accent);
-}
-.checkboxes { display: flex; flex-direction: column; gap: 4px; }
-.checkboxes label {
+/* ============================================
+   HEADER
+   ============================================ */
+.hdr {
+  background: var(--navy);
+  border-bottom: 4px solid var(--green);
+  padding: 1.4rem 2rem;
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  cursor: pointer;
-  margin-bottom: 0;
-  padding: 3px 0;
+  gap: 1.5rem;
 }
-.checkboxes input { margin: 0; }
-.cb-count {
-  margin-left: auto;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  color: var(--muted);
+.hdr-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
 }
-
-.btn-clear {
-  width: 100%;
-  padding: 8px;
-  background: transparent;
-  border: 1px solid var(--rule-soft);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
+.hdr-mark {
+  width: 56px;
+  height: 56px;
+  background: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--fh);
+  font-weight: 900;
+  font-size: 1.8rem;
+  color: var(--navy);
+  letter-spacing: -0.05em;
+  border-radius: 6px;
+}
+.hdr-title {
+  font-family: var(--fh);
+  font-size: 1.05rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--ink-soft);
-  cursor: pointer;
-  margin-top: 12px;
+  color: var(--white);
+  letter-spacing: 0.04em;
+  line-height: 1;
 }
-.btn-clear:hover { background: var(--paper); border-color: var(--rule); color: var(--ink); }
+.hdr-org {
+  font-size: 0.74rem;
+  color: rgba(255,255,255,0.4);
+  margin-top: 0.3rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.hdr-div {
+  width: 1px;
+  height: 50px;
+  background: rgba(255,255,255,0.12);
+  flex-shrink: 0;
+}
+.hdr-meta {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.5;
+}
+.hdr-meta strong {
+  color: var(--green);
+  display: block;
+  font-size: 0.86rem;
+  margin-bottom: 0.15rem;
+  letter-spacing: 0.02em;
+}
+.hdr-spacer { flex: 1; }
+.hdr-time {
+  font-size: 0.74rem;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
 
-/* ===== Main ===== */
-.main {
-  padding: 0;
+/* ============================================
+   HERO + STATS
+   ============================================ */
+.hero {
+  background: var(--white);
+  border-bottom: 1px solid var(--bdr);
+  padding: 2.5rem 2rem 2rem;
+}
+.hero-in {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.eyebrow {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gd);
+  margin-bottom: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.eyebrow::before {
+  content: '';
+  width: 30px;
+  height: 3px;
+  background: var(--green);
+  border-radius: 2px;
+  display: inline-block;
+}
+h1 {
+  font-family: var(--fh);
+  font-size: clamp(2.4rem, 5.5vw, 4.6rem);
+  font-weight: 900;
+  line-height: 0.94;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin-bottom: 1.1rem;
+}
+h1 em { font-style: normal; color: var(--gd); }
+.lede {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--txm);
+  max-width: 680px;
+  margin-bottom: 1.8rem;
+}
+.hstats {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1.5px solid var(--bdr);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--off);
+}
+.hstat {
+  padding: 1.1rem 1.5rem;
+  border-right: 1.5px solid var(--bdr);
+  flex: 1;
+  min-width: 140px;
+}
+.hstat:last-child { border-right: none; }
+.hsn {
+  font-family: var(--fh);
+  font-size: 2.3rem;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--navy);
+}
+.hsn em { font-style: normal; color: var(--gd); }
+.hsl {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--txl);
+  margin-top: 0.3rem;
+}
+
+/* ============================================
+   TABS
+   ============================================ */
+.tabs-bar {
+  background: var(--white);
+  border-bottom: 2px solid var(--bdr);
+  padding: 0 2rem;
+}
+.tabs-in {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  gap: 0;
+}
+.tab {
+  font-family: var(--fb);
+  font-size: 0.86rem;
+  font-weight: 700;
+  padding: 0.85rem 1.4rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--txl);
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.15s;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.tab:hover { color: var(--txt); }
+.tab.on { color: var(--gd); border-bottom-color: var(--green); }
+.tab .tab-count {
+  display: inline-block;
+  font-size: 0.72rem;
+  background: var(--grey);
+  color: var(--txm);
+  padding: 0.1rem 0.5rem;
+  border-radius: 10px;
+  margin-left: 0.4rem;
+  font-weight: 700;
+}
+.tab.on .tab-count { background: var(--gpale); color: var(--gd); }
+
+/* ============================================
+   LAYOUT
+   ============================================ */
+.layout {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 290px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+.sidebar {
+  position: sticky;
+  top: 1rem;
+  background: var(--white);
+  border: 1.5px solid var(--bdr);
+  border-radius: 12px;
+  overflow: hidden;
+  max-height: calc(100vh - 2rem);
   display: flex;
   flex-direction: column;
+}
+.sidebar-head {
+  padding: 1rem 1.2rem;
+  background: var(--navy);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid var(--green);
+}
+.sidebar-title {
+  font-family: var(--fh);
+  font-size: 0.92rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.btn-clear {
+  font-family: var(--fb);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.3rem 0.7rem;
+  background: transparent;
+  color: var(--green);
+  border: 1.5px solid rgba(151,194,33,0.3);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-clear:hover {
+  background: var(--green);
+  color: var(--navy);
+  border-color: var(--green);
+}
+.sidebar-body {
+  padding: 1.1rem 1.2rem;
+  overflow-y: auto;
+  flex: 1;
+}
+.sidebar-body::-webkit-scrollbar { width: 6px; }
+.sidebar-body::-webkit-scrollbar-track { background: var(--off); }
+.sidebar-body::-webkit-scrollbar-thumb { background: var(--bdr); border-radius: 3px; }
+.sidebar-body::-webkit-scrollbar-thumb:hover { background: var(--green); }
+
+.fgroup { margin-bottom: 1.4rem; }
+.fgroup:last-child { margin-bottom: 0.4rem; }
+.flabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--txl);
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.flabel-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+.flabel-mini {
+  font-size: 0.64rem;
+  background: none;
+  border: none;
+  color: var(--gd);
+  cursor: pointer;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0;
+}
+.flabel-mini:hover { color: var(--navy); text-decoration: underline; }
+
+input[type="text"] {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border: 1.5px solid var(--bdr);
+  background: var(--white);
+  font-family: var(--fb);
+  font-size: 0.9rem;
+  color: var(--txt);
+  border-radius: 6px;
+  transition: border-color 0.15s;
+}
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--green);
+}
+
+.checks { display: flex; flex-direction: column; gap: 0.15rem; }
+.checks label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.84rem;
+  cursor: pointer;
+  padding: 0.28rem 0.4rem;
+  border-radius: 4px;
+  transition: background 0.1s;
+  color: var(--txt);
+}
+.checks label:hover { background: var(--gpale); }
+.checks input[type="checkbox"] {
+  margin: 0;
+  width: 14px;
+  height: 14px;
+  accent-color: var(--green);
+  cursor: pointer;
+}
+.cb-count {
+  margin-left: auto;
+  font-size: 0.72rem;
+  color: var(--txl);
+  font-weight: 600;
+  font-family: var(--fmono);
+}
+
+/* Hierarchical region list */
+.region-tree { display: flex; flex-direction: column; gap: 0.1rem; }
+.region-top {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.32rem 0.4rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.region-top:hover { background: var(--gpale); }
+.region-toggle {
+  width: 14px;
+  text-align: center;
+  font-family: var(--fmono);
+  font-size: 0.7rem;
+  color: var(--txl);
+  flex-shrink: 0;
+  user-select: none;
+}
+.region-top label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  cursor: pointer;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--txt);
+  margin: 0;
+  padding: 0;
+}
+.region-top label input { accent-color: var(--green); }
+.region-children {
+  display: none;
+  margin-left: 1.5rem;
+  border-left: 1.5px solid var(--bdr);
+  padding-left: 0.5rem;
+  margin-top: 0.1rem;
+  margin-bottom: 0.2rem;
+}
+.region-children.expanded { display: flex; flex-direction: column; gap: 0.1rem; }
+.region-children label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--txm);
+}
+.region-children label:hover { background: var(--gpale); }
+.region-children input { accent-color: var(--green); }
+
+/* ============================================
+   MAIN CONTENT
+   ============================================ */
+.main {
+  background: var(--white);
+  border: 1.5px solid var(--bdr);
+  border-radius: 12px;
+  overflow: hidden;
   min-width: 0;
 }
 .toolbar {
+  padding: 1rem 1.4rem;
+  border-bottom: 1.5px solid var(--bdr);
+  background: var(--off);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 32px;
-  border-bottom: 1px solid var(--rule-soft);
-  background: var(--paper);
-  gap: 20px;
   flex-wrap: wrap;
+  gap: 1rem;
 }
 .results-count {
-  font-family: 'Fraunces', serif;
-  font-size: 18px;
-  font-weight: 500;
+  font-family: var(--fh);
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--navy);
 }
-.results-count strong { color: var(--accent); font-weight: 600; }
-.export-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
-.btn {
-  padding: 8px 14px;
-  background: var(--ink);
-  color: var(--paper);
-  border: 1px solid var(--ink);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
+.results-count em {
+  font-style: normal;
+  color: var(--gd);
+}
+.results-count-sub {
+  font-size: 0.74rem;
+  color: var(--txl);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  cursor: pointer;
+  letter-spacing: 0.08em;
+  margin-top: 0.15rem;
 }
-.btn:hover { background: var(--accent); border-color: var(--accent); }
-.btn-secondary { background: transparent; color: var(--ink); }
-.btn-secondary:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.btn {
+  font-family: var(--fb);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.55rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1.5px solid;
+  white-space: nowrap;
+}
+.btn-primary {
+  background: var(--green);
+  color: var(--navy);
+  border-color: var(--green);
+}
+.btn-primary:hover {
+  background: #a8d428;
+  border-color: #a8d428;
+  transform: translateY(-1px);
+}
+.btn-secondary {
+  background: var(--white);
+  color: var(--navy);
+  border-color: var(--bdr);
+}
+.btn-secondary:hover {
+  background: var(--navy);
+  color: var(--white);
+  border-color: var(--navy);
+}
 
-/* ===== Table ===== */
-.table-wrapper { overflow-x: auto; flex: 1; }
+/* ============================================
+   TABLE
+   ============================================ */
+.tbl-scroll {
+  overflow-x: auto;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+.tbl-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
+.tbl-scroll::-webkit-scrollbar-track { background: var(--off); }
+.tbl-scroll::-webkit-scrollbar-thumb { background: var(--bdr); border-radius: 4px; }
+.tbl-scroll::-webkit-scrollbar-thumb:hover { background: var(--green); }
+
 table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  table-layout: auto;
 }
 thead th {
   position: sticky;
   top: 0;
-  background: var(--paper);
-  border-bottom: 2px solid var(--rule);
-  text-align: left;
-  padding: 12px 16px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 600;
+  z-index: 5;
+  background: var(--off);
+  border-bottom: 2px solid var(--bdr);
+  padding: 0.8rem 1rem;
+  font-family: var(--fb);
+  font-size: 0.7rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--ink-soft);
+  color: var(--txl);
+  text-align: left;
   cursor: pointer;
   user-select: none;
   white-space: nowrap;
 }
-thead th:hover { color: var(--accent); }
-thead th .sort-arrow { color: var(--muted-soft); margin-left: 4px; }
-thead th.active .sort-arrow { color: var(--accent); }
+thead th:hover { color: var(--txt); }
+thead th.sa { color: var(--gd); }
+thead th.sa.asc::after { content: ' ↑'; }
+thead th.sa.dsc::after { content: ' ↓'; }
 tbody tr {
-  border-bottom: 1px solid var(--rule-soft);
+  border-bottom: 1px solid var(--grey);
   transition: background 0.1s;
 }
-tbody tr:hover { background: var(--paper-deep); }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: #f5faea; }
 tbody td {
-  padding: 12px 16px;
-  vertical-align: top;
+  padding: 0.85rem 1rem;
+  vertical-align: middle;
 }
-.col-name { font-weight: 600; min-width: 160px; font-family: 'Fraunces', serif; font-size: 15px; }
+
+.col-name {
+  font-family: var(--fh);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.15;
+  min-width: 160px;
+}
 .col-name small {
   display: block;
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
+  font-family: var(--fb);
+  font-size: 0.78rem;
   font-weight: 400;
-  color: var(--muted);
-  margin-top: 2px;
+  color: var(--txl);
+  margin-top: 0.2rem;
+  letter-spacing: 0.01em;
+  text-transform: none;
 }
-.col-outlet { min-width: 180px; }
-.col-outlet small {
-  display: block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  color: var(--muted);
-  margin-top: 2px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+.col-region {
+  font-size: 0.82rem;
+  color: var(--txm);
+  min-width: 110px;
 }
-.col-region { color: var(--ink-soft); font-size: 12px; }
 .col-email {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
+  font-family: var(--fmono);
+  font-size: 0.8rem;
+  color: var(--navy);
   word-break: break-all;
   min-width: 220px;
 }
-.col-email a { color: var(--accent); text-decoration: none; }
-.col-email a:hover { text-decoration: underline; }
-.col-bylines { font-family: 'JetBrains Mono', monospace; text-align: right; font-size: 12px; }
-
-.confidence-pill {
-  display: inline-block;
-  padding: 2px 6px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-radius: 2px;
-  margin-left: 4px;
+.col-email a { color: var(--gd); text-decoration: none; }
+.col-email a:hover { color: var(--navy); text-decoration: underline; }
+.col-bylines {
+  font-family: var(--fh);
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: var(--navy);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.col-recency {
+  text-align: right;
+  font-family: var(--fmono);
+  font-size: 0.78rem;
+  color: var(--txm);
   white-space: nowrap;
 }
-.conf-verified { background: var(--green); color: white; }
-.conf-pattern_high { background: #2d5530; color: white; }
-.conf-pattern_med { background: var(--amber); color: white; }
-.conf-guess { background: #c4b896; color: var(--ink); }
 
-.classification-tag {
+/* Pills */
+.pill {
   display: inline-block;
-  padding: 2px 8px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 500;
+  font-size: 0.66rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border-radius: 2px;
+  padding: 0.2rem 0.55rem;
+  border-radius: 12px;
+  white-space: nowrap;
+  font-family: var(--fb);
 }
-.cls-local_staff { background: var(--green); color: white; }
-.cls-regional_staff { background: #4a7048; color: white; }
-.cls-network_reporter { background: var(--amber); color: white; }
-.cls-national { background: var(--ink); color: var(--paper); }
-.cls-unclear { background: var(--rule-soft); color: var(--ink-soft); }
+.pill-cls { font-family: var(--fh); font-weight: 800; }
+.cls-local_staff    { background: var(--green); color: var(--navy); }
+.cls-regional_staff { background: #c5e074; color: var(--navy); }
+.cls-network_reporter { background: #fde88a; color: var(--navy); }
+.cls-national       { background: var(--navy); color: var(--green); }
+.cls-unclear        { background: var(--grey); color: var(--txl); }
 
-  .recency-badge {
-  display: inline-block;
-  padding: 1px 6px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-radius: 2px;
-  margin-left: 4px;
-}
-.recency-fresh { background: var(--green); color: white; }
-.recency-recent { background: var(--paper-deep); color: var(--ink-soft); border: 1px solid var(--rule-soft); }
-.recency-stale { background: var(--amber); color: white; }
-.recency-very-stale { background: var(--red); color: white; }
-.moved-badge {
-  display: inline-block;
-  padding: 1px 6px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-radius: 2px;
-  background: var(--accent);
-  color: white;
-  margin-left: 4px;
+.conf-pill { margin-left: 0.4rem; }
+.conf-verified     { background: var(--gd); color: var(--white); }
+.conf-pattern_high { background: var(--gpale); color: var(--gd); border: 1px solid var(--green); }
+.conf-pattern_med  { background: #fff4e0; color: var(--amber); border: 1px solid var(--amber); }
+.conf-guess        { background: var(--grey); color: var(--txm); }
+
+.recency-pill { margin-left: 0.4rem; }
+.recency-fresh     { background: var(--green); color: var(--navy); }
+.recency-recent    { background: var(--grey); color: var(--txm); }
+.recency-stale     { background: #fde6c8; color: var(--amber); }
+.recency-very-stale { background: #f5d4d4; color: var(--rust); }
+
+.moved-pill {
+  margin-left: 0.4rem;
+  background: var(--rust);
+  color: var(--white);
 }
 
-.specialism-tag {
-  display: inline-block;
-  padding: 1px 6px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  background: var(--paper-deep);
-  border: 1px solid var(--rule-soft);
-  margin: 1px 2px 1px 0;
-  border-radius: 2px;
-  color: var(--ink-soft);
-}
-
-/* ===== Loading + empty ===== */
-.loading, .empty {
-  padding: 80px 32px;
-  text-align: center;
-  color: var(--muted);
-  font-family: 'Fraunces', serif;
-  font-style: italic;
-  font-size: 18px;
-}
-.empty p { margin: 0 auto 12px; max-width: 500px; }
-.empty code {
-  display: inline-block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  background: var(--paper-deep);
-  padding: 2px 6px;
-  font-style: normal;
-}
-
-/* ===== Newsroom contacts panel ===== */
-.tabs {
+.spec-tags {
   display: flex;
-  border-bottom: 1px solid var(--rule-soft);
-  background: var(--paper);
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  max-width: 240px;
 }
-.tab {
-  padding: 12px 24px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
+.spec-tag {
+  font-size: 0.7rem;
+  padding: 0.18rem 0.5rem;
+  background: var(--off);
+  border: 1px solid var(--bdr);
+  border-radius: 10px;
+  color: var(--txm);
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--muted);
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  background: none;
-  border-left: none;
-  border-right: none;
-  border-top: none;
 }
-.tab.active { color: var(--ink); border-bottom-color: var(--accent); }
-.tab:hover { color: var(--ink); }
+.spec-tag.lead {
+  background: var(--navy);
+  color: var(--green);
+  border-color: var(--navy);
+}
 
-@media (max-width: 900px) {
-  .app { grid-template-columns: 1fr; }
-  .filters { border-right: none; border-bottom: 1px solid var(--rule-soft); max-height: 300px; }
-  .masthead { padding: 16px 20px 12px; }
-  .toolbar { padding: 12px 20px; }
-  thead th, tbody td { padding: 8px 12px; }
+/* States */
+.empty, .loading {
+  padding: 4rem 2rem;
+  text-align: center;
+  color: var(--txl);
+}
+.empty h2 {
+  font-family: var(--fh);
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin-bottom: 0.7rem;
+}
+.empty p { max-width: 540px; margin: 0 auto 0.8rem; line-height: 1.6; font-size: 0.94rem; }
+.empty code {
+  font-family: var(--fmono);
+  font-size: 0.82rem;
+  background: var(--off);
+  border: 1px solid var(--bdr);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  color: var(--navy);
+}
+
+/* Footer */
+footer {
+  background: var(--navy);
+  padding: 1.5rem 2rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+.ft-text {
+  font-size: 0.74rem;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.6;
+}
+.ft-text strong { color: rgba(255,255,255,0.65); }
+
+/* Mobile */
+@media (max-width: 1000px) {
+  .layout {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  .sidebar {
+    position: static;
+    max-height: none;
+  }
+  .hdr { padding: 1rem 1.2rem; flex-wrap: wrap; }
+  .hdr-meta, .hdr-div { display: none; }
+  .hero { padding: 1.6rem 1.2rem 1.4rem; }
+  .tabs-bar { padding: 0 1rem; }
+  thead th, tbody td { padding: 0.6rem 0.7rem; }
 }
 </style>
 </head>
 <body>
 
-<div class="masthead">
-  <div class="masthead-top">
-    <span>JournoFinder &mdash; UK Press Contacts Database</span>
-    <span id="last-updated">Loading database&hellip;</span>
+<div class="hdr">
+  <div class="hdr-brand">
+    <div class="hdr-mark">JF</div>
+    <div>
+      <div class="hdr-title">JournoFinder</div>
+      <div class="hdr-org">Green Britain Foundation</div>
+    </div>
   </div>
-  <h1>The <em>Press</em> Index</h1>
-  <p class="subtitle">A searchable database of UK news bylines, refreshed by automated scrapers across national, regional, local and specialist outlets in Great Britain.</p>
+  <div class="hdr-div"></div>
+  <div class="hdr-meta">
+    <strong>UK Press Database</strong>
+    Automated byline scraping &middot; refreshed daily
+  </div>
+  <div class="hdr-spacer"></div>
+  <div class="hdr-time" id="lastUpdated">Loading&hellip;</div>
 </div>
 
-<div class="statusbar">
-  <span class="stat"><strong id="stat-journalists">&mdash;</strong> journalists</span>
-  <span class="stat"><strong id="stat-outlets">&mdash;</strong> outlets</span>
-  <span class="stat"><strong id="stat-bylines">&mdash;</strong> bylines tracked</span>
-  <span class="stat"><strong id="stat-regions">&mdash;</strong> regions</span>
-  <span class="stat"><strong id="stat-newsdesks">&mdash;</strong> newsroom contacts</span>
-</div>
-
-<div class="tabs">
-  <button class="tab active" data-tab="journalists">Journalists</button>
-  <button class="tab" data-tab="newsrooms">Newsroom Contacts</button>
-</div>
-
-<div class="app">
-  <aside class="filters" id="filters">
-    <h2>Search</h2>
-    <div class="filter-group">
-      <label>Name, outlet or email</label>
-      <input type="text" id="search-text" placeholder="e.g. Edwards, salmon, Yorkshire&hellip;">
-    </div>
-
-    <h2>Region</h2>
-    <div class="filter-group">
-      <select id="filter-region"><option value="">All regions</option></select>
-    </div>
-
-    <h2>Tier</h2>
-    <div class="filter-group">
-      <div class="checkboxes" id="filter-tier"></div>
-    </div>
-
-    <h2>Classification</h2>
-    <div class="filter-group">
-      <div class="checkboxes" id="filter-classification"></div>
-    </div>
-
-    <h2>Specialism</h2>
-    <div class="filter-group">
-      <select id="filter-specialism"><option value="">All specialisms</option></select>
-    </div>
-
-    <h2>Activity</h2>
-    <div class="filter-group">
-      <div class="checkboxes">
-        <label><input type="checkbox" id="hide-stale"> Hide stale (over 90 days) <span class="cb-count" id="stale-count">—</span></label>
-        <label><input type="checkbox" id="hide-very-stale" checked> Hide very stale (over 180 days) <span class="cb-count" id="very-stale-count">—</span></label>
-        <label><input type="checkbox" id="show-moved-only"> Only show "moved" journalists <span class="cb-count" id="moved-count">—</span></label>
+<section class="hero">
+  <div class="hero-in">
+    <div class="eyebrow">UK regional &amp; national press contacts</div>
+    <h1>Find the <em>right</em><br>journalist for the story</h1>
+    <p class="lede">A searchable database of UK news bylines, automatically refreshed across national, regional, local and specialist outlets in Great Britain. Distinguishes embedded local reporters from syndicated wire bylines so you can target the people who actually cover your patch.</p>
+    <div class="hstats">
+      <div class="hstat">
+        <div class="hsn" id="statJournalists">&mdash;</div>
+        <div class="hsl">Journalists tracked</div>
       </div>
-    </div><h2>Email confidence</h2>
-    <div class="filter-group">
-      <div class="checkboxes" id="filter-confidence"></div>
+      <div class="hstat">
+        <div class="hsn" id="statOutlets">&mdash;</div>
+        <div class="hsl">UK news outlets</div>
+      </div>
+      <div class="hstat">
+        <div class="hsn" id="statBylines">&mdash;</div>
+        <div class="hsl">Bylines indexed</div>
+      </div>
+      <div class="hstat">
+        <div class="hsn" id="statRegions">&mdash;</div>
+        <div class="hsl">Regions covered</div>
+      </div>
+      <div class="hstat">
+        <div class="hsn" id="statNewsdesks">&mdash;</div>
+        <div class="hsl">Newsroom contacts</div>
+      </div>
     </div>
+  </div>
+</section>
 
-    <button class="btn-clear" id="clear-filters">Clear all filters</button>
+<div class="tabs-bar">
+  <div class="tabs-in">
+    <button class="tab on" data-tab="journalists">Journalists <span class="tab-count" id="tabJournalists">&mdash;</span></button>
+    <button class="tab" data-tab="newsrooms">Newsroom Contacts <span class="tab-count" id="tabNewsrooms">&mdash;</span></button>
+  </div>
+</div>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-head">
+      <div class="sidebar-title">Filters</div>
+      <button class="btn-clear" id="btnClear">Clear all</button>
+    </div>
+    <div class="sidebar-body">
+
+      <div class="fgroup">
+        <div class="flabel">Search</div>
+        <input type="text" id="filterSearch" placeholder="Name, outlet, email, topic…">
+      </div>
+
+      <div class="fgroup">
+        <div class="flabel">Region <span class="flabel-actions">
+          <button class="flabel-mini" id="regionExpandAll">Expand</button>
+          <button class="flabel-mini" id="regionCollapseAll">Collapse</button>
+        </span></div>
+        <div class="region-tree" id="filterRegion"></div>
+      </div>
+
+      <div class="fgroup">
+        <div class="flabel">Tier</div>
+        <div class="checks" id="filterTier"></div>
+      </div>
+
+      <div class="fgroup">
+        <div class="flabel">Type</div>
+        <div class="checks" id="filterClass"></div>
+      </div>
+
+      <div class="fgroup">
+        <div class="flabel">Specialism</div>
+        <div class="checks" id="filterSpecialism"></div>
+      </div>
+
+      <div class="fgroup">
+        <div class="flabel">Activity</div>
+        <div class="checks">
+          <label><input type="checkbox" id="hideStale"> Hide stale (90+ days) <span class="cb-count" id="cntStale">&mdash;</span></label>
+          <label><input type="checkbox" id="hideVeryStale" checked> Hide very stale (180+ days) <span class="cb-count" id="cntVeryStale">&mdash;</span></label>
+          <label><input type="checkbox" id="movedOnly"> Only "moved" journalists <span class="cb-count" id="cntMoved">&mdash;</span></label>
+        </div>
+      </div>
+
+      <div class="fgroup">
+        <div class="flabel">Email confidence</div>
+        <div class="checks" id="filterConfidence"></div>
+      </div>
+
+    </div>
   </aside>
 
   <main class="main">
     <div class="toolbar">
-      <div class="results-count">
-        <strong id="results-n">0</strong> matching contact<span id="results-plural">s</span>
+      <div>
+        <div class="results-count">
+          <em id="resultsCount">0</em> matches
+        </div>
+        <div class="results-count-sub" id="resultsCountSub">No filters applied</div>
       </div>
-      <div class="export-buttons">
-        <button class="btn btn-secondary" id="copy-emails">Copy emails</button>
-        <button class="btn" id="export-csv">Export CSV (Outlook)</button>
+      <div class="actions">
+        <button class="btn btn-secondary" id="btnCopy">Copy Emails</button>
+        <button class="btn btn-primary" id="btnExport">Export CSV</button>
       </div>
     </div>
-    <div class="table-wrapper" id="table-container">
+    <div class="tbl-scroll" id="tblContainer">
       <div class="loading">Loading database&hellip;</div>
     </div>
   </main>
 </div>
+
+<footer>
+  <div class="ft-text">
+    <strong>JournoFinder</strong> &middot; Built for press &amp; media research<br>
+    Data scraped from publicly published bylines &middot; <a style="color:rgba(255,255,255,0.55)" href="https://github.com/journostorymaker-alt/journofinder">View source</a>
+  </div>
+</footer>
 
 <script>
 let db = null;
@@ -497,61 +863,85 @@ let allNewsrooms = [];
 let activeTab = 'journalists';
 let filters = {
   text: '',
-  region: '',
+  regions: new Set(),     // multi-select
   tiers: new Set(),
-  classifications: new Set(),
-  specialism: '',
+  classes: new Set(),
+  specialisms: new Set(), // multi-select
   confidences: new Set(),
   hideStale: false,
   hideVeryStale: true,
-  showMovedOnly: false,
+  movedOnly: false,
 };
 let sortBy = { col: 'total_bylines', dir: 'desc' };
 
-// ---------- Init ----------
+// =============================================================================
+// REGION HIERARCHY
+// =============================================================================
+// Take "South West - Bristol" and produce { top: "South West", sub: "Bristol" }
+// Top-level regions like "Scotland", "Wales", "London" don't have a hyphen.
+const TOP_REGIONS_ORDER = [
+  'UK', 'Scotland', 'Wales', 'London',
+  'North East', 'North West', 'Yorkshire',
+  'West Midlands', 'East Midlands', 'East of England',
+  'South East', 'South West',
+  'Midlands',  // for ITV regions
+];
+
+function parseRegion(r) {
+  if (!r) return { top: 'Unknown', sub: null };
+  // Normalize "England - X" or "Scotland - X" patterns
+  if (r.includes(' - ')) {
+    const [top, sub] = r.split(' - ', 2);
+    return { top: top.trim(), sub: sub.trim() };
+  }
+  return { top: r, sub: null };
+}
+
+// =============================================================================
+// INIT
+// =============================================================================
 async function init() {
   try {
     const SQL = await initSqlJs({
       locateFile: f => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/${f}`
     });
-    
+
     let dbData;
     try {
       const r = await fetch('./data/journalists.db');
       if (!r.ok) throw new Error('No database file yet — run the scraper first.');
       dbData = new Uint8Array(await r.arrayBuffer());
     } catch (e) {
-      showEmpty(e.message);
+      showEmpty('Database not loaded', e.message);
       return;
     }
-    
+
     db = new SQL.Database(dbData);
     loadData();
     setupFilters();
+    setupEvents();
     render();
     updateLastUpdated();
   } catch (e) {
     console.error(e);
-    showEmpty('Could not load database: ' + e.message);
+    showEmpty('Failed to load', e.message);
   }
 }
 
-function showEmpty(msg) {
-  document.getElementById('table-container').innerHTML = `
+function showEmpty(title, msg) {
+  document.getElementById('tblContainer').innerHTML = `
     <div class="empty">
-      <p>${msg}</p>
-      <p style="font-size:13px; color: var(--muted);">
-        To populate: run <code>python scraper/scrape.py</code> then 
-        <code>python scraper/consolidate.py</code> and place the resulting 
-        <code>data/journalists.db</code> alongside this file.
+      <h2>${esc(title)}</h2>
+      <p>${esc(msg || '')}</p>
+      <p style="font-size:0.86rem;color:var(--txl);margin-top:1rem;">
+        To populate locally: run <code>python scraper/scrape.py</code>, then <code>python scraper/consolidate.py</code>, then place the resulting <code>data/journalists.db</code> alongside this page.
       </p>
     </div>`;
 }
 
 function loadData() {
-  // Load journalists with all needed joins
   const jRows = db.exec(`
-    SELECT 
+    SELECT
       j.id, j.full_name, j.first_name, j.last_name,
       j.classification, j.total_bylines, j.distinct_outlets,
       j.syndication_score, j.primary_region, j.primary_tier,
@@ -565,7 +955,7 @@ function loadData() {
     FROM journalists j
     JOIN outlets o ON j.primary_outlet_id = o.id
   `);
-  
+
   if (jRows.length === 0) {
     allJournalists = [];
   } else {
@@ -578,11 +968,13 @@ function loadData() {
         const [email, conf] = e.split('|');
         return { email, conf };
       }) : [];
+      const r = parseRegion(obj.region);
+      obj.region_top = r.top;
+      obj.region_sub = r.sub;
       return obj;
     });
   }
-  
-  // Load newsrooms
+
   const nRows = db.exec(`
     SELECT n.id, n.role, n.email, n.confidence, n.contact_name,
            o.name as outlet_name, o.region, o.tier
@@ -595,153 +987,277 @@ function loadData() {
     allNewsrooms = nRows[0].values.map(row => {
       const obj = {};
       cols.forEach((c, i) => obj[c] = row[i]);
+      const r = parseRegion(obj.region);
+      obj.region_top = r.top;
+      obj.region_sub = r.sub;
       return obj;
     });
   }
-  
+
   // Stats
-  const stats = db.exec("SELECT COUNT(*) as j FROM journalists")[0]?.values[0]?.[0] || 0;
-  const outlets = db.exec("SELECT COUNT(*) as o FROM outlets")[0]?.values[0]?.[0] || 0;
-  const bylines = db.exec("SELECT COUNT(*) as b FROM bylines")[0]?.values[0]?.[0] || 0;
-  const regions = db.exec("SELECT COUNT(DISTINCT region) FROM outlets")[0]?.values[0]?.[0] || 0;
-  
-  document.getElementById('stat-journalists').textContent = stats.toLocaleString();
-  document.getElementById('stat-outlets').textContent = outlets.toLocaleString();
-  document.getElementById('stat-bylines').textContent = bylines.toLocaleString();
-  document.getElementById('stat-regions').textContent = regions;
-  document.getElementById('stat-newsdesks').textContent = allNewsrooms.length;
+  const journalistCount = (db.exec('SELECT COUNT(*) FROM journalists')[0]?.values[0]?.[0]) || 0;
+  const outletCount = (db.exec('SELECT COUNT(*) FROM outlets')[0]?.values[0]?.[0]) || 0;
+  const bylineCount = (db.exec('SELECT COUNT(*) FROM bylines')[0]?.values[0]?.[0]) || 0;
+  const regionCount = (db.exec('SELECT COUNT(DISTINCT region) FROM outlets')[0]?.values[0]?.[0]) || 0;
+
+  setStat('statJournalists', journalistCount);
+  setStat('statOutlets', outletCount);
+  setStat('statBylines', bylineCount);
+  setStat('statRegions', regionCount);
+  setStat('statNewsdesks', allNewsrooms.length);
+  setStat('tabJournalists', journalistCount);
+  setStat('tabNewsrooms', allNewsrooms.length);
+}
+
+function setStat(id, n) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = (typeof n === 'number') ? n.toLocaleString() : n;
 }
 
 function updateLastUpdated() {
-  // Try to find the most recent scrape
-  const r = db.exec("SELECT MAX(scraped_at) FROM scrape_log");
+  const r = db.exec('SELECT MAX(scraped_at) FROM scrape_log');
   const ts = r[0]?.values[0]?.[0];
   if (ts) {
     const d = new Date(ts);
-    document.getElementById('last-updated').textContent = 
-      'Updated ' + d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+    document.getElementById('lastUpdated').textContent =
+      'Updated ' + d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
   }
 }
 
-// ---------- Filters ----------
+// =============================================================================
+// FILTERS — set up the controls
+// =============================================================================
 function setupFilters() {
-  // Region dropdown
-  const regions = [...new Set(allJournalists.map(j => j.region).filter(Boolean))].sort();
-  const regionSel = document.getElementById('filter-region');
-  regions.forEach(r => {
-    const opt = document.createElement('option');
-    opt.value = r; opt.textContent = r;
-    regionSel.appendChild(opt);
+  // ===== HIERARCHICAL REGION =====
+  const regionTree = {};  // { topName: { count: N, subs: [{name, count}] } }
+  for (const j of allJournalists) {
+    const top = j.region_top || 'Unknown';
+    const sub = j.region_sub;
+    if (!regionTree[top]) regionTree[top] = { count: 0, subs: {} };
+    regionTree[top].count++;
+    if (sub) {
+      if (!regionTree[top].subs[sub]) regionTree[top].subs[sub] = 0;
+      regionTree[top].subs[sub]++;
+    }
+  }
+
+  // Order top regions by our preferred sequence; unknowns at the end
+  const orderedTops = [];
+  for (const t of TOP_REGIONS_ORDER) if (regionTree[t]) orderedTops.push(t);
+  for (const t of Object.keys(regionTree).sort()) {
+    if (!orderedTops.includes(t)) orderedTops.push(t);
+  }
+
+  const regionEl = document.getElementById('filterRegion');
+  for (const top of orderedTops) {
+    const data = regionTree[top];
+    const subs = Object.keys(data.subs).sort();
+    const hasChildren = subs.length > 0;
+
+    const topRow = document.createElement('div');
+    topRow.className = 'region-top';
+    topRow.innerHTML = `
+      <span class="region-toggle" data-region="${esc(top)}">${hasChildren ? '+' : ' '}</span>
+      <label>
+        <input type="checkbox" data-region-top="${esc(top)}">
+        <span style="flex:1">${esc(top)}</span>
+        <span class="cb-count">${data.count}</span>
+      </label>
+    `;
+    regionEl.appendChild(topRow);
+
+    if (hasChildren) {
+      const childrenEl = document.createElement('div');
+      childrenEl.className = 'region-children';
+      childrenEl.dataset.region = top;
+      for (const sub of subs) {
+        const subRow = document.createElement('label');
+        subRow.innerHTML = `
+          <input type="checkbox" data-region-sub="${esc(top)}|${esc(sub)}">
+          <span style="flex:1">${esc(sub)}</span>
+          <span class="cb-count">${data.subs[sub]}</span>
+        `;
+        childrenEl.appendChild(subRow);
+      }
+      regionEl.appendChild(childrenEl);
+    }
+  }
+
+  // Wire up region tree interactions
+  regionEl.addEventListener('click', e => {
+    const toggle = e.target.closest('.region-toggle');
+    if (toggle && !toggle.textContent.includes(' ')) {
+      e.stopPropagation();
+      const top = toggle.dataset.region;
+      const childrenEl = regionEl.querySelector(`.region-children[data-region="${CSS.escape(top)}"]`);
+      if (childrenEl) {
+        childrenEl.classList.toggle('expanded');
+        toggle.textContent = childrenEl.classList.contains('expanded') ? '−' : '+';
+      }
+    }
   });
-  
-  // Tier checkboxes
+
+  regionEl.addEventListener('change', e => {
+    const cb = e.target;
+    if (cb.dataset.regionTop) {
+      const top = cb.dataset.regionTop;
+      // When ticking a top, untick all its subs (we want OR logic, so picking
+      // top means "all of this region", picking a sub means "just this part")
+      const subCbs = regionEl.querySelectorAll(`input[data-region-sub^="${CSS.escape(top)}|"]`);
+      if (cb.checked) {
+        filters.regions.add(`top:${top}`);
+        subCbs.forEach(scb => {
+          scb.checked = false;
+          filters.regions.delete(`sub:${scb.dataset.regionSub}`);
+        });
+      } else {
+        filters.regions.delete(`top:${top}`);
+      }
+    } else if (cb.dataset.regionSub) {
+      const ref = cb.dataset.regionSub;
+      const top = ref.split('|', 1)[0];
+      const topCb = regionEl.querySelector(`input[data-region-top="${CSS.escape(top)}"]`);
+      if (cb.checked) {
+        filters.regions.add(`sub:${ref}`);
+        if (topCb && topCb.checked) {
+          topCb.checked = false;
+          filters.regions.delete(`top:${top}`);
+        }
+      } else {
+        filters.regions.delete(`sub:${ref}`);
+      }
+    }
+    render();
+  });
+
+  // ===== TIER =====
   const tiers = ['national', 'regional', 'local', 'hyperlocal', 'broadcast', 'specialist'];
-  const tierBox = document.getElementById('filter-tier');
-  tiers.forEach(t => {
-    const count = allJournalists.filter(j => j.tier === t).length;
-    if (count === 0) return;
-    const lbl = document.createElement('label');
-    lbl.innerHTML = `<input type="checkbox" value="${t}"> ${t} <span class="cb-count">${count}</span>`;
-    tierBox.appendChild(lbl);
-  });
-  
-  // Classification checkboxes
-  const cls = ['local_staff', 'regional_staff', 'network_reporter', 'national', 'unclear'];
-  const clsBox = document.getElementById('filter-classification');
-  cls.forEach(c => {
-    const count = allJournalists.filter(j => j.classification === c).length;
-    if (count === 0) return;
-    const lbl = document.createElement('label');
-    lbl.innerHTML = `<input type="checkbox" value="${c}"> ${c.replace('_', ' ')} <span class="cb-count">${count}</span>`;
-    clsBox.appendChild(lbl);
-  });
-  
-  // Specialism dropdown
-  const specs = new Set();
-  allJournalists.forEach(j => j.specialisms_arr.forEach(s => specs.add(s)));
-  const specSel = document.getElementById('filter-specialism');
-  [...specs].sort().forEach(s => {
-    const opt = document.createElement('option');
-    opt.value = s; opt.textContent = s;
-    specSel.appendChild(opt);
-  });
-  
-  // Confidence checkboxes
+  populateChecks('filterTier', tiers, t => allJournalists.filter(j => j.tier === t).length, 'tiers');
+
+  // ===== CLASSIFICATION =====
+  const classes = ['local_staff', 'regional_staff', 'network_reporter', 'national', 'unclear'];
+  populateChecks('filterClass', classes,
+    c => allJournalists.filter(j => j.classification === c).length,
+    'classes',
+    c => c.replace('_', ' '));
+
+  // ===== SPECIALISM =====
+  const specCount = {};
+  for (const j of allJournalists) {
+    for (const s of j.specialisms_arr) {
+      specCount[s] = (specCount[s] || 0) + 1;
+    }
+  }
+  const specs = Object.keys(specCount).sort((a, b) => specCount[b] - specCount[a]);
+  populateChecks('filterSpecialism', specs, s => specCount[s], 'specialisms');
+
+  // ===== CONFIDENCE =====
   const confs = ['verified', 'pattern_high', 'pattern_med', 'guess'];
-  const confBox = document.getElementById('filter-confidence');
-  confs.forEach(c => {
-    const count = allJournalists.filter(j => j.primary_confidence === c).length;
+  populateChecks('filterConfidence', confs,
+    c => allJournalists.filter(j => j.primary_confidence === c).length,
+    'confidences',
+    c => c.replace('_', ' '));
+
+  // Activity counts
+  document.getElementById('cntStale').textContent =
+    allJournalists.filter(j => j.days_since_last_byline > 90).length;
+  document.getElementById('cntVeryStale').textContent =
+    allJournalists.filter(j => j.days_since_last_byline > 180).length;
+  document.getElementById('cntMoved').textContent =
+    allJournalists.filter(j => j.moved_from_outlet).length;
+}
+
+function populateChecks(containerId, items, countFn, filterKey, labelFn) {
+  const el = document.getElementById(containerId);
+  for (const item of items) {
+    const count = countFn(item);
+    if (count === 0) continue;
     const lbl = document.createElement('label');
-    lbl.innerHTML = `<input type="checkbox" value="${c}"> ${c.replace('_', ' ')} <span class="cb-count">${count}</span>`;
-    confBox.appendChild(lbl);
-  });
-  
-  // Wire up events
-  document.getElementById('search-text').addEventListener('input', e => {
+    lbl.innerHTML = `<input type="checkbox" data-filter-key="${filterKey}" value="${esc(item)}">
+      <span style="flex:1">${esc(labelFn ? labelFn(item) : item)}</span>
+      <span class="cb-count">${count}</span>`;
+    el.appendChild(lbl);
+  }
+}
+
+function setupEvents() {
+  document.getElementById('filterSearch').addEventListener('input', e => {
     filters.text = e.target.value.toLowerCase();
     render();
   });
-  document.getElementById('filter-region').addEventListener('change', e => {
-    filters.region = e.target.value; render();
-  });
-  document.getElementById('filter-specialism').addEventListener('change', e => {
-    filters.specialism = e.target.value; render();
-  });
-  ['filter-tier', 'filter-classification', 'filter-confidence'].forEach(id => {
-    const key = id === 'filter-tier' ? 'tiers' : id === 'filter-classification' ? 'classifications' : 'confidences';
-    document.getElementById(id).addEventListener('change', e => {
+
+  document.querySelectorAll('input[data-filter-key]').forEach(cb => {
+    cb.addEventListener('change', e => {
+      const key = e.target.dataset.filterKey;
       const val = e.target.value;
       if (e.target.checked) filters[key].add(val);
       else filters[key].delete(val);
       render();
     });
   });
-  
-  document.getElementById('hide-stale').addEventListener('change', e => {
+
+  document.getElementById('hideStale').addEventListener('change', e => {
     filters.hideStale = e.target.checked; render();
   });
-  document.getElementById('hide-very-stale').addEventListener('change', e => {
+  document.getElementById('hideVeryStale').addEventListener('change', e => {
     filters.hideVeryStale = e.target.checked; render();
   });
-  document.getElementById('show-moved-only').addEventListener('change', e => {
-    filters.showMovedOnly = e.target.checked; render();
+  document.getElementById('movedOnly').addEventListener('change', e => {
+    filters.movedOnly = e.target.checked; render();
   });
-  
-  // Populate counts for activity filters
-  const stale = allJournalists.filter(j => j.days_since_last_byline > 90).length;
-  const veryStale = allJournalists.filter(j => j.days_since_last_byline > 180).length;
-  const moved = allJournalists.filter(j => j.moved_from_outlet).length;
-  document.getElementById('stale-count').textContent = stale;
-  document.getElementById('very-stale-count').textContent = veryStale;
-  document.getElementById('moved-count').textContent = moved;document.getElementById('clear-filters').addEventListener('click', () => {
-    filters = { text: '', region: '', tiers: new Set(), classifications: new Set(), specialism: '', confidences: new Set() };
-    document.getElementById('search-text').value = '';
-    document.getElementById('filter-region').value = '';
-    document.getElementById('filter-specialism').value = '';
-    document.querySelectorAll('.checkboxes input').forEach(cb => cb.checked = false);
-    render();
+
+  document.getElementById('btnClear').addEventListener('click', clearFilters);
+  document.getElementById('btnExport').addEventListener('click', exportCSV);
+  document.getElementById('btnCopy').addEventListener('click', copyEmails);
+
+  document.getElementById('regionExpandAll').addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelectorAll('.region-children').forEach(c => c.classList.add('expanded'));
+    document.querySelectorAll('.region-toggle').forEach(t => {
+      if (!t.textContent.includes(' ')) t.textContent = '−';
+    });
   });
-  
+  document.getElementById('regionCollapseAll').addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelectorAll('.region-children').forEach(c => c.classList.remove('expanded'));
+    document.querySelectorAll('.region-toggle').forEach(t => {
+      if (!t.textContent.includes(' ')) t.textContent = '+';
+    });
+  });
+
   document.querySelectorAll('.tab').forEach(t => {
     t.addEventListener('click', () => {
-      document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
-      t.classList.add('active');
+      document.querySelectorAll('.tab').forEach(x => x.classList.remove('on'));
+      t.classList.add('on');
       activeTab = t.dataset.tab;
       render();
     });
   });
-  
-  document.getElementById('export-csv').addEventListener('click', exportCSV);
-  document.getElementById('copy-emails').addEventListener('click', copyEmails);
 }
 
-// ---------- Render ----------
+function clearFilters() {
+  filters = {
+    text: '', regions: new Set(), tiers: new Set(), classes: new Set(),
+    specialisms: new Set(), confidences: new Set(),
+    hideStale: false, hideVeryStale: true, movedOnly: false,
+  };
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    if (cb.id === 'hideVeryStale') cb.checked = true;
+    else cb.checked = false;
+  });
+  document.getElementById('filterSearch').value = '';
+  render();
+}
+
+// =============================================================================
+// FILTER + RENDER
+// =============================================================================
 function getFiltered() {
   if (activeTab === 'newsrooms') {
     return allNewsrooms.filter(n => {
-      if (filters.text && !(`${n.outlet_name} ${n.role} ${n.email}`.toLowerCase().includes(filters.text))) return false;
-      if (filters.region && n.region !== filters.region) return false;
+      if (filters.text && !`${n.outlet_name} ${n.role} ${n.email}`.toLowerCase().includes(filters.text)) return false;
       if (filters.tiers.size && !filters.tiers.has(n.tier)) return false;
+      if (filters.regions.size && !regionMatches(n)) return false;
       return true;
     });
   }
@@ -750,22 +1266,35 @@ function getFiltered() {
       const blob = `${j.full_name} ${j.outlet_name} ${j.primary_email || ''} ${j.specialisms || ''} ${j.region}`.toLowerCase();
       if (!blob.includes(filters.text)) return false;
     }
-    if (filters.region && j.region !== filters.region) return false;
+    if (filters.regions.size && !regionMatches(j)) return false;
     if (filters.tiers.size && !filters.tiers.has(j.tier)) return false;
-    if (filters.classifications.size && !filters.classifications.has(j.classification)) return false;
-    if (filters.specialism && !j.specialisms_arr.includes(filters.specialism)) return false;
+    if (filters.classes.size && !filters.classes.has(j.classification)) return false;
+    if (filters.specialisms.size && !j.specialisms_arr.some(s => filters.specialisms.has(s))) return false;
     if (filters.confidences.size && !filters.confidences.has(j.primary_confidence)) return false;
     if (filters.hideStale && j.days_since_last_byline != null && j.days_since_last_byline > 90) return false;
     if (filters.hideVeryStale && j.days_since_last_byline != null && j.days_since_last_byline > 180) return false;
-    if (filters.showMovedOnly && !j.moved_from_outlet) return false;
+    if (filters.movedOnly && !j.moved_from_outlet) return false;
     return true;
   });
 }
 
+function regionMatches(item) {
+  // OR logic: matches if any selected top OR sub matches
+  for (const sel of filters.regions) {
+    if (sel.startsWith('top:')) {
+      const top = sel.slice(4);
+      if (item.region_top === top) return true;
+    } else if (sel.startsWith('sub:')) {
+      const ref = sel.slice(4);
+      const [top, sub] = ref.split('|', 2);
+      if (item.region_top === top && item.region_sub === sub) return true;
+    }
+  }
+  return false;
+}
+
 function render() {
   const data = getFiltered();
-  
-  // Sort
   data.sort((a, b) => {
     const av = a[sortBy.col]; const bv = b[sortBy.col];
     if (av == null && bv == null) return 0;
@@ -774,18 +1303,30 @@ function render() {
     const cmp = (typeof av === 'number') ? (av - bv) : String(av).localeCompare(String(bv));
     return sortBy.dir === 'desc' ? -cmp : cmp;
   });
-  
-  document.getElementById('results-n').textContent = data.length.toLocaleString();
-  document.getElementById('results-plural').textContent = data.length === 1 ? '' : 's';
-  
-  const c = document.getElementById('table-container');
+
+  document.getElementById('resultsCount').textContent = data.length.toLocaleString();
+  document.getElementById('resultsCountSub').textContent =
+    summariseFilters(data.length);
+
+  const c = document.getElementById('tblContainer');
   if (data.length === 0) {
-    c.innerHTML = '<div class="empty"><p>No matches. Try clearing some filters.</p></div>';
+    c.innerHTML = `<div class="empty"><h2>No matches</h2><p>Try clearing some filters.</p></div>`;
     return;
   }
-  
+
   if (activeTab === 'journalists') renderJournalists(data, c);
   else renderNewsrooms(data, c);
+}
+
+function summariseFilters(n) {
+  const parts = [];
+  if (filters.regions.size) parts.push(`${filters.regions.size} region${filters.regions.size > 1 ? 's' : ''}`);
+  if (filters.tiers.size) parts.push(`${filters.tiers.size} tier${filters.tiers.size > 1 ? 's' : ''}`);
+  if (filters.classes.size) parts.push(`${filters.classes.size} type${filters.classes.size > 1 ? 's' : ''}`);
+  if (filters.specialisms.size) parts.push(`${filters.specialisms.size} specialism${filters.specialisms.size > 1 ? 's' : ''}`);
+  if (filters.confidences.size) parts.push(`${filters.confidences.size} confidence level${filters.confidences.size > 1 ? 's' : ''}`);
+  if (filters.text) parts.push(`text "${filters.text}"`);
+  return parts.length ? 'Filtered by ' + parts.join(' · ') : 'No filters applied';
 }
 
 function renderJournalists(data, container) {
@@ -794,39 +1335,38 @@ function renderJournalists(data, container) {
     { key: 'region', label: 'Region' },
     { key: 'classification', label: 'Type' },
     { key: 'specialisms', label: 'Specialisms' },
-    { key: 'primary_email', label: 'Email (best guess)' },
+    { key: 'primary_email', label: 'Email' },
     { key: 'days_since_last_byline', label: 'Last byline' },
     { key: 'total_bylines', label: 'Bylines' },
   ];
-  
+
   let html = '<table><thead><tr>';
-  headers.forEach(h => {
-    const active = sortBy.col === h.key ? 'active' : '';
-    const arrow = sortBy.col === h.key ? (sortBy.dir === 'desc' ? '▼' : '▲') : '↕';
-    html += `<th class="${active}" data-sort="${h.key}">${h.label}<span class="sort-arrow">${arrow}</span></th>`;
-  });
+  for (const h of headers) {
+    const act = sortBy.col === h.key ? `sa ${sortBy.dir === 'desc' ? 'dsc' : 'asc'}` : '';
+    html += `<th class="${act}" data-sort="${h.key}">${h.label}</th>`;
+  }
   html += '</tr></thead><tbody>';
-  
-  data.forEach(j => {
+
+  for (const j of data) {
     html += '<tr>';
     html += `<td class="col-name">${esc(j.full_name)}<small>${esc(j.outlet_name)}</small></td>`;
     html += `<td class="col-region">${esc(j.region || '—')}</td>`;
-    html += `<td><span class="classification-tag cls-${j.classification || 'unclear'}">${(j.classification || 'unclear').replace('_', ' ')}</span>${recencyBadge(j)}${movedBadge(j)}</td>`;
-    html += `<td>${j.specialisms_arr.slice(0, 4).map(s => `<span class="specialism-tag">${esc(s)}</span>`).join('')}</td>`;
+    html += `<td><span class="pill pill-cls cls-${j.classification || 'unclear'}">${esc((j.classification || 'unclear').replace('_', ' '))}</span>${recencyPill(j)}${movedPill(j)}</td>`;
+    html += `<td>${specTags(j.specialisms_arr)}</td>`;
     if (j.primary_email) {
-      html += `<td class="col-email"><a href="mailto:${esc(j.primary_email)}">${esc(j.primary_email)}</a><span class="confidence-pill conf-${j.primary_confidence}">${j.primary_confidence.replace('_', ' ')}</span></td>`;
+      html += `<td class="col-email"><a href="mailto:${esc(j.primary_email)}">${esc(j.primary_email)}</a><span class="pill conf-pill conf-${j.primary_confidence}">${esc((j.primary_confidence || '').replace('_', ' '))}</span></td>`;
     } else {
-      html += `<td class="col-email" style="color:var(--muted-soft)">—</td>`;
+      html += `<td class="col-email" style="color:var(--txl)">—</td>`;
     }
     const dsb = j.days_since_last_byline;
     const dsbDisplay = dsb == null ? '—' : (dsb === 0 ? 'today' : `${dsb}d ago`);
-    html += `<td class="col-bylines">${dsbDisplay}</td>`;
+    html += `<td class="col-recency">${esc(dsbDisplay)}</td>`;
     html += `<td class="col-bylines">${j.total_bylines}</td>`;
     html += '</tr>';
-  });
+  }
   html += '</tbody></table>';
   container.innerHTML = html;
-  
+
   container.querySelectorAll('th[data-sort]').forEach(th => {
     th.addEventListener('click', () => {
       const col = th.dataset.sort;
@@ -839,56 +1379,60 @@ function renderJournalists(data, container) {
 
 function renderNewsrooms(data, container) {
   let html = '<table><thead><tr><th>Outlet</th><th>Role</th><th>Email</th><th>Region</th></tr></thead><tbody>';
-  data.forEach(n => {
+  for (const n of data) {
     html += `<tr>`;
     html += `<td class="col-name">${esc(n.outlet_name)}</td>`;
-    html += `<td>${esc(n.role.replace('_', ' '))}</td>`;
+    html += `<td>${esc((n.role || '').replace('_', ' '))}</td>`;
     html += `<td class="col-email"><a href="mailto:${esc(n.email)}">${esc(n.email)}</a></td>`;
-    html += `<td class="col-region">${esc(n.region)}</td>`;
+    html += `<td class="col-region">${esc(n.region || '—')}</td>`;
     html += `</tr>`;
-  });
+  }
   html += '</tbody></table>';
   container.innerHTML = html;
 }
 
-function recencyBadge(j) {
+function recencyPill(j) {
   const d = j.days_since_last_byline;
   if (d == null) return '';
-  if (d <= 14) return `<span class="recency-badge recency-fresh">${d}d</span>`;
-  if (d <= 90) return `<span class="recency-badge recency-recent">${d}d</span>`;
-  if (d <= 180) return `<span class="recency-badge recency-stale">stale ${d}d</span>`;
-  return `<span class="recency-badge recency-very-stale">very stale ${d}d</span>`;
+  if (d <= 14) return `<span class="pill recency-pill recency-fresh">${d}d</span>`;
+  if (d <= 90) return `<span class="pill recency-pill recency-recent">${d}d</span>`;
+  if (d <= 180) return `<span class="pill recency-pill recency-stale">stale ${d}d</span>`;
+  return `<span class="pill recency-pill recency-very-stale">very stale ${d}d</span>`;
 }
 
-function movedBadge(j) {
+function movedPill(j) {
   if (!j.moved_from_outlet) return '';
-  return `<span class="moved-badge" title="Last 30 days mostly at ${esc(j.outlet_name)}, prior 30-180 days mostly at ${esc(j.moved_from_outlet)}">moved?</span>`;
-}
-  function esc(s) {
-  if (s == null) return '';
-  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+  return `<span class="pill moved-pill" title="Recently appeared at ${esc(j.outlet_name)}, previously mostly at ${esc(j.moved_from_outlet)}">moved?</span>`;
 }
 
-// ---------- Export ----------
+function specTags(arr) {
+  if (!arr || !arr.length) return '<span style="color:var(--txl);font-size:0.8rem">—</span>';
+  return '<div class="spec-tags">' +
+    arr.slice(0, 4).map((s, i) =>
+      `<span class="spec-tag${i === 0 ? ' lead' : ''}">${esc(s)}</span>`
+    ).join('') + '</div>';
+}
+
+function esc(s) {
+  if (s == null) return '';
+  return String(s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'})[c]);
+}
+
+// =============================================================================
+// EXPORT
+// =============================================================================
 function exportCSV() {
   const data = getFiltered();
   if (data.length === 0) { alert('No data to export.'); return; }
-  
-  // Outlook-friendly column order
+
   const headers = ['First Name', 'Last Name', 'E-mail Address', 'Company', 'Job Title', 'Categories', 'Notes'];
   const rows = data.map(j => {
     if (activeTab === 'newsrooms') {
-      return [
-        '', '',
-        j.email,
-        j.outlet_name,
-        j.role,
-        'UK Press; Newsroom',
-        `Region: ${j.region}; Confidence: ${j.confidence}`
-      ];
+      return ['', '', j.email, j.outlet_name, j.role, 'UK Press; Newsroom',
+              `Region: ${j.region}; Confidence: ${j.confidence}`];
     }
     const specs = j.specialisms_arr.join('; ');
-    const cats = ['UK Press', j.classification?.replace('_', ' ') || '', j.tier || ''].filter(Boolean).join('; ');
+    const cats = ['UK Press', (j.classification || '').replace('_', ' '), j.tier || ''].filter(Boolean).join('; ');
     const notes = [
       `Region: ${j.region || '—'}`,
       `Bylines tracked: ${j.total_bylines}`,
@@ -903,35 +1447,34 @@ function exportCSV() {
       cats, notes
     ];
   });
-  
-  const csv = [headers, ...rows].map(r => 
+
+  const csv = [headers, ...rows].map(r =>
     r.map(cell => {
       const s = String(cell == null ? '' : cell);
       return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
     }).join(',')
   ).join('\r\n');
-  
-  // Add UTF-8 BOM so Excel/Outlook reads accents correctly
+
   const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `journofinder-${activeTab}-${new Date().toISOString().slice(0,10)}.csv`;
+  a.download = `journofinder-${activeTab}-${new Date().toISOString().slice(0, 10)}.csv`;
   a.click();
   URL.revokeObjectURL(url);
 }
 
 function copyEmails() {
   const data = getFiltered();
-  const emails = activeTab === 'newsrooms' 
+  const emails = activeTab === 'newsrooms'
     ? data.map(n => n.email).filter(Boolean)
     : data.map(j => j.primary_email).filter(Boolean);
   if (emails.length === 0) { alert('No emails to copy.'); return; }
   navigator.clipboard.writeText(emails.join('; ')).then(() => {
-    const btn = document.getElementById('copy-emails');
+    const btn = document.getElementById('btnCopy');
     const orig = btn.textContent;
     btn.textContent = `Copied ${emails.length}!`;
-    setTimeout(() => btn.textContent = orig, 1500);
+    setTimeout(() => btn.textContent = orig, 1600);
   });
 }
 
