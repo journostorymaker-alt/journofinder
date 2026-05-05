@@ -8,208 +8,162 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
+  /* GBF house palette — green is for emphasis, not body text */
   --green: #97C221;
-  --gd: #7aa018;
+  --gd: #7aa018;       /* used sparingly: hover states, accents */
   --gpale: #f0f7e0;
   --navy: #131820;
   --white: #fff;
   --off: #f8f9f5;
   --grey: #eef0ea;
+  --grey2: #e3e6dd;
   --bdr: #dde0d6;
-  --txt: #1a1f14;
-  --txm: #4a5440;
-  --txl: #7a8870;
+  --txt: #1a1f14;      /* primary body text */
+  --txm: #4a5440;      /* secondary body text */
+  --txl: #7a8870;      /* labels, captions */
   --fh: 'Arial Black', Arial, sans-serif;
   --fb: Arial, sans-serif;
   --fmono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --rust: #c0392b;
-  --amber: #d97706;
+  --amber: #b76e00;
 }
 html { scroll-behavior: smooth; }
 body {
   font-family: var(--fb);
   background: var(--off);
   color: var(--txt);
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.5;
   min-height: 100vh;
 }
 
-/* ============================================
-   HEADER
-   ============================================ */
+/* ========== HEADER ========== */
 .hdr {
   background: var(--navy);
   border-bottom: 4px solid var(--green);
-  padding: 1.4rem 2rem;
+  padding: 1.2rem 1.6rem;
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.4rem;
 }
-.hdr-brand {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-shrink: 0;
-}
+.hdr-brand { display: flex; align-items: center; gap: 0.9rem; flex-shrink: 0; }
 .hdr-mark {
-  width: 56px;
-  height: 56px;
+  width: 50px; height: 50px;
   background: var(--green);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--fh);
-  font-weight: 900;
-  font-size: 1.8rem;
-  color: var(--navy);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--fh); font-weight: 900;
+  font-size: 1.6rem; color: var(--navy);
   letter-spacing: -0.05em;
-  border-radius: 6px;
+  border-radius: 5px;
 }
 .hdr-title {
   font-family: var(--fh);
-  font-size: 1.05rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  color: var(--white);
-  letter-spacing: 0.04em;
-  line-height: 1;
+  font-size: 1rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--white); line-height: 1;
 }
 .hdr-org {
-  font-size: 0.74rem;
+  font-size: 0.7rem;
   color: rgba(255,255,255,0.4);
   margin-top: 0.3rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.1em; text-transform: uppercase;
 }
 .hdr-div {
-  width: 1px;
-  height: 50px;
+  width: 1px; height: 44px;
   background: rgba(255,255,255,0.12);
   flex-shrink: 0;
 }
 .hdr-meta {
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   color: rgba(255,255,255,0.45);
   line-height: 1.5;
 }
 .hdr-meta strong {
-  color: var(--green);
+  color: var(--white);  /* was green — now white for readability */
   display: block;
-  font-size: 0.86rem;
-  margin-bottom: 0.15rem;
-  letter-spacing: 0.02em;
+  font-size: 0.84rem;
+  margin-bottom: 0.1rem;
 }
 .hdr-spacer { flex: 1; }
 .hdr-time {
-  font-size: 0.74rem;
+  font-size: 0.7rem;
   color: rgba(255,255,255,0.5);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0.06em; text-transform: uppercase;
 }
 
-/* ============================================
-   HERO + STATS
-   ============================================ */
+/* ========== HERO ========== */
 .hero {
   background: var(--white);
   border-bottom: 1px solid var(--bdr);
-  padding: 2.5rem 2rem 2rem;
+  padding: 2.2rem 1.6rem 1.8rem;
 }
-.hero-in {
-  max-width: 1400px;
-  margin: 0 auto;
-}
+.hero-in { max-width: 1500px; margin: 0 auto; }
 .eyebrow {
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gd);
-  margin-bottom: 0.85rem;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--txl);
+  margin-bottom: 0.8rem;
+  display: flex; align-items: center; gap: 0.55rem;
 }
 .eyebrow::before {
   content: '';
-  width: 30px;
-  height: 3px;
+  width: 28px; height: 3px;
   background: var(--green);
   border-radius: 2px;
-  display: inline-block;
 }
 h1 {
   font-family: var(--fh);
-  font-size: clamp(2.4rem, 5.5vw, 4.6rem);
+  font-size: clamp(2.2rem, 5vw, 4rem);
   font-weight: 900;
-  line-height: 0.94;
+  line-height: 0.96;
   letter-spacing: -0.01em;
   text-transform: uppercase;
   color: var(--navy);
-  margin-bottom: 1.1rem;
+  margin-bottom: 0.9rem;
 }
 h1 em { font-style: normal; color: var(--gd); }
 .lede {
-  font-size: 1rem;
-  line-height: 1.65;
+  font-size: 0.95rem; line-height: 1.6;
   color: var(--txm);
-  max-width: 680px;
-  margin-bottom: 1.8rem;
+  max-width: 660px;
+  margin-bottom: 1.5rem;
 }
 .hstats {
-  display: flex;
-  flex-wrap: wrap;
+  display: flex; flex-wrap: wrap;
   border: 1.5px solid var(--bdr);
-  border-radius: 10px;
-  overflow: hidden;
+  border-radius: 10px; overflow: hidden;
   background: var(--off);
 }
 .hstat {
-  padding: 1.1rem 1.5rem;
+  padding: 0.95rem 1.3rem;
   border-right: 1.5px solid var(--bdr);
-  flex: 1;
-  min-width: 140px;
+  flex: 1; min-width: 140px;
 }
 .hstat:last-child { border-right: none; }
 .hsn {
   font-family: var(--fh);
-  font-size: 2.3rem;
-  font-weight: 900;
-  line-height: 1;
-  color: var(--navy);
+  font-size: 2rem; font-weight: 900;
+  line-height: 1; color: var(--navy);
 }
-.hsn em { font-style: normal; color: var(--gd); }
 .hsl {
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
+  font-size: 0.68rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.09em;
   color: var(--txl);
   margin-top: 0.3rem;
 }
 
-/* ============================================
-   TABS
-   ============================================ */
+/* ========== TABS ========== */
 .tabs-bar {
   background: var(--white);
   border-bottom: 2px solid var(--bdr);
-  padding: 0 2rem;
+  padding: 0 1.6rem;
 }
-.tabs-in {
-  max-width: 1400px;
-  margin: 0 auto;
-  display: flex;
-  gap: 0;
-}
+.tabs-in { max-width: 1500px; margin: 0 auto; display: flex; gap: 0; }
 .tab {
   font-family: var(--fb);
-  font-size: 0.86rem;
-  font-weight: 700;
-  padding: 0.85rem 1.4rem;
-  border: none;
-  background: none;
+  font-size: 0.82rem; font-weight: 700;
+  padding: 0.75rem 1.3rem;
+  border: none; background: none;
   cursor: pointer;
   color: var(--txl);
   border-bottom: 3px solid transparent;
@@ -219,68 +173,58 @@ h1 em { font-style: normal; color: var(--gd); }
   letter-spacing: 0.04em;
 }
 .tab:hover { color: var(--txt); }
-.tab.on { color: var(--gd); border-bottom-color: var(--green); }
+.tab.on { color: var(--navy); border-bottom-color: var(--green); }
 .tab .tab-count {
   display: inline-block;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   background: var(--grey);
   color: var(--txm);
-  padding: 0.1rem 0.5rem;
+  padding: 0.08rem 0.45rem;
   border-radius: 10px;
   margin-left: 0.4rem;
   font-weight: 700;
 }
-.tab.on .tab-count { background: var(--gpale); color: var(--gd); }
+.tab.on .tab-count { background: var(--navy); color: var(--green); }
 
-/* ============================================
-   LAYOUT
-   ============================================ */
+/* ========== LAYOUT ========== */
 .layout {
-  max-width: 1400px;
+  max-width: 1500px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1.4rem 1.6rem;
   display: grid;
-  grid-template-columns: 290px 1fr;
-  gap: 2rem;
+  grid-template-columns: 270px 1fr;
+  gap: 1.4rem;
   align-items: start;
 }
 .sidebar {
-  position: sticky;
-  top: 1rem;
+  position: sticky; top: 1rem;
   background: var(--white);
   border: 1.5px solid var(--bdr);
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
   max-height: calc(100vh - 2rem);
-  display: flex;
-  flex-direction: column;
+  display: flex; flex-direction: column;
 }
 .sidebar-head {
-  padding: 1rem 1.2rem;
+  padding: 0.85rem 1rem;
   background: var(--navy);
   color: var(--white);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between;
   border-bottom: 3px solid var(--green);
 }
 .sidebar-title {
   font-family: var(--fh);
-  font-size: 0.92rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-size: 0.85rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.05em;
 }
 .btn-clear {
   font-family: var(--fb);
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 0.3rem 0.7rem;
+  font-size: 0.68rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 0.25rem 0.6rem;
   background: transparent;
-  color: var(--green);
-  border: 1.5px solid rgba(151,194,33,0.3);
+  color: rgba(255,255,255,0.65);
+  border: 1.5px solid rgba(255,255,255,0.2);
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.15s;
@@ -291,54 +235,45 @@ h1 em { font-style: normal; color: var(--gd); }
   border-color: var(--green);
 }
 .sidebar-body {
-  padding: 1.1rem 1.2rem;
+  padding: 0.95rem 1rem;
   overflow-y: auto;
   flex: 1;
 }
 .sidebar-body::-webkit-scrollbar { width: 6px; }
 .sidebar-body::-webkit-scrollbar-track { background: var(--off); }
 .sidebar-body::-webkit-scrollbar-thumb { background: var(--bdr); border-radius: 3px; }
-.sidebar-body::-webkit-scrollbar-thumb:hover { background: var(--green); }
+.sidebar-body::-webkit-scrollbar-thumb:hover { background: var(--txl); }
 
-.fgroup { margin-bottom: 1.4rem; }
+.fgroup { margin-bottom: 1.2rem; }
 .fgroup:last-child { margin-bottom: 0.4rem; }
 .flabel {
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.11em;
+  font-size: 0.66rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.11em;
   color: var(--txl);
-  margin-bottom: 0.6rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  display: flex; align-items: center; justify-content: space-between;
 }
-.flabel-actions {
-  display: flex;
-  gap: 0.4rem;
-}
+.flabel-actions { display: flex; gap: 0.4rem; }
 .flabel-mini {
-  font-size: 0.64rem;
-  background: none;
-  border: none;
-  color: var(--gd);
+  font-size: 0.62rem;
+  background: none; border: none;
+  color: var(--txm);  /* was green — now grey */
   cursor: pointer;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  text-transform: uppercase; letter-spacing: 0.08em;
   padding: 0;
 }
 .flabel-mini:hover { color: var(--navy); text-decoration: underline; }
 
 input[type="text"] {
   width: 100%;
-  padding: 0.55rem 0.7rem;
+  padding: 0.5rem 0.65rem;
   border: 1.5px solid var(--bdr);
   background: var(--white);
   font-family: var(--fb);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--txt);
-  border-radius: 6px;
+  border-radius: 5px;
   transition: border-color 0.15s;
 }
 input[type="text"]:focus {
@@ -346,14 +281,13 @@ input[type="text"]:focus {
   border-color: var(--green);
 }
 
-.checks { display: flex; flex-direction: column; gap: 0.15rem; }
+.checks { display: flex; flex-direction: column; gap: 0.05rem; }
 .checks label {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.84rem;
+  display: flex; align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
   cursor: pointer;
-  padding: 0.28rem 0.4rem;
+  padding: 0.22rem 0.35rem;
   border-radius: 4px;
   transition: background 0.1s;
   color: var(--txt);
@@ -361,67 +295,54 @@ input[type="text"]:focus {
 .checks label:hover { background: var(--gpale); }
 .checks input[type="checkbox"] {
   margin: 0;
-  width: 14px;
-  height: 14px;
+  width: 13px; height: 13px;
   accent-color: var(--green);
   cursor: pointer;
+  flex-shrink: 0;
 }
 .cb-count {
   margin-left: auto;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--txl);
   font-weight: 600;
   font-family: var(--fmono);
 }
 
 /* Hierarchical region list */
-.region-tree { display: flex; flex-direction: column; gap: 0.1rem; }
+.region-tree { display: flex; flex-direction: column; gap: 0.05rem; }
 .region-top {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.32rem 0.4rem;
-  cursor: pointer;
-  border-radius: 4px;
+  display: flex; align-items: center; gap: 0.35rem;
+  padding: 0.28rem 0.35rem;
+  cursor: pointer; border-radius: 4px;
 }
 .region-top:hover { background: var(--gpale); }
 .region-toggle {
-  width: 14px;
-  text-align: center;
-  font-family: var(--fmono);
-  font-size: 0.7rem;
+  width: 14px; text-align: center;
+  font-family: var(--fmono); font-size: 0.78rem;
   color: var(--txl);
-  flex-shrink: 0;
-  user-select: none;
+  flex-shrink: 0; user-select: none;
 }
 .region-top label {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex: 1;
-  cursor: pointer;
-  font-size: 0.84rem;
-  font-weight: 600;
+  display: flex; align-items: center; gap: 0.45rem;
+  flex: 1; cursor: pointer;
+  font-size: 0.82rem; font-weight: 600;
   color: var(--txt);
-  margin: 0;
-  padding: 0;
+  margin: 0; padding: 0;
 }
 .region-top label input { accent-color: var(--green); }
 .region-children {
   display: none;
-  margin-left: 1.5rem;
+  margin-left: 1.4rem;
   border-left: 1.5px solid var(--bdr);
-  padding-left: 0.5rem;
+  padding-left: 0.45rem;
   margin-top: 0.1rem;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.15rem;
 }
-.region-children.expanded { display: flex; flex-direction: column; gap: 0.1rem; }
+.region-children.expanded { display: flex; flex-direction: column; gap: 0.05rem; }
 .region-children label {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.78rem;
-  padding: 0.2rem 0.4rem;
+  display: flex; align-items: center; gap: 0.45rem;
+  font-size: 0.76rem;
+  padding: 0.18rem 0.35rem;
   border-radius: 4px;
   cursor: pointer;
   color: var(--txm);
@@ -429,57 +350,45 @@ input[type="text"]:focus {
 .region-children label:hover { background: var(--gpale); }
 .region-children input { accent-color: var(--green); }
 
-/* ============================================
-   MAIN CONTENT
-   ============================================ */
+/* ========== MAIN ========== */
 .main {
   background: var(--white);
   border: 1.5px solid var(--bdr);
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
   min-width: 0;
 }
 .toolbar {
-  padding: 1rem 1.4rem;
+  padding: 0.85rem 1.2rem;
   border-bottom: 1.5px solid var(--bdr);
   background: var(--off);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 0.85rem;
 }
 .results-count {
   font-family: var(--fh);
-  font-size: 1.5rem;
-  font-weight: 900;
+  font-size: 1.3rem; font-weight: 900;
   color: var(--navy);
+  line-height: 1;
 }
 .results-count em {
   font-style: normal;
   color: var(--gd);
 }
 .results-count-sub {
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   color: var(--txl);
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-top: 0.15rem;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  margin-top: 0.25rem;
 }
-.actions {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
+.actions { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 .btn {
   font-family: var(--fb);
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 0.55rem 1rem;
-  border-radius: 6px;
+  font-size: 0.74rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  padding: 0.5rem 0.9rem;
+  border-radius: 5px;
   cursor: pointer;
   transition: all 0.15s;
   border: 1.5px solid;
@@ -506,184 +415,213 @@ input[type="text"]:focus {
   border-color: var(--navy);
 }
 
-/* ============================================
-   TABLE
-   ============================================ */
+/* ========== TABLE ==========
+   Layout-fixed with explicit column widths so nothing overflows.
+   Specialisms are now inline with name as a small lead tag.
+*/
 .tbl-scroll {
   overflow-x: auto;
-  max-height: calc(100vh - 100px);
+  max-height: calc(100vh - 60px);
   overflow-y: auto;
 }
 .tbl-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
 .tbl-scroll::-webkit-scrollbar-track { background: var(--off); }
 .tbl-scroll::-webkit-scrollbar-thumb { background: var(--bdr); border-radius: 4px; }
-.tbl-scroll::-webkit-scrollbar-thumb:hover { background: var(--green); }
+.tbl-scroll::-webkit-scrollbar-thumb:hover { background: var(--txl); }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: auto;
+  table-layout: fixed;
 }
+
+/* Column widths — sized to fit a 1500px container without horizontal scroll */
+.col-name    { width: 27%; }
+.col-region  { width: 14%; }
+.col-type    { width: 11%; }
+.col-email   { width: 28%; }
+.col-last    { width: 8%; text-align: right; }
+.col-bylines { width: 7%; text-align: right; }
+
 thead th {
-  position: sticky;
-  top: 0;
-  z-index: 5;
+  position: sticky; top: 0; z-index: 5;
   background: var(--off);
   border-bottom: 2px solid var(--bdr);
-  padding: 0.8rem 1rem;
+  padding: 0.65rem 0.85rem;
   font-family: var(--fb);
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  font-size: 0.66rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
   color: var(--txl);
   text-align: left;
   cursor: pointer;
   user-select: none;
   white-space: nowrap;
 }
+thead th.right { text-align: right; }
 thead th:hover { color: var(--txt); }
-thead th.sa { color: var(--gd); }
+thead th.sa { color: var(--navy); }
 thead th.sa.asc::after { content: ' ↑'; }
 thead th.sa.dsc::after { content: ' ↓'; }
+
 tbody tr {
   border-bottom: 1px solid var(--grey);
   transition: background 0.1s;
 }
 tbody tr:last-child { border-bottom: none; }
-tbody tr:hover { background: #f5faea; }
+tbody tr:hover { background: var(--gpale); }
 tbody td {
-  padding: 0.85rem 1rem;
+  padding: 0.6rem 0.85rem;
   vertical-align: middle;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.col-name {
+.cell-name {
   font-family: var(--fh);
-  font-size: 1rem;
-  font-weight: 800;
+  font-size: 0.95rem; font-weight: 800;
   color: var(--navy);
   line-height: 1.15;
-  min-width: 160px;
+  display: flex; align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
-.col-name small {
+.cell-name-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cell-name small {
   display: block;
   font-family: var(--fb);
-  font-size: 0.78rem;
-  font-weight: 400;
+  font-size: 0.74rem; font-weight: 400;
   color: var(--txl);
-  margin-top: 0.2rem;
+  margin-top: 0.18rem;
   letter-spacing: 0.01em;
   text-transform: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.col-region {
-  font-size: 0.82rem;
+.lead-spec {
+  display: inline-block;
+  font-size: 0.66rem;
+  font-weight: 600;
+  background: var(--grey);
   color: var(--txm);
-  min-width: 110px;
+  padding: 0.12rem 0.5rem;
+  border-radius: 9px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-family: var(--fb);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
-.col-email {
-  font-family: var(--fmono);
+.cell-region {
   font-size: 0.8rem;
-  color: var(--navy);
-  word-break: break-all;
-  min-width: 220px;
+  color: var(--txm);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.col-email a { color: var(--gd); text-decoration: none; }
-.col-email a:hover { color: var(--navy); text-decoration: underline; }
-.col-bylines {
-  font-family: var(--fh);
-  font-size: 0.95rem;
-  font-weight: 900;
-  color: var(--navy);
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-.col-recency {
-  text-align: right;
+.cell-email {
   font-family: var(--fmono);
   font-size: 0.78rem;
+  color: var(--navy);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cell-email a { color: var(--navy); text-decoration: none; }
+.cell-email a:hover { color: var(--gd); text-decoration: underline; }
+.cell-bylines {
+  font-family: var(--fh);
+  font-size: 0.92rem; font-weight: 900;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+.cell-last {
+  font-family: var(--fmono);
+  font-size: 0.76rem;
   color: var(--txm);
   white-space: nowrap;
 }
 
-/* Pills */
+/* ========== PILLS ========== */
 .pill {
   display: inline-block;
   font-size: 0.66rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 0.2rem 0.55rem;
-  border-radius: 12px;
+  letter-spacing: 0.04em;
+  padding: 0.18rem 0.5rem;
+  border-radius: 11px;
   white-space: nowrap;
   font-family: var(--fb);
 }
 .pill-cls { font-family: var(--fh); font-weight: 800; }
-.cls-local_staff    { background: var(--green); color: var(--navy); }
-.cls-regional_staff { background: #c5e074; color: var(--navy); }
-.cls-network_reporter { background: #fde88a; color: var(--navy); }
-.cls-national       { background: var(--navy); color: var(--green); }
-.cls-unclear        { background: var(--grey); color: var(--txl); }
 
-.conf-pill { margin-left: 0.4rem; }
+/* Type pills — solid colours, white/navy text for legibility */
+.cls-local_staff      { background: var(--green); color: var(--navy); }
+.cls-regional_staff   { background: #c5e074; color: var(--navy); }
+.cls-network_reporter { background: var(--amber); color: var(--white); }
+.cls-national         { background: var(--navy); color: var(--green); }
+.cls-unclear          { background: var(--grey); color: var(--txl); }
+
+/* Confidence pills — solid colours, no green-on-white */
+.conf-pill { font-size: 0.6rem; padding: 0.13rem 0.42rem; }
 .conf-verified     { background: var(--gd); color: var(--white); }
-.conf-pattern_high { background: var(--gpale); color: var(--gd); border: 1px solid var(--green); }
-.conf-pattern_med  { background: #fff4e0; color: var(--amber); border: 1px solid var(--amber); }
-.conf-guess        { background: var(--grey); color: var(--txm); }
+.conf-pattern_high { background: var(--grey); color: var(--txm); }
+.conf-pattern_med  { background: #fff0d4; color: var(--amber); }
+.conf-guess        { background: var(--grey2); color: var(--txl); }
 
-.recency-pill { margin-left: 0.4rem; }
-.recency-fresh     { background: var(--green); color: var(--navy); }
-.recency-recent    { background: var(--grey); color: var(--txm); }
-.recency-stale     { background: #fde6c8; color: var(--amber); }
-.recency-very-stale { background: #f5d4d4; color: var(--rust); }
-
-.moved-pill {
+/* Stale warning pill — only shown for >90 day records, fresh ones get nothing */
+.stale-pill {
+  background: var(--amber);
+  color: var(--white);
+  font-size: 0.6rem;
   margin-left: 0.4rem;
+}
+.very-stale-pill {
   background: var(--rust);
   color: var(--white);
+  font-size: 0.6rem;
+  margin-left: 0.4rem;
 }
 
-.spec-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem;
-  max-width: 240px;
-}
-.spec-tag {
-  font-size: 0.7rem;
-  padding: 0.18rem 0.5rem;
-  background: var(--off);
-  border: 1px solid var(--bdr);
-  border-radius: 10px;
-  color: var(--txm);
-  font-weight: 600;
-}
-.spec-tag.lead {
-  background: var(--navy);
-  color: var(--green);
-  border-color: var(--navy);
+/* Moved pill */
+.moved-pill {
+  background: var(--rust);
+  color: var(--white);
+  font-size: 0.6rem;
+  margin-left: 0.4rem;
 }
 
 /* States */
 .empty, .loading {
-  padding: 4rem 2rem;
+  padding: 3rem 2rem;
   text-align: center;
   color: var(--txl);
 }
 .empty h2 {
   font-family: var(--fh);
-  font-size: 1.4rem;
-  font-weight: 800;
+  font-size: 1.2rem; font-weight: 800;
   text-transform: uppercase;
   color: var(--navy);
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.6rem;
 }
-.empty p { max-width: 540px; margin: 0 auto 0.8rem; line-height: 1.6; font-size: 0.94rem; }
+.empty p {
+  max-width: 520px;
+  margin: 0 auto 0.7rem;
+  line-height: 1.55;
+  font-size: 0.88rem;
+}
 .empty code {
   font-family: var(--fmono);
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   background: var(--off);
   border: 1px solid var(--bdr);
-  padding: 0.15rem 0.4rem;
+  padding: 0.12rem 0.4rem;
   border-radius: 4px;
   color: var(--navy);
 }
@@ -691,33 +629,33 @@ tbody td {
 /* Footer */
 footer {
   background: var(--navy);
-  padding: 1.5rem 2rem;
+  padding: 1.3rem 1.6rem;
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 .ft-text {
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   color: rgba(255,255,255,0.4);
   line-height: 1.6;
 }
 .ft-text strong { color: rgba(255,255,255,0.65); }
+.ft-text a { color: rgba(255,255,255,0.55); }
 
 /* Mobile */
-@media (max-width: 1000px) {
+@media (max-width: 1100px) {
   .layout {
     grid-template-columns: 1fr;
     padding: 1rem;
     gap: 1rem;
   }
-  .sidebar {
-    position: static;
-    max-height: none;
-  }
-  .hdr { padding: 1rem 1.2rem; flex-wrap: wrap; }
+  .sidebar { position: static; max-height: none; }
+  .hdr { padding: 0.9rem 1rem; flex-wrap: wrap; }
   .hdr-meta, .hdr-div { display: none; }
-  .hero { padding: 1.6rem 1.2rem 1.4rem; }
+  .hero { padding: 1.4rem 1rem 1.2rem; }
   .tabs-bar { padding: 0 1rem; }
-  thead th, tbody td { padding: 0.6rem 0.7rem; }
+  thead th, tbody td { padding: 0.5rem 0.6rem; }
+  /* On mobile let the table scroll horizontally rather than squashing columns */
+  table { table-layout: auto; min-width: 700px; }
 }
 </style>
 </head>
@@ -852,7 +790,7 @@ footer {
 <footer>
   <div class="ft-text">
     <strong>JournoFinder</strong> &middot; Built for press &amp; media research<br>
-    Data scraped from publicly published bylines &middot; <a style="color:rgba(255,255,255,0.55)" href="https://github.com/journostorymaker-alt/journofinder">View source</a>
+    Data scraped from publicly published bylines &middot; <a href="https://github.com/journostorymaker-alt/journofinder">View source</a>
   </div>
 </footer>
 
@@ -863,10 +801,10 @@ let allNewsrooms = [];
 let activeTab = 'journalists';
 let filters = {
   text: '',
-  regions: new Set(),     // multi-select
+  regions: new Set(),
   tiers: new Set(),
   classes: new Set(),
-  specialisms: new Set(), // multi-select
+  specialisms: new Set(),
   confidences: new Set(),
   hideStale: false,
   hideVeryStale: true,
@@ -874,22 +812,16 @@ let filters = {
 };
 let sortBy = { col: 'total_bylines', dir: 'desc' };
 
-// =============================================================================
-// REGION HIERARCHY
-// =============================================================================
-// Take "South West - Bristol" and produce { top: "South West", sub: "Bristol" }
-// Top-level regions like "Scotland", "Wales", "London" don't have a hyphen.
 const TOP_REGIONS_ORDER = [
   'UK', 'Scotland', 'Wales', 'London',
   'North East', 'North West', 'Yorkshire',
   'West Midlands', 'East Midlands', 'East of England',
   'South East', 'South West',
-  'Midlands',  // for ITV regions
+  'Midlands',
 ];
 
 function parseRegion(r) {
   if (!r) return { top: 'Unknown', sub: null };
-  // Normalize "England - X" or "Scotland - X" patterns
   if (r.includes(' - ')) {
     const [top, sub] = r.split(' - ', 2);
     return { top: top.trim(), sub: sub.trim() };
@@ -897,15 +829,11 @@ function parseRegion(r) {
   return { top: r, sub: null };
 }
 
-// =============================================================================
-// INIT
-// =============================================================================
 async function init() {
   try {
     const SQL = await initSqlJs({
       locateFile: f => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/${f}`
     });
-
     let dbData;
     try {
       const r = await fetch('./data/journalists.db');
@@ -915,7 +843,6 @@ async function init() {
       showEmpty('Database not loaded', e.message);
       return;
     }
-
     db = new SQL.Database(dbData);
     loadData();
     setupFilters();
@@ -933,7 +860,7 @@ function showEmpty(title, msg) {
     <div class="empty">
       <h2>${esc(title)}</h2>
       <p>${esc(msg || '')}</p>
-      <p style="font-size:0.86rem;color:var(--txl);margin-top:1rem;">
+      <p style="font-size:0.84rem;color:var(--txl);margin-top:1rem;">
         To populate locally: run <code>python scraper/scrape.py</code>, then <code>python scraper/consolidate.py</code>, then place the resulting <code>data/journalists.db</code> alongside this page.
       </p>
     </div>`;
@@ -994,7 +921,6 @@ function loadData() {
     });
   }
 
-  // Stats
   const journalistCount = (db.exec('SELECT COUNT(*) FROM journalists')[0]?.values[0]?.[0]) || 0;
   const outletCount = (db.exec('SELECT COUNT(*) FROM outlets')[0]?.values[0]?.[0]) || 0;
   const bylineCount = (db.exec('SELECT COUNT(*) FROM bylines')[0]?.values[0]?.[0]) || 0;
@@ -1024,12 +950,9 @@ function updateLastUpdated() {
   }
 }
 
-// =============================================================================
-// FILTERS — set up the controls
-// =============================================================================
 function setupFilters() {
-  // ===== HIERARCHICAL REGION =====
-  const regionTree = {};  // { topName: { count: N, subs: [{name, count}] } }
+  // ===== Region tree =====
+  const regionTree = {};
   for (const j of allJournalists) {
     const top = j.region_top || 'Unknown';
     const sub = j.region_sub;
@@ -1040,8 +963,6 @@ function setupFilters() {
       regionTree[top].subs[sub]++;
     }
   }
-
-  // Order top regions by our preferred sequence; unknowns at the end
   const orderedTops = [];
   for (const t of TOP_REGIONS_ORDER) if (regionTree[t]) orderedTops.push(t);
   for (const t of Object.keys(regionTree).sort()) {
@@ -1057,7 +978,7 @@ function setupFilters() {
     const topRow = document.createElement('div');
     topRow.className = 'region-top';
     topRow.innerHTML = `
-      <span class="region-toggle" data-region="${esc(top)}">${hasChildren ? '+' : ' '}</span>
+      <span class="region-toggle" data-region="${esc(top)}">${hasChildren ? '+' : '·'}</span>
       <label>
         <input type="checkbox" data-region-top="${esc(top)}">
         <span style="flex:1">${esc(top)}</span>
@@ -1083,10 +1004,9 @@ function setupFilters() {
     }
   }
 
-  // Wire up region tree interactions
   regionEl.addEventListener('click', e => {
     const toggle = e.target.closest('.region-toggle');
-    if (toggle && !toggle.textContent.includes(' ')) {
+    if (toggle && toggle.textContent !== '·') {
       e.stopPropagation();
       const top = toggle.dataset.region;
       const childrenEl = regionEl.querySelector(`.region-children[data-region="${CSS.escape(top)}"]`);
@@ -1101,8 +1021,6 @@ function setupFilters() {
     const cb = e.target;
     if (cb.dataset.regionTop) {
       const top = cb.dataset.regionTop;
-      // When ticking a top, untick all its subs (we want OR logic, so picking
-      // top means "all of this region", picking a sub means "just this part")
       const subCbs = regionEl.querySelectorAll(`input[data-region-sub^="${CSS.escape(top)}|"]`);
       if (cb.checked) {
         filters.regions.add(`top:${top}`);
@@ -1130,18 +1048,14 @@ function setupFilters() {
     render();
   });
 
-  // ===== TIER =====
   const tiers = ['national', 'regional', 'local', 'hyperlocal', 'broadcast', 'specialist'];
   populateChecks('filterTier', tiers, t => allJournalists.filter(j => j.tier === t).length, 'tiers');
 
-  // ===== CLASSIFICATION =====
   const classes = ['local_staff', 'regional_staff', 'network_reporter', 'national', 'unclear'];
   populateChecks('filterClass', classes,
     c => allJournalists.filter(j => j.classification === c).length,
-    'classes',
-    c => c.replace('_', ' '));
+    'classes', c => c.replace('_', ' '));
 
-  // ===== SPECIALISM =====
   const specCount = {};
   for (const j of allJournalists) {
     for (const s of j.specialisms_arr) {
@@ -1151,14 +1065,11 @@ function setupFilters() {
   const specs = Object.keys(specCount).sort((a, b) => specCount[b] - specCount[a]);
   populateChecks('filterSpecialism', specs, s => specCount[s], 'specialisms');
 
-  // ===== CONFIDENCE =====
   const confs = ['verified', 'pattern_high', 'pattern_med', 'guess'];
   populateChecks('filterConfidence', confs,
     c => allJournalists.filter(j => j.primary_confidence === c).length,
-    'confidences',
-    c => c.replace('_', ' '));
+    'confidences', c => c.replace('_', ' '));
 
-  // Activity counts
   document.getElementById('cntStale').textContent =
     allJournalists.filter(j => j.days_since_last_byline > 90).length;
   document.getElementById('cntVeryStale').textContent =
@@ -1214,14 +1125,14 @@ function setupEvents() {
     e.preventDefault();
     document.querySelectorAll('.region-children').forEach(c => c.classList.add('expanded'));
     document.querySelectorAll('.region-toggle').forEach(t => {
-      if (!t.textContent.includes(' ')) t.textContent = '−';
+      if (t.textContent !== '·') t.textContent = '−';
     });
   });
   document.getElementById('regionCollapseAll').addEventListener('click', e => {
     e.preventDefault();
     document.querySelectorAll('.region-children').forEach(c => c.classList.remove('expanded'));
     document.querySelectorAll('.region-toggle').forEach(t => {
-      if (!t.textContent.includes(' ')) t.textContent = '+';
+      if (t.textContent !== '·') t.textContent = '+';
     });
   });
 
@@ -1249,9 +1160,6 @@ function clearFilters() {
   render();
 }
 
-// =============================================================================
-// FILTER + RENDER
-// =============================================================================
 function getFiltered() {
   if (activeTab === 'newsrooms') {
     return allNewsrooms.filter(n => {
@@ -1279,7 +1187,6 @@ function getFiltered() {
 }
 
 function regionMatches(item) {
-  // OR logic: matches if any selected top OR sub matches
   for (const sel of filters.regions) {
     if (sel.startsWith('top:')) {
       const top = sel.slice(4);
@@ -1305,8 +1212,7 @@ function render() {
   });
 
   document.getElementById('resultsCount').textContent = data.length.toLocaleString();
-  document.getElementById('resultsCountSub').textContent =
-    summariseFilters(data.length);
+  document.getElementById('resultsCountSub').textContent = summariseFilters();
 
   const c = document.getElementById('tblContainer');
   if (data.length === 0) {
@@ -1318,7 +1224,7 @@ function render() {
   else renderNewsrooms(data, c);
 }
 
-function summariseFilters(n) {
+function summariseFilters() {
   const parts = [];
   if (filters.regions.size) parts.push(`${filters.regions.size} region${filters.regions.size > 1 ? 's' : ''}`);
   if (filters.tiers.size) parts.push(`${filters.tiers.size} tier${filters.tiers.size > 1 ? 's' : ''}`);
@@ -1331,37 +1237,55 @@ function summariseFilters(n) {
 
 function renderJournalists(data, container) {
   const headers = [
-    { key: 'full_name', label: 'Name / Outlet' },
-    { key: 'region', label: 'Region' },
-    { key: 'classification', label: 'Type' },
-    { key: 'specialisms', label: 'Specialisms' },
-    { key: 'primary_email', label: 'Email' },
-    { key: 'days_since_last_byline', label: 'Last byline' },
-    { key: 'total_bylines', label: 'Bylines' },
+    { key: 'full_name',              label: 'Name / Outlet',     cls: 'col-name' },
+    { key: 'region',                 label: 'Region',            cls: 'col-region' },
+    { key: 'classification',         label: 'Type',              cls: 'col-type' },
+    { key: 'primary_email',          label: 'Email',             cls: 'col-email' },
+    { key: 'days_since_last_byline', label: 'Last',              cls: 'col-last right' },
+    { key: 'total_bylines',          label: 'Bylines',           cls: 'col-bylines right' },
   ];
 
-  let html = '<table><thead><tr>';
+  let html = '<table><colgroup>';
+  for (const h of headers) {
+    html += `<col class="${h.cls}">`;
+  }
+  html += '</colgroup><thead><tr>';
   for (const h of headers) {
     const act = sortBy.col === h.key ? `sa ${sortBy.dir === 'desc' ? 'dsc' : 'asc'}` : '';
-    html += `<th class="${act}" data-sort="${h.key}">${h.label}</th>`;
+    const rightCls = h.cls.includes('right') ? 'right' : '';
+    html += `<th class="${act} ${rightCls}" data-sort="${h.key}">${h.label}</th>`;
   }
   html += '</tr></thead><tbody>';
 
   for (const j of data) {
     html += '<tr>';
-    html += `<td class="col-name">${esc(j.full_name)}<small>${esc(j.outlet_name)}</small></td>`;
-    html += `<td class="col-region">${esc(j.region || '—')}</td>`;
-    html += `<td><span class="pill pill-cls cls-${j.classification || 'unclear'}">${esc((j.classification || 'unclear').replace('_', ' '))}</span>${recencyPill(j)}${movedPill(j)}</td>`;
-    html += `<td>${specTags(j.specialisms_arr)}</td>`;
+    
+    // Name + outlet, with optional lead specialism inline
+    const leadSpec = j.specialisms_arr[0];
+    const leadSpecHtml = leadSpec ? `<span class="lead-spec" title="Specialisms: ${esc(j.specialisms_arr.join(', '))}">${esc(leadSpec)}</span>` : '';
+    html += `<td><div class="cell-name"><span class="cell-name-text" title="${esc(j.full_name)}">${esc(j.full_name)}</span>${leadSpecHtml}</div><small title="${esc(j.outlet_name)}">${esc(j.outlet_name)}</small></td>`;
+    
+    // Region
+    html += `<td class="cell-region" title="${esc(j.region || '')}">${esc(j.region || '—')}</td>`;
+    
+    // Type pill + stale/moved warnings (no fresh badges, no duplication of last-byline info)
+    html += `<td><span class="pill pill-cls cls-${j.classification || 'unclear'}">${esc((j.classification || 'unclear').replace('_', ' '))}</span>${stalePill(j)}${movedPill(j)}</td>`;
+    
+    // Email + small confidence pill
     if (j.primary_email) {
-      html += `<td class="col-email"><a href="mailto:${esc(j.primary_email)}">${esc(j.primary_email)}</a><span class="pill conf-pill conf-${j.primary_confidence}">${esc((j.primary_confidence || '').replace('_', ' '))}</span></td>`;
+      html += `<td class="cell-email"><a href="mailto:${esc(j.primary_email)}" title="${esc(j.primary_email)}">${esc(j.primary_email)}</a> <span class="pill conf-pill conf-${j.primary_confidence}">${esc((j.primary_confidence || '').replace('_', ' '))}</span></td>`;
     } else {
-      html += `<td class="col-email" style="color:var(--txl)">—</td>`;
+      html += `<td class="cell-email" style="color:var(--txl)">—</td>`;
     }
+    
+    // Last byline (right-aligned)
     const dsb = j.days_since_last_byline;
-    const dsbDisplay = dsb == null ? '—' : (dsb === 0 ? 'today' : `${dsb}d ago`);
-    html += `<td class="col-recency">${esc(dsbDisplay)}</td>`;
-    html += `<td class="col-bylines">${j.total_bylines}</td>`;
+    const dsbDisplay = dsb == null ? '—' : (dsb === 0 ? 'today' : `${dsb}d`);
+    html += `<td class="cell-last">${esc(dsbDisplay)}</td>`;
+    
+    // Total bylines
+    html += `<td class="cell-bylines">${j.total_bylines}</td>`;
+    
     html += '</tr>';
   }
   html += '</tbody></table>';
@@ -1378,39 +1302,31 @@ function renderJournalists(data, container) {
 }
 
 function renderNewsrooms(data, container) {
-  let html = '<table><thead><tr><th>Outlet</th><th>Role</th><th>Email</th><th>Region</th></tr></thead><tbody>';
+  let html = '<table><colgroup><col style="width:35%"><col style="width:18%"><col style="width:32%"><col style="width:15%"></colgroup><thead><tr><th>Outlet</th><th>Role</th><th>Email</th><th>Region</th></tr></thead><tbody>';
   for (const n of data) {
     html += `<tr>`;
-    html += `<td class="col-name">${esc(n.outlet_name)}</td>`;
+    html += `<td class="cell-name"><span class="cell-name-text">${esc(n.outlet_name)}</span></td>`;
     html += `<td>${esc((n.role || '').replace('_', ' '))}</td>`;
-    html += `<td class="col-email"><a href="mailto:${esc(n.email)}">${esc(n.email)}</a></td>`;
-    html += `<td class="col-region">${esc(n.region || '—')}</td>`;
+    html += `<td class="cell-email"><a href="mailto:${esc(n.email)}">${esc(n.email)}</a></td>`;
+    html += `<td class="cell-region">${esc(n.region || '—')}</td>`;
     html += `</tr>`;
   }
   html += '</tbody></table>';
   container.innerHTML = html;
 }
 
-function recencyPill(j) {
+function stalePill(j) {
+  // Only emit a warning for actually stale records, no badges for fresh ones.
+  // Last byline column already shows the day count.
   const d = j.days_since_last_byline;
-  if (d == null) return '';
-  if (d <= 14) return `<span class="pill recency-pill recency-fresh">${d}d</span>`;
-  if (d <= 90) return `<span class="pill recency-pill recency-recent">${d}d</span>`;
-  if (d <= 180) return `<span class="pill recency-pill recency-stale">stale ${d}d</span>`;
-  return `<span class="pill recency-pill recency-very-stale">very stale ${d}d</span>`;
+  if (d == null || d <= 90) return '';
+  if (d <= 180) return `<span class="pill stale-pill" title="Last bylined ${d} days ago">stale</span>`;
+  return `<span class="pill very-stale-pill" title="Last bylined ${d} days ago">very stale</span>`;
 }
 
 function movedPill(j) {
   if (!j.moved_from_outlet) return '';
-  return `<span class="pill moved-pill" title="Recently appeared at ${esc(j.outlet_name)}, previously mostly at ${esc(j.moved_from_outlet)}">moved?</span>`;
-}
-
-function specTags(arr) {
-  if (!arr || !arr.length) return '<span style="color:var(--txl);font-size:0.8rem">—</span>';
-  return '<div class="spec-tags">' +
-    arr.slice(0, 4).map((s, i) =>
-      `<span class="spec-tag${i === 0 ? ' lead' : ''}">${esc(s)}</span>`
-    ).join('') + '</div>';
+  return `<span class="pill moved-pill" title="Recently appearing at ${esc(j.outlet_name)}, previously mostly at ${esc(j.moved_from_outlet)}">moved?</span>`;
 }
 
 function esc(s) {
@@ -1418,9 +1334,6 @@ function esc(s) {
   return String(s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'})[c]);
 }
 
-// =============================================================================
-// EXPORT
-// =============================================================================
 function exportCSV() {
   const data = getFiltered();
   if (data.length === 0) { alert('No data to export.'); return; }
