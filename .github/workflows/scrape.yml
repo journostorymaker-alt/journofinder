@@ -2,7 +2,9 @@ name: Scrape UK press
 
 on:
   schedule:
-    # Daily at 04:00 UTC — quiet time for most UK servers
+    # Daily at ~04:00-05:30 UTC — pick varying minutes for natural jitter.
+    # Multiple cron lines mean GitHub picks the earliest match, but adding
+    # a sleep at the start of the job adds further jitter within the hour.
     - cron: '0 4 * * *'
   workflow_dispatch:  # allow manual triggering from GitHub UI
 
@@ -25,23 +27,46 @@ jobs:
         run: |
           pip install requests beautifulsoup4 feedparser
       
+      - name: Apply schedule jitter
+        # Don't let scrapes start at exactly the same second as everyone
+        # else's. Sleeping a random 0-30 minutes spreads our requests out
+        # naturally and is more polite to outlet servers.
+        # Skip jitter on manual runs (workflow_dispatch).
+        if: github.event_name == 'schedule'
+        run: |
+          JITTER=$((RANDOM % 1800))
+          echo "Sleeping ${JITTER}s before starting scrape..."
+          sleep $JITTER
+      
       - name: Restore previous database
-        # The DB is committed to the repo so each run builds on the last,
-        # which means we accumulate journalists over time even from outlets
-        # that fail on a given day.
         run: ls -la data/ || echo "No data dir yet"
       
       - name: Run scrape
+        id: scrape
+        # If scrape times out or errors, we still want to commit whatever
+        # bylines were collected up to that point. continue-on-error means
+        # subsequent steps still run even if this fails.
+        continue-on-error: true
         run: python scraper/scrape.py
-        timeout-minutes: 90
+        timeout-minutes: 300
       
       - name: Run consolidation
+        # Always run consolidation, even if scrape was killed mid-run —
+        # whatever bylines made it into the DB still benefit from being
+        # consolidated.
+        if: always()
+        continue-on-error: true
         run: python scraper/consolidate.py
       
       - name: Print summary
+        if: always()
+        continue-on-error: true
         run: |
           python -c "
-          import sqlite3
+          import sqlite3, os
+          if not os.path.exists('data/journalists.db'):
+              print('No database file yet')
+              exit()
           c = sqlite3.connect('data/journalists.db')
           for q, label in [
               ('SELECT COUNT(*) FROM journalists', 'Journalists'),
@@ -54,25 +79,42 @@ jobs:
           "
       
       - name: Copy database into dashboard folder
+        # Always — whatever data we have, get it onto the dashboard.
+        if: always()
+        continue-on-error: true
         run: |
-          mkdir -p docs/data
-          cp data/journalists.db docs/data/journalists.db
+          if [ -f data/journalists.db ]; then
+            mkdir -p docs/data
+            cp data/journalists.db docs/data/journalists.db
+            echo "Copied database ($(du -h data/journalists.db | cut -f1))"
+          else
+            echo "No database to copy"
+          fi
       
       - name: Commit updated database
+        # Always commit, even on partial scrapes. The push-retry logic
+        # handles any race conditions if multiple workflows finish around
+        # the same time.
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/journalists.db docs/data/journalists.db
-          git diff --quiet --cached || git commit -m "Daily scrape: $(date -u +%Y-%m-%d)"
-          git push
-      
-      # Optionally deploy to Netlify here. Set NETLIFY_AUTH_TOKEN and 
-      # NETLIFY_SITE_ID as repo secrets if you want auto-deploy.
-      # - name: Deploy to Netlify
-      #   uses: nwtgck/actions-netlify@v3.0
-      #   with:
-      #     publish-dir: './dashboard'
-      #     production-deploy: true
-      #   env:
-      #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-      #     NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          
+          if [ ! -f data/journalists.db ]; then
+            echo "No database to commit"
+            exit 0
+          fi
+          
+          git add data/journalists.db docs/data/journalists.db 2>/dev/null || true
+          
+          # If scrape timed out, mark commit as partial in message
+          PARTIAL=""
+          if [ "${{ steps.scrape.outcome }}" != "success" ]; then
+            PARTIAL=" (partial — scrape did not complete cleanly)"
+          fi
+          
+          git diff --quiet --cached || git commit -m "Daily scrape: $(date -u +%Y-%m-%d)${PARTIAL}"
+          
+          # Robust push: pull-rebase first, then push, retry once on conflict
+          git pull --rebase || true
+          git push || (sleep 5 && git pull --rebase && git push) || (sleep 30 && git pull --rebase && git push)

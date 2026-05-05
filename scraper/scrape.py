@@ -1,33 +1,38 @@
 """
-Scraping engine.
+Scraping engine — upgraded multi-strategy version.
 
-Strategy: prefer RSS feeds where available — they're cheap, fast, and explicitly
-public. For each article in the feed, fetch the page and extract:
-  - byline (author name)
-  - email if visibly published
-  - section/category
-  - first ~500 words for keyword extraction
+Tries multiple strategies for each outlet in order, falling through if one
+yields no useful bylines:
 
-For outlets without RSS, fall back to the homepage and a small number of
-section pages.
+  1. RSS feed(s)            — cheap, fast, but many outlets don't expose them
+  2. News sitemap           — /sitemap_news.xml or /news-sitemap.xml
+  3. Generic sitemap        — /sitemap.xml (parses index, samples articles)
+  4. Author directory       — /authors/, /staff/, /meet-the-team/, etc.
+  5. Homepage link harvest  — last resort
 
 Politeness:
-  - 2 second delay between requests to the same domain
-  - Custom user agent identifying us
-  - Respect robots.txt for the article paths
-  - Cache successful fetches for 24h
-  - Hard cap of 30 articles per outlet per scrape run
+  - Randomised 2-5 second delay between requests to same domain
+  - Honours Crawl-Delay directive in robots.txt
+  - Backoff on 429 / 503 errors
+  - Browser-style request headers
+  - Identifies itself transparently in User-Agent
+  - Respects robots.txt
+  - Caches successful fetches for 24 hours
+  - Hard cap of 100 articles per outlet per scrape run
 
 Resilience:
-  - Every outlet wrapped in try/except so one failure doesn't kill the run
-  - Status logged to scrape_log table for the dashboard to display
+  - Every outlet wrapped in try/except
+  - Status logged to scrape_log
+  - Periodic checkpoint commits to database during long runs
 """
 
 import re
 import time
 import json
+import random
 import hashlib
 import urllib.robotparser
+import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
 from pathlib import Path
 from urllib.parse import urlparse, urljoin
@@ -40,19 +45,38 @@ from db import get_conn, init_db, sync_outlets
 from outlets import OUTLETS
 
 USER_AGENT = (
-    "JournoFinder/1.0 (+https://github.com/your-repo/journofinder; "
-    "press research tool; respects robots.txt)"
+    "JournoFinder/1.0 (+https://github.com/journostorymaker-alt/journofinder; "
+    "press research tool; respects robots.txt; contact via repo issues)"
 )
+
+# Standard browser-style headers so request fingerprint is consistent
+DEFAULT_HEADERS = {
+    "User-Agent": USER_AGENT,
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    "Accept-Language": "en-GB,en;q=0.9",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Upgrade-Insecure-Requests": "1",
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "none",
+    "Sec-Fetch-User": "?1",
+    "Cache-Control": "max-age=0",
+}
 
 CACHE_DIR = Path(__file__).parent.parent / "data" / "cache"
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
 CACHE_TTL = timedelta(hours=24)
 
-REQUEST_DELAY = 2.0  # seconds between requests to same domain
-MAX_ARTICLES_PER_OUTLET = 30
-REQUEST_TIMEOUT = 20
+# Polite scraping params
+MIN_DELAY = 2.0
+MAX_DELAY = 5.0
+MAX_ARTICLES_PER_OUTLET = 100
+REQUEST_TIMEOUT = 25
+MAX_RETRIES_ON_429 = 2
 
-# Bylines to ignore — generic newsroom names, not real journalists
+CHECKPOINT_EVERY_N_OUTLETS = 10
+
 NON_JOURNALIST_BYLINES = {
     "newsdesk", "news desk", "news team", "staff reporter", "staff writer",
     "press association", "pa news agency", "pa reporters", "pa media",
@@ -60,114 +84,193 @@ NON_JOURNALIST_BYLINES = {
     "editor", "editorial team", "the editor", "our reporter",
     "our political editor", "anonymous", "admin", "user", "test",
     "sponsored content", "promoted content", "bbc news", "sky news",
-    "itv news", "channel 4 news", "wire services",
+    "itv news", "channel 4 news", "channel 5 news", "wire services",
+    "bbc sport", "bbc cymru fyw", "bbc weather", "bbc travel",
+    "bbc reporter", "bbc correspondent", "bbc breakfast",
+    "letters the editor", "letters editor", "letters to the editor",
+    "the team", "our team", "newsroom", "the newsroom",
+    "comment", "comments", "leader", "letter writer",
+    "press release", "press team", "communications team",
+    "guardian staff", "telegraph staff", "times staff",
+    "yorkshire post letters", "the yorkshire post letters",
+    "the yorkshire post", "yorkshire post staff",
+    "the scotsman", "scotsman reporters", "scotsman staff",
+    "national world", "national world publishing",
 }
 
-# Robots cache: domain -> RobotFileParser
-_robots_cache = {}
-_last_request_time = {}  # domain -> timestamp
+SECTION_WORDS = {
+    "sport", "news", "comment", "weather", "business", "politics",
+    "culture", "lifestyle", "entertainment", "showbiz", "money",
+    "travel", "food", "drink", "opinion", "letters", "obituaries",
+    "world", "uk", "scotland", "wales", "england", "ireland",
+}
 
+_robots_cache = {}
+_last_request_time = {}
+_domain_failure_streak = {}
+
+
+# =============================================================================
+# Polite HTTP layer
+# =============================================================================
 
 def _get_robots(domain):
-    """Fetch and cache robots.txt for a domain."""
+    """Fetch and cache robots.txt for a domain. Returns (RobotFileParser, crawl_delay)."""
     if domain in _robots_cache:
         return _robots_cache[domain]
     rp = urllib.robotparser.RobotFileParser()
     rp.set_url(f"https://{domain}/robots.txt")
+    crawl_delay = None
     try:
         rp.read()
+        try:
+            cd = rp.crawl_delay(USER_AGENT) or rp.crawl_delay("*")
+            if cd:
+                crawl_delay = float(cd)
+        except Exception:
+            pass
     except Exception:
-        pass  # if robots.txt unreachable, be permissive but careful
-    _robots_cache[domain] = rp
-    return rp
+        pass
+    _robots_cache[domain] = (rp, crawl_delay)
+    return _robots_cache[domain]
 
 
-def _polite_get(url):
-    """Rate-limited, robots-aware GET with caching."""
+def _polite_get(url, accept_xml=False):
+    """Rate-limited, robots-aware GET with caching, jitter and backoff."""
     domain = urlparse(url).netloc
+    if not domain:
+        return None, "invalid_url"
     
-    # Robots check
-    rp = _get_robots(domain)
+    rp, crawl_delay = _get_robots(domain)
     if not rp.can_fetch(USER_AGENT, url):
         return None, "robots_disallow"
     
-    # Cache check
     cache_key = hashlib.sha256(url.encode()).hexdigest()
     cache_file = CACHE_DIR / f"{cache_key}.html"
     if cache_file.exists():
         age = datetime.now() - datetime.fromtimestamp(cache_file.stat().st_mtime)
         if age < CACHE_TTL:
-            return cache_file.read_text(encoding="utf-8", errors="replace"), "cache"
+            try:
+                return cache_file.read_text(encoding="utf-8", errors="replace"), "cache"
+            except Exception:
+                pass
     
-    # Rate limit
+    base_delay = crawl_delay if crawl_delay else random.uniform(MIN_DELAY, MAX_DELAY)
+    failures = _domain_failure_streak.get(domain, 0)
+    if failures > 0:
+        base_delay = min(60.0, base_delay * (1.5 ** failures))
+    
     now = time.time()
     if domain in _last_request_time:
         elapsed = now - _last_request_time[domain]
-        if elapsed < REQUEST_DELAY:
-            time.sleep(REQUEST_DELAY - elapsed)
+        if elapsed < base_delay:
+            time.sleep(base_delay - elapsed)
     _last_request_time[domain] = time.time()
     
-    # Fetch
-    try:
-        r = requests.get(
-            url,
-            headers={"User-Agent": USER_AGENT, "Accept-Language": "en-GB,en;q=0.9"},
-            timeout=REQUEST_TIMEOUT,
-            allow_redirects=True,
-        )
-        if r.status_code == 200:
-            cache_file.write_text(r.text, encoding="utf-8")
-            return r.text, "ok"
-        return None, f"http_{r.status_code}"
-    except requests.exceptions.Timeout:
-        return None, "timeout"
-    except requests.exceptions.RequestException as e:
-        return None, f"error:{type(e).__name__}"
+    headers = dict(DEFAULT_HEADERS)
+    if accept_xml:
+        headers["Accept"] = "application/xml,text/xml;q=0.9,*/*;q=0.8"
+    
+    for attempt in range(MAX_RETRIES_ON_429 + 1):
+        try:
+            r = requests.get(url, headers=headers, timeout=REQUEST_TIMEOUT, allow_redirects=True)
+            
+            if r.status_code == 200:
+                _domain_failure_streak[domain] = 0
+                try:
+                    cache_file.write_text(r.text, encoding="utf-8")
+                except Exception:
+                    pass
+                return r.text, "ok"
+            
+            if r.status_code in (429, 503):
+                retry_after = r.headers.get("Retry-After")
+                if retry_after:
+                    try:
+                        wait = min(120, int(retry_after))
+                    except ValueError:
+                        wait = 30
+                else:
+                    wait = 10 * (2 ** attempt)
+                if attempt < MAX_RETRIES_ON_429:
+                    time.sleep(wait)
+                    continue
+                _domain_failure_streak[domain] = failures + 1
+                return None, "rate_limited"
+            
+            _domain_failure_streak[domain] = failures + 1
+            return None, f"http_{r.status_code}"
+        
+        except requests.exceptions.Timeout:
+            _domain_failure_streak[domain] = failures + 1
+            return None, "timeout"
+        except requests.exceptions.RequestException as e:
+            _domain_failure_streak[domain] = failures + 1
+            return None, f"error:{type(e).__name__}"
+    
+    return None, "exhausted_retries"
 
+
+# =============================================================================
+# Name parsing & validation
+# =============================================================================
 
 def _normalise_name(name):
-    """Lowercase, strip punctuation, collapse spaces."""
     name = re.sub(r"[^\w\s]", "", name.lower())
     name = re.sub(r"\s+", " ", name).strip()
     return name
 
 
+def _looks_like_organisation(name):
+    """Detect organisation/section labels (e.g. 'BBC Sport', 'Yorkshire Post')."""
+    lower = name.lower().strip()
+    org_prefixes = ("bbc ", "itv ", "sky ", "pa ", "reuters ", "channel ",
+                    "guardian ", "times ", "sun ", "mirror ",
+                    "yorkshire post", "the yorkshire", "national world ",
+                    "scotsman ", "the scotsman", "press association ")
+    for prefix in org_prefixes:
+        if lower.startswith(prefix):
+            return True
+    parts = lower.split()
+    if len(parts) == 1 and parts[0] in SECTION_WORDS:
+        return True
+    return False
+
+
 def _looks_like_real_name(name):
-    """Filter out 'Newsdesk', 'PA Media', single words, all-caps mastheads, etc."""
     if not name or len(name) < 4 or len(name) > 60:
         return False
     if _normalise_name(name) in NON_JOURNALIST_BYLINES:
         return False
+    if _looks_like_organisation(name):
+        return False
     parts = name.strip().split()
     if len(parts) < 2:
         return False
-    # Must look like proper case (people's names)
     if name.isupper() or name.islower():
         return False
-    # Must be alphabetic + spaces + apostrophes/hyphens
     if not re.match(r"^[A-Za-z][A-Za-z\s'\-\.]+$", name):
         return False
     return True
 
 
 def _split_name(full_name):
-    """Crude first/last split. Handles Mc/Mac, hyphens, single middle initials."""
     parts = full_name.strip().split()
     if len(parts) == 2:
         return parts[0], parts[1]
     if len(parts) == 3:
-        # If middle is an initial like 'A.' treat as first-last
         if re.match(r"^[A-Z]\.?$", parts[1]):
             return parts[0], parts[2]
-        # Otherwise first + last-two-as-surname (e.g. 'Sarah Van Doren')
         return parts[0], " ".join(parts[1:])
     if len(parts) >= 4:
         return parts[0], " ".join(parts[-2:])
     return parts[0], ""
 
 
-# Topic keywords for specialism extraction.
-# These are matched against article titles + URL paths.
+# =============================================================================
+# Specialism extraction
+# =============================================================================
+
 SPECIALISM_KEYWORDS = {
     "environment": ["environment", "climate", "pollution", "emissions", "wildlife", "nature", "biodiversity", "ecology", "rewilding", "river", "sewage", "carbon"],
     "agriculture": ["farming", "agriculture", "farmer", "crop", "livestock", "dairy", "defra", "cap", "subsidy", "rural"],
@@ -188,29 +291,24 @@ SPECIALISM_KEYWORDS = {
 
 
 def _extract_keywords(title, url):
-    """Return list of specialism tags matching title or URL path."""
     blob = (title + " " + url).lower()
-    found = []
-    for tag, keywords in SPECIALISM_KEYWORDS.items():
-        if any(k in blob for k in keywords):
-            found.append(tag)
-    return found
+    return [tag for tag, keywords in SPECIALISM_KEYWORDS.items()
+            if any(k in blob for k in keywords)]
 
 
-# ---------- Byline extractors ----------
-# Different CMS platforms expose bylines differently. We try in order.
+# =============================================================================
+# Byline extraction from article HTML
+# =============================================================================
 
 def _extract_byline_from_article(html, base_url):
-    """Try multiple strategies to find the article's author."""
+    """Try multiple strategies to find article author(s)."""
     soup = BeautifulSoup(html, "html.parser")
     
-    # Strategy 1: JSON-LD structured data — most reliable
     for script in soup.find_all("script", type="application/ld+json"):
         try:
             data = json.loads(script.string)
             if isinstance(data, list):
                 data = data[0] if data else {}
-            # NewsArticle / Article schemas
             authors = data.get("author")
             if authors:
                 if isinstance(authors, dict):
@@ -223,36 +321,34 @@ def _extract_byline_from_article(html, base_url):
                         elif isinstance(a, str):
                             names.append(a)
                     if names:
-                        return [n for n in names if _looks_like_real_name(n)]
+                        valid = [n for n in names if _looks_like_real_name(n)]
+                        if valid:
+                            return valid
         except (json.JSONDecodeError, AttributeError, TypeError):
             continue
     
-    # Strategy 2: meta tags
-    for meta_name in ["author", "article:author", "byl", "DC.creator"]:
+    for meta_name in ["author", "article:author", "byl", "DC.creator", "twitter:creator"]:
         meta = soup.find("meta", attrs={"name": meta_name}) or soup.find("meta", property=meta_name)
         if meta and meta.get("content"):
             name = meta["content"].strip()
-            # Sometimes this is a URL — skip those
-            if not name.startswith("http") and _looks_like_real_name(name):
+            if not name.startswith("http") and not name.startswith("@") and _looks_like_real_name(name):
                 return [name]
     
-    # Strategy 3: common byline class names
     byline_selectors = [
         ".byline", ".author", ".article-author", ".by-line", ".author-name",
         '[rel="author"]', ".c-byline", ".story-byline", ".byline__author",
         ".author-link", ".td-post-author-name a", ".meta-author",
+        ".article__byline", ".article-meta__author", ".post-author",
+        ".entry-author", ".author-info__name", ".m-byline__author-name",
     ]
     for sel in byline_selectors:
         for el in soup.select(sel):
             text = el.get_text(" ", strip=True)
-            # Strip leading "By "
             text = re.sub(r"^by\s+", "", text, flags=re.I)
-            # Take first name before " and ", " & ", " | "
             text = re.split(r"\s+(?:and|&|\|)\s+", text)[0].strip()
             if _looks_like_real_name(text):
                 return [text]
     
-    # Strategy 4: text pattern "By Firstname Lastname"
     body_text = soup.get_text(" ", strip=True)[:2000]
     m = re.search(r"\bBy\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+){1,3})\b", body_text)
     if m and _looks_like_real_name(m.group(1)):
@@ -262,53 +358,292 @@ def _extract_byline_from_article(html, base_url):
 
 
 def _extract_emails_from_page(html):
-    """Find any visible email addresses on a page (for masthead/team pages)."""
     text = BeautifulSoup(html, "html.parser").get_text(" ")
     pattern = r"\b[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Z|a-z]{2,}\b"
     emails = set()
     for m in re.findall(pattern, text):
-        # Filter out obvious junk
         if any(bad in m.lower() for bad in ["example.com", "yourdomain", "domain.com", "@2x"]):
             continue
         emails.add(m.lower())
     return emails
 
 
-# ---------- Main scraper for one outlet ----------
+# =============================================================================
+# Strategy 1: RSS
+# =============================================================================
+
+def _strategy_rss(outlet_data, max_articles):
+    article_urls = []
+    for rss_url in (outlet_data.get("rss") or [])[:3]:
+        html, status = _polite_get(rss_url, accept_xml=True)
+        if not html:
+            continue
+        try:
+            feed = feedparser.parse(html)
+            for entry in feed.entries[:max_articles]:
+                if entry.get("link"):
+                    article_urls.append({
+                        "url": entry["link"],
+                        "title": entry.get("title", ""),
+                        "date": entry.get("published", ""),
+                    })
+        except Exception:
+            continue
+    return article_urls
+
+
+# =============================================================================
+# Strategy 2 & 3: Sitemap
+# =============================================================================
+
+def _parse_sitemap_xml(xml_text, base_url):
+    """Returns (urls, is_index). urls is list of (url, lastmod) tuples."""
+    urls = []
+    is_index = False
+    try:
+        xml_text = xml_text.strip()
+        root = ET.fromstring(xml_text)
+        ns_strip = lambda t: t.split("}", 1)[-1] if "}" in t else t
+        
+        if ns_strip(root.tag) == "sitemapindex":
+            is_index = True
+            for sm in root:
+                if ns_strip(sm.tag) == "sitemap":
+                    for child in sm:
+                        if ns_strip(child.tag) == "loc" and child.text:
+                            urls.append((child.text.strip(), None))
+                            break
+        elif ns_strip(root.tag) == "urlset":
+            for u in root:
+                if ns_strip(u.tag) != "url":
+                    continue
+                loc_text = None
+                lastmod_text = None
+                for child in u:
+                    tag = ns_strip(child.tag)
+                    if tag == "loc" and child.text:
+                        loc_text = child.text.strip()
+                    elif tag == "lastmod" and child.text:
+                        lastmod_text = child.text.strip()
+                if loc_text:
+                    urls.append((loc_text, lastmod_text))
+    except ET.ParseError:
+        pass
+    
+    return urls, is_index
+
+
+def _looks_like_article_url(url):
+    lower = url.lower()
+    skip = ["/tag/", "/topic/", "/category/", "/author/", "/page/",
+            "/wp-content/", "/feed/", "/rss/", "/sitemap",
+            "/login", "/register", "/subscribe", "/contact",
+            "/privacy", "/terms", "/about/", "/help/",
+            ".jpg", ".png", ".gif", ".pdf", ".xml"]
+    if any(s in lower for s in skip):
+        return False
+    parsed = urlparse(url)
+    path = parsed.path.strip("/")
+    if not path:
+        return False
+    if path.count("/") < 1:
+        return False
+    return True
+
+
+def _strategy_sitemap(outlet_data, max_articles):
+    domain = outlet_data["domain"].split("/")[0]
+    candidates = [
+        f"https://{domain}/sitemap_news.xml",
+        f"https://{domain}/news-sitemap.xml",
+        f"https://{domain}/google-news-sitemap.xml",
+        f"https://{domain}/sitemap-news.xml",
+        f"https://{domain}/sitemap.xml",
+        f"https://{domain}/sitemap_index.xml",
+    ]
+    
+    article_urls = []
+    
+    for sitemap_url in candidates:
+        html, status = _polite_get(sitemap_url, accept_xml=True)
+        if not html:
+            continue
+        urls, is_index = _parse_sitemap_xml(html, sitemap_url)
+        if not urls:
+            continue
+        
+        if is_index:
+            child_urls = [u for u, _ in urls if any(
+                kw in u.lower() for kw in ["news", "article", "post", "story"]
+            )]
+            if not child_urls:
+                child_urls = [u for u, _ in urls[:2]]
+            else:
+                child_urls = child_urls[:2]
+            
+            for child in child_urls:
+                child_html, _ = _polite_get(child, accept_xml=True)
+                if not child_html:
+                    continue
+                child_urls_parsed, _ = _parse_sitemap_xml(child_html, child)
+                child_urls_parsed.sort(key=lambda u: u[1] or "", reverse=True)
+                for url, lastmod in child_urls_parsed[:max_articles]:
+                    if _looks_like_article_url(url):
+                        article_urls.append({"url": url, "title": "", "date": lastmod or ""})
+                if len(article_urls) >= max_articles:
+                    break
+        else:
+            urls.sort(key=lambda u: u[1] or "", reverse=True)
+            for url, lastmod in urls[:max_articles * 2]:
+                if _looks_like_article_url(url):
+                    article_urls.append({"url": url, "title": "", "date": lastmod or ""})
+        
+        if article_urls:
+            break
+    
+    return article_urls[:max_articles]
+
+
+# =============================================================================
+# Strategy 4: Author directory walking
+# =============================================================================
+
+def _strategy_authors(outlet_data, max_articles):
+    """Visit author directory pages, find profile links, harvest their articles."""
+    domain = outlet_data["domain"].split("/")[0]
+    article_urls = []
+    
+    candidates = list(outlet_data.get("team_urls") or [])
+    common_paths = [
+        "/authors/", "/author/", "/staff/", "/our-team/", "/team/",
+        "/meet-the-team", "/news/meet-the-team", "/journalists/",
+    ]
+    for path in common_paths:
+        candidates.append(f"https://{domain}{path}")
+    
+    seen_profile_urls = set()
+    
+    for dir_url in candidates[:3]:
+        html, status = _polite_get(dir_url)
+        if not html:
+            continue
+        
+        soup = BeautifulSoup(html, "html.parser")
+        profile_links = []
+        for a in soup.find_all("a", href=True):
+            href = urljoin(dir_url, a["href"])
+            href_lower = href.lower()
+            if not href.startswith("http"):
+                continue
+            if domain not in href_lower:
+                continue
+            if not any(p in href_lower for p in
+                       ["/author/", "/authors/", "/staff/", "/profile/",
+                        "/meet-the-team/", "/people/", "/journalists/"]):
+                continue
+            if href in seen_profile_urls:
+                continue
+            seen_profile_urls.add(href)
+            profile_links.append(href)
+        
+        for profile_url in profile_links[:30]:
+            phtml, _ = _polite_get(profile_url)
+            if not phtml:
+                continue
+            psoup = BeautifulSoup(phtml, "html.parser")
+            
+            for a in psoup.find_all("a", href=True):
+                href = urljoin(profile_url, a["href"])
+                if domain not in href.lower():
+                    continue
+                if _looks_like_article_url(href):
+                    title = a.get_text(strip=True)[:200]
+                    if href not in {x["url"] for x in article_urls}:
+                        article_urls.append({"url": href, "title": title, "date": ""})
+            
+            if len(article_urls) >= max_articles:
+                break
+        
+        if article_urls:
+            break
+    
+    return article_urls[:max_articles]
+
+
+# =============================================================================
+# Strategy 5: Homepage harvest
+# =============================================================================
+
+def _strategy_homepage(outlet_data, max_articles):
+    domain = outlet_data["domain"].split("/")[0]
+    homepage = f"https://{domain}/"
+    
+    html, status = _polite_get(homepage)
+    if not html:
+        return []
+    
+    soup = BeautifulSoup(html, "html.parser")
+    article_urls = []
+    seen = set()
+    
+    for a in soup.find_all("a", href=True):
+        href = urljoin(homepage, a["href"])
+        if domain not in href.lower():
+            continue
+        if not _looks_like_article_url(href):
+            continue
+        if href in seen:
+            continue
+        seen.add(href)
+        title = a.get_text(strip=True)[:200]
+        article_urls.append({"url": href, "title": title, "date": ""})
+        if len(article_urls) >= max_articles:
+            break
+    
+    return article_urls
+
+
+# =============================================================================
+# Per-outlet driver
+# =============================================================================
 
 def scrape_outlet(outlet_row):
-    """Scrape one outlet. Returns (status, byline_count)."""
+    """Scrape one outlet by trying strategies in order. Returns (status, byline_count)."""
     outlet_id = outlet_row["id"]
     outlet_data = next((o for o in OUTLETS if o["name"] == outlet_row["name"]), None)
     if not outlet_data:
         return "no_seed_data", 0
     
-    rss_urls = outlet_data.get("rss", []) or []
-    team_urls = outlet_data.get("team_urls", []) or []
-    
     article_urls = []
+    strategy_used = "none"
     
-    # Collect article URLs from RSS
-    for rss_url in rss_urls[:2]:  # max 2 feeds per outlet
-        html, status = _polite_get(rss_url)
-        if html:
-            try:
-                feed = feedparser.parse(html)
-                for entry in feed.entries[:MAX_ARTICLES_PER_OUTLET]:
-                    article_urls.append({
-                        "url": entry.get("link"),
-                        "title": entry.get("title", ""),
-                        "date": entry.get("published", ""),
-                    })
-            except Exception as e:
-                _log_scrape(outlet_id, rss_url, "parse_error", 0, str(e))
+    article_urls = _strategy_rss(outlet_data, MAX_ARTICLES_PER_OUTLET)
+    if article_urls:
+        strategy_used = "rss"
     
-    # Dedupe article URLs
+    if not article_urls:
+        article_urls = _strategy_sitemap(outlet_data, MAX_ARTICLES_PER_OUTLET)
+        if article_urls:
+            strategy_used = "sitemap"
+    
+    if not article_urls:
+        article_urls = _strategy_authors(outlet_data, MAX_ARTICLES_PER_OUTLET)
+        if article_urls:
+            strategy_used = "authors"
+    
+    if not article_urls:
+        article_urls = _strategy_homepage(outlet_data, MAX_ARTICLES_PER_OUTLET)
+        if article_urls:
+            strategy_used = "homepage"
+    
     seen_urls = set()
-    article_urls = [a for a in article_urls if a["url"] and not (a["url"] in seen_urls or seen_urls.add(a["url"]))]
-    article_urls = article_urls[:MAX_ARTICLES_PER_OUTLET]
+    deduped = []
+    for a in article_urls:
+        if a["url"] and a["url"] not in seen_urls:
+            seen_urls.add(a["url"])
+            deduped.append(a)
+    article_urls = deduped[:MAX_ARTICLES_PER_OUTLET]
     
-    # Scrape each article for bylines
     bylines_found = 0
     for art in article_urls:
         html, status = _polite_get(art["url"])
@@ -317,37 +652,39 @@ def scrape_outlet(outlet_row):
         names = _extract_byline_from_article(html, art["url"])
         if not names:
             continue
-        keywords = _extract_keywords(art["title"], art["url"])
+        title = art.get("title") or ""
+        if not title:
+            soup = BeautifulSoup(html[:5000], "html.parser")
+            t = soup.find("title")
+            if t:
+                title = t.get_text(strip=True)[:200]
+        keywords = _extract_keywords(title, art["url"])
         for name in names:
-            _record_byline(outlet_row, name, art, keywords)
+            _record_byline(outlet_row, name, {"url": art["url"], "title": title,
+                                              "date": art.get("date", "")}, keywords)
             bylines_found += 1
     
-    # Scrape team/masthead pages for verified emails
-    for team_url in team_urls[:1]:  # one per outlet
+    # Newsroom emails — kept SEPARATE from journalists now (was a bug previously)
+    for team_url in (outlet_data.get("team_urls") or [])[:1]:
         html, status = _polite_get(team_url)
         if html:
             emails = _extract_emails_from_page(html)
-            if emails:
-                _log_scrape(outlet_id, team_url, "ok", len(emails), f"masthead emails: {len(emails)}")
-                # We don't auto-link these to journalists — that requires
-                # name-near-email proximity matching, which we'll do in
-                # consolidation. For now, just store newsroom-level finds.
-                for email in emails:
-                    role = _classify_email_role(email)
-                    if role:
-                        _record_newsroom_contact(outlet_id, role, email, team_url)
+            for email in emails:
+                role = _classify_email_role(email)
+                if role:
+                    _record_newsroom_contact(outlet_id, role, email, team_url)
     
     _log_scrape(outlet_id, "summary", "ok", bylines_found,
-                f"articles: {len(article_urls)}, bylines: {bylines_found}")
+                f"strategy: {strategy_used}, articles: {len(article_urls)}, bylines: {bylines_found}")
     
     with get_conn() as conn:
         conn.execute("""
             UPDATE outlets SET last_scraped = CURRENT_TIMESTAMP,
                 last_scrape_status = ?, last_scrape_count = ?
             WHERE id = ?
-        """, ("ok" if bylines_found else "no_bylines", bylines_found, outlet_id))
+        """, (f"ok:{strategy_used}" if bylines_found else "no_bylines", bylines_found, outlet_id))
     
-    return "ok", bylines_found
+    return "ok" if bylines_found else "no_bylines", bylines_found
 
 
 def _classify_email_role(email):
@@ -367,17 +704,16 @@ def _classify_email_role(email):
 
 
 def _record_byline(outlet_row, name, article, keywords):
-    """Insert/update journalist + byline rows."""
+    """Insert/update journalist + byline rows. Cross-outlet dedup by name."""
     name = name.strip()
     name_norm = _normalise_name(name)
     first, last = _split_name(name)
     keywords_str = ",".join(keywords) if keywords else ""
     
     with get_conn() as conn:
-        # Find or create journalist (matching on normalised name + outlet)
         existing = conn.execute("""
-            SELECT id FROM journalists WHERE name_normalised = ? AND primary_outlet_id = ?
-        """, (name_norm, outlet_row["id"])).fetchone()
+            SELECT id FROM journalists WHERE name_normalised = ?
+        """, (name_norm,)).fetchone()
         
         if existing:
             jid = existing["id"]
@@ -389,7 +725,6 @@ def _record_byline(outlet_row, name, article, keywords):
             """, (name, name_norm, first, last, outlet_row["id"]))
             jid = cur.lastrowid
         
-        # Insert byline (ignore duplicates)
         conn.execute("""
             INSERT OR IGNORE INTO bylines (journalist_id, outlet_id, article_url, article_title, article_date, keywords)
             VALUES (?, ?, ?, ?, ?, ?)
@@ -412,8 +747,11 @@ def _log_scrape(outlet_id, url, status, count, notes):
         """, (outlet_id, url, status, count, notes))
 
 
+# =============================================================================
+# Main run loop
+# =============================================================================
+
 def run_full_scrape(limit=None, region_filter=None):
-    """Scrape all outlets. Use limit=N for testing."""
     init_db()
     sync_outlets(OUTLETS)
     
@@ -428,8 +766,15 @@ def run_full_scrape(limit=None, region_filter=None):
     if limit:
         outlets = outlets[:limit]
     
+    # Shuffle so we don't always hit the same domains in order
+    outlets = list(outlets)
+    random.shuffle(outlets)
+    
     print(f"Scraping {len(outlets)} outlets...")
-    results = {"ok": 0, "no_bylines": 0, "error": 0}
+    print(f"Politeness: {MIN_DELAY}-{MAX_DELAY}s jitter, "
+          f"crawl-delay honoured, backoff on 429/503", flush=True)
+    
+    results = {"ok": 0, "no_bylines": 0, "error": 0, "no_seed_data": 0}
     total_bylines = 0
     
     for i, outlet in enumerate(outlets, 1):
@@ -438,11 +783,18 @@ def run_full_scrape(limit=None, region_filter=None):
             status, count = scrape_outlet(outlet)
             results[status if status in results else "error"] = results.get(status, 0) + 1
             total_bylines += count
-            print(f"{status} ({count} bylines)")
+            print(f"{status} ({count} bylines)", flush=True)
         except Exception as e:
-            print(f"FAILED: {e}")
+            print(f"FAILED: {e}", flush=True)
             results["error"] += 1
-            _log_scrape(outlet["id"], "exception", "error", 0, str(e))
+            try:
+                _log_scrape(outlet["id"], "exception", "error", 0, str(e))
+            except Exception:
+                pass
+        
+        if i % CHECKPOINT_EVERY_N_OUTLETS == 0:
+            print(f"  --- checkpoint: {i}/{len(outlets)} done, {total_bylines} bylines so far ---",
+                  flush=True)
     
     print(f"\nScrape complete: {results}")
     print(f"Total bylines collected this run: {total_bylines}")
