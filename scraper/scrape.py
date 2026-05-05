@@ -215,25 +215,67 @@ def _polite_get(url, accept_xml=False):
 # Name parsing & validation
 # =============================================================================
 
+# Post-nominals that should be stripped before name matching, so that
+# "Caroline Lucas MP" and "Caroline Lucas" merge into the same record.
+POST_NOMINALS = {
+    "mp", "msp", "ms", "mep", "am",
+    "obe", "cbe", "mbe", "kbe", "dbe", "gbe", "bem",
+    "phd", "md", "frcs", "frcp", "frsa", "frs", "frse", "fba",
+    "qc", "kc", "qpm", "rev", "revd",
+    "bsc", "ba", "ma", "msc", "mba", "llb", "llm",
+    "jr", "sr", "esq",
+}
+
+
 def _normalise_name(name):
-    name = re.sub(r"[^\w\s]", "", name.lower())
-    name = re.sub(r"\s+", " ", name).strip()
-    return name
+    """Lowercase, strip punctuation and post-nominals, collapse spaces."""
+    n = re.sub(r"[^\w\s]", "", name.lower())
+    n = re.sub(r"\s+", " ", n).strip()
+    # Strip trailing post-nominals (one or more, may be combined like "MP OBE")
+    parts = n.split()
+    while len(parts) > 2 and parts[-1] in POST_NOMINALS:
+        parts.pop()
+    return " ".join(parts)
+
+
+# Suffix patterns that indicate this is a section/desk/group, not a person
+ORG_SUFFIX_WORDS = {
+    "letters", "readers", "comments", "comment", "editorial",
+    "staff", "team", "desk", "newsroom", "reporters", "reporter",
+    "correspondents", "correspondent", "writers", "writer",
+    "contributors", "contributor", "podcast", "weekly", "daily",
+    "magazine", "online", "tv", "radio", "news", "sport",
+}
 
 
 def _looks_like_organisation(name):
-    """Detect organisation/section labels (e.g. 'BBC Sport', 'Yorkshire Post')."""
+    """Detect organisation/section labels (e.g. 'BBC Sport', 'Yorkshire Post', 'Readers' Letters')."""
     lower = name.lower().strip()
+    
+    # Prefix patterns — name starts with media organisation
     org_prefixes = ("bbc ", "itv ", "sky ", "pa ", "reuters ", "channel ",
-                    "guardian ", "times ", "sun ", "mirror ",
+                    "guardian ", "times ", "sun ", "mirror ", "telegraph ",
                     "yorkshire post", "the yorkshire", "national world ",
-                    "scotsman ", "the scotsman", "press association ")
+                    "scotsman ", "the scotsman", "press association ",
+                    "our ", "the ")  # "Our reporter", "The editor" etc.
     for prefix in org_prefixes:
         if lower.startswith(prefix):
             return True
+    
     parts = lower.split()
+    
+    # Single-word name that is a section
     if len(parts) == 1 and parts[0] in SECTION_WORDS:
         return True
+    
+    # Name ENDING in a desk/section word ("Readers Letters", "Sports Desk")
+    if len(parts) >= 2 and parts[-1] in ORG_SUFFIX_WORDS:
+        return True
+    
+    # Name where every word is a section/role term
+    if all(w in SECTION_WORDS or w in ORG_SUFFIX_WORDS for w in parts):
+        return True
+    
     return False
 
 
