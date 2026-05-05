@@ -54,9 +54,12 @@ CREATE TABLE IF NOT EXISTS journalists (
     -- Computed from the spread of bylines across outlets vs concentration on one.
     syndication_score INTEGER DEFAULT 0,
     classification TEXT,  -- 'local_staff', 'regional_staff', 'network_reporter', 'national', 'freelance', 'unclear'
+    last_active_outlet_id INTEGER,  -- where most recent bylines are concentrated
+    moved_from_outlet_id INTEGER,  -- if this differs from primary, journalist may have moved
+    days_since_last_byline INTEGER,  -- cached for dashboard sort
     first_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE(name_normalised, primary_outlet_id),
+    UNIQUE(name_normalised),
     FOREIGN KEY (primary_outlet_id) REFERENCES outlets(id)
 );
 
@@ -151,9 +154,59 @@ def get_conn():
 
 
 def init_db():
-    """Create all tables. Idempotent."""
+    """Create all tables. Idempotent. Migrates older databases by adding any
+    columns that exist in the current schema but not in the existing tables."""
     with get_conn() as conn:
         conn.executescript(SCHEMA)
+        
+        # Migration: add columns that may be missing from older databases.
+        # SQLite's CREATE TABLE IF NOT EXISTS won't add new columns to an
+        # existing table, so we check what's there and ALTER if needed.
+        existing_cols = {row["name"] for row in conn.execute("PRAGMA table_info(journalists)").fetchall()}
+        migrations = [
+            ("last_active_outlet_id", "INTEGER"),
+            ("moved_from_outlet_id", "INTEGER"),
+            ("days_since_last_byline", "INTEGER"),
+        ]
+
+      # Migration: deduplicate journalists across outlets.
+        # The old schema allowed multiple records for the same name as long as
+        # they were on different outlets. The new schema is name-only unique.
+        # Merge duplicates: keep the oldest record (lowest id), reassign all
+        # bylines and emails to it, delete the duplicates.
+        try:
+            dupes = conn.execute("""
+                SELECT name_normalised, MIN(id) as keep_id, COUNT(*) as n
+                FROM journalists GROUP BY name_normalised HAVING COUNT(*) > 1
+            """).fetchall()
+            if dupes:
+                print(f"Migrating: merging {len(dupes)} duplicated journalist names")
+                for d in dupes:
+                    keep_id = d["keep_id"]
+                    name = d["name_normalised"]
+                    other_ids = [r["id"] for r in conn.execute(
+                        "SELECT id FROM journalists WHERE name_normalised = ? AND id != ?",
+                        (name, keep_id)
+                    ).fetchall()]
+                    if other_ids:
+                        placeholders = ",".join("?" for _ in other_ids)
+                        conn.execute(f"UPDATE bylines SET journalist_id = ? WHERE journalist_id IN ({placeholders})",
+                                     [keep_id] + other_ids)
+                        conn.execute(f"DELETE FROM journalist_emails WHERE journalist_id IN ({placeholders})",
+                                     other_ids)
+                        conn.execute(f"DELETE FROM journalist_specialisms WHERE journalist_id IN ({placeholders})",
+                                     other_ids)
+                        conn.execute(f"DELETE FROM journalists WHERE id IN ({placeholders})",
+                                     other_ids)
+        except Exception as e:
+            print(f"Dedup migration warning: {e}")
+        for col_name, col_type in migrations:
+            if col_name not in existing_cols:
+                try:
+                    conn.execute(f"ALTER TABLE journalists ADD COLUMN {col_name} {col_type}")
+                    print(f"Migrated: added column journalists.{col_name}")
+                except Exception as e:
+                    print(f"Migration warning for {col_name}: {e}")
 
 
 def sync_outlets(outlets_list):

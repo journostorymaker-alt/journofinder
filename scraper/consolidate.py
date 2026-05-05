@@ -94,59 +94,117 @@ def _generate_emails(first, last, pattern_str, fallback_domain=None):
 def _classify_journalist(jid, conn):
     """Decide if a journalist is local_staff, network_reporter, etc.
     
-    Looks at all bylines for this journalist (by normalised name across all
-    outlets in their primary group), counts how spread they are.
+    Looks at all bylines for this journalist, with recent ones weighted 3x heavier.
+    This means journalists who change outlets get reclassified within weeks
+    rather than being locked into their first observed pattern.
     """
-    # Get all bylines for this journalist
+    # Get all bylines with their dates
     rows = conn.execute("""
-        SELECT b.outlet_id, o.name, o.tier, o.region, o.group_name, COUNT(*) as n
+        SELECT b.outlet_id, b.seen_at, o.name, o.tier, o.region, o.group_name
         FROM bylines b
         JOIN outlets o ON b.outlet_id = o.id
         WHERE b.journalist_id = ?
-        GROUP BY b.outlet_id
     """, (jid,)).fetchall()
     
     if not rows:
-        return "unclear", 0, 0, 0, 0, None, None
+        return ("unclear", 0, 0, 0, 0, None, None, None, None, None)
     
-    total_bylines = sum(r["n"] for r in rows)
-    distinct_outlets = len(rows)
-    distinct_groups = len(set(r["group_name"] for r in rows if r["group_name"]))
-    distinct_regions = len(set(r["region"] for r in rows if r["region"]))
+    # Compute recency-weighted byline counts per outlet.
+    # Bylines from the last 30 days count 3x. 30-90 days count 1.5x. Older count 1x.
+    from datetime import datetime, timedelta
+    now = datetime.now()
     
-    # Identify primary outlet (most bylines)
-    primary = max(rows, key=lambda r: r["n"])
-    primary_share = primary["n"] / total_bylines
+    outlet_weighted = {}  # outlet_id -> weighted count
+    outlet_meta = {}  # outlet_id -> dict of metadata
+    most_recent_byline_date = None
+    most_recent_outlet_id = None
     
-    # Syndication score: 0 = totally concentrated, 100 = totally spread
-    if total_bylines == 0:
+    for r in rows:
+        oid = r["outlet_id"]
+        try:
+            seen_at = datetime.fromisoformat(r["seen_at"])
+        except (TypeError, ValueError):
+            seen_at = now
+        
+        days_ago = (now - seen_at).days
+        if days_ago < 30:
+            weight = 3.0
+        elif days_ago < 90:
+            weight = 1.5
+        else:
+            weight = 1.0
+        
+        outlet_weighted[oid] = outlet_weighted.get(oid, 0) + weight
+        outlet_meta[oid] = {
+            "name": r["name"], "tier": r["tier"], "region": r["region"], "group_name": r["group_name"]
+        }
+        if most_recent_byline_date is None or seen_at > most_recent_byline_date:
+            most_recent_byline_date = seen_at
+            most_recent_outlet_id = oid
+    
+    total_weighted = sum(outlet_weighted.values())
+    total_bylines = len(rows)
+    distinct_outlets = len(outlet_weighted)
+    distinct_groups = len(set(m["group_name"] for m in outlet_meta.values() if m["group_name"]))
+    distinct_regions = len(set(m["region"] for m in outlet_meta.values() if m["region"]))
+    
+    # Primary outlet by weighted score (so recent bylines dominate)
+    primary_oid = max(outlet_weighted, key=outlet_weighted.get)
+    primary_meta = outlet_meta[primary_oid]
+    primary_share = outlet_weighted[primary_oid] / total_weighted if total_weighted else 0
+    
+    # Days since last byline
+    days_since = (now - most_recent_byline_date).days if most_recent_byline_date else None
+    
+    # Syndication score (Herfindahl, on weighted shares)
+    if total_weighted == 0:
         synd = 0
     else:
-        # Use Herfindahl-style concentration index, inverted
-        shares = [r["n"] / total_bylines for r in rows]
+        shares = [w / total_weighted for w in outlet_weighted.values()]
         concentration = sum(s * s for s in shares)
         synd = int(round((1 - concentration) * 100))
     
-    # Classification logic
-    if primary["tier"] == "national":
+    # Classification
+    if primary_meta["tier"] == "national":
         classification = "national"
     elif distinct_regions >= 4 and distinct_outlets >= 4:
-        # Bylines spread across many regions = clearly a network reporter
         classification = "network_reporter"
     elif distinct_outlets >= 3 and distinct_groups == 1:
-        # Same group, multiple titles, fewer regions = regional staff
         classification = "regional_staff"
     elif primary_share >= 0.7 and distinct_outlets <= 2:
-        # Concentrated on one outlet = local staff
         classification = "local_staff"
     elif distinct_outlets <= 2:
         classification = "local_staff"
     else:
         classification = "unclear"
     
+    # Movement detection: was the primary outlet different in older data?
+    # Compare last 30 days vs the prior 30-180 days window.
+    moved_from_oid = None
+    recent_outlet_count = {}
+    older_outlet_count = {}
+    for r in rows:
+        try:
+            seen_at = datetime.fromisoformat(r["seen_at"])
+        except (TypeError, ValueError):
+            continue
+        days_ago = (now - seen_at).days
+        if days_ago < 30:
+            recent_outlet_count[r["outlet_id"]] = recent_outlet_count.get(r["outlet_id"], 0) + 1
+        elif days_ago < 180:
+            older_outlet_count[r["outlet_id"]] = older_outlet_count.get(r["outlet_id"], 0) + 1
+    
+    if recent_outlet_count and older_outlet_count:
+        recent_top = max(recent_outlet_count, key=recent_outlet_count.get)
+        older_top = max(older_outlet_count, key=older_outlet_count.get)
+        if recent_top != older_top and recent_outlet_count[recent_top] >= 2:
+            # They've moved — recent activity is at a different outlet
+            moved_from_oid = older_top
+    
     return (classification, total_bylines, distinct_outlets, distinct_groups, synd,
-            primary["name"], primary["region"])
-
+            primary_meta["name"], primary_meta["region"],
+            most_recent_outlet_id, moved_from_oid, days_since)
+   
 
 def _extract_specialisms(jid, conn):
     """Aggregate keywords from journalist's bylines."""
@@ -175,7 +233,8 @@ def consolidate():
             jid = j["id"]
             
             # Classify
-            (classification, total, n_outlets, n_groups, synd, primary_name, primary_region) = (
+            (classification, total, n_outlets, n_groups, synd, primary_name, primary_region,
+             last_active_oid, moved_from_oid, days_since) = (
                 _classify_journalist(jid, conn)
             )
             
@@ -193,9 +252,13 @@ def consolidate():
                     distinct_groups = ?,
                     syndication_score = ?,
                     primary_region = ?,
-                    primary_tier = ?
+                    primary_tier = ?,
+                    last_active_outlet_id = ?,
+                    moved_from_outlet_id = ?,
+                    days_since_last_byline = ?
                 WHERE id = ?
-            """, (classification, total, n_outlets, n_groups, synd, primary_region, primary_tier, jid))
+            """, (classification, total, n_outlets, n_groups, synd, primary_region, primary_tier,
+                  last_active_oid, moved_from_oid, days_since, jid))
             
             # Specialisms
             conn.execute("DELETE FROM journalist_specialisms WHERE journalist_id = ?", (jid,))
