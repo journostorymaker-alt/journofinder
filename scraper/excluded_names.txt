@@ -1,0 +1,100 @@
+# Excluded names — guest contributors who appear in bylines but aren't journalists
+#
+# These are MPs, academics, activists, public figures who write op-eds or
+# guest columns. They appear in the byline data because they signed an article,
+# but they aren't on staff at the outlet — emailing them at @bylinetimes.com
+# (or wherever) won't reach them. Their press contact is via their MP office,
+# institution, or personal channels.
+#
+# Add to this list as you spot them. Names are case-insensitive and post-nominals
+# (MP, OBE etc.) are stripped automatically before matching.
+#
+# Lines starting with # are comments and are ignored.
+
+# === MPs and former MPs (frequent op-ed bylines) ===
+Caroline Lucas
+Diane Abbott
+Jeremy Corbyn
+Andy Burnham
+Sadiq Khan
+Mhairi Black
+Zarah Sultana
+Clive Lewis
+Layla Moran
+Wera Hobhouse
+Daisy Cooper
+Ed Davey
+Anneliese Dodds
+Jess Phillips
+Stella Creasy
+Nadia Whittome
+Lloyd Russell-Moyle
+Apsana Begum
+Richard Burgon
+Dawn Butler
+John McDonnell
+Andrew Mitchell
+Caroline Nokes
+Rishi Sunak
+Keir Starmer
+Rachel Reeves
+Wes Streeting
+Yvette Cooper
+David Lammy
+Lisa Nandy
+Pat McFadden
+Ed Miliband
+Liz Kendall
+Bridget Phillipson
+Steve Reed
+Hilary Benn
+Peter Kyle
+Shabana Mahmood
+
+# === Lords and prominent peers ===
+Frank Field
+Shami Chakrabarti
+Andrew Adonis
+
+# === Activists and campaigners ===
+George Monbiot
+Naomi Klein
+Ash Sarkar
+Owen Jones
+Aaron Bastani
+Grace Blakeley
+Femi Oluwole
+Otto English
+Carole Cadwalladr
+Marina Hyde
+Polly Toynbee
+Jonathan Freedland
+
+# === Academics frequently in op-eds ===
+Mariana Mazzucato
+Danny Dorling
+Simon Wren-Lewis
+Will Hutton
+Anand Menon
+
+# === Trade unionists ===
+Mick Lynch
+Sharon Graham
+Mark Serwotka
+Christina McAnea
+
+# === Other prominent guest contributors ===
+Gary Lineker
+Neil Tennant
+Hugh Grant
+Michael Sheen
+Brian Eno
+Stephen Fry
+Charlotte Church
+Greg Wise
+Emma Thompson
+Mark Rylance
+Maxine Peake
+Vanessa Redgrave
+Annie Lennox
+Bob Geldof

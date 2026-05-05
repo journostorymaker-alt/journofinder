@@ -559,6 +559,13 @@ def _strategy_authors(outlet_data, max_articles):
     common_paths = [
         "/authors/", "/author/", "/staff/", "/our-team/", "/team/",
         "/meet-the-team", "/news/meet-the-team", "/journalists/",
+        # Newsquest-specific
+        "/author/journalists/", "/contact/",
+        # Major nationals — columnists/correspondents directories
+        "/columnists/", "/columnists", "/our-columnists",
+        "/correspondents/", "/correspondents", "/our-correspondents",
+        # Other patterns
+        "/people/", "/bureaus/", "/about/team/", "/about/staff/",
     ]
     for path in common_paths:
         candidates.append(f"https://{domain}{path}")
@@ -581,7 +588,8 @@ def _strategy_authors(outlet_data, max_articles):
                 continue
             if not any(p in href_lower for p in
                        ["/author/", "/authors/", "/staff/", "/profile/",
-                        "/meet-the-team/", "/people/", "/journalists/"]):
+                        "/meet-the-team/", "/people/", "/journalists/",
+                        "/columnists/", "/correspondents/"]):
                 continue
             if href in seen_profile_urls:
                 continue
@@ -793,28 +801,61 @@ def _log_scrape(outlet_id, url, status, count, notes):
 # Main run loop
 # =============================================================================
 
-def run_full_scrape(limit=None, region_filter=None):
+def run_full_scrape(limit=None, region_filter=None, skip_recent_hours=None):
+    """Scrape outlets, ordered by last_scraped ASC (oldest/never first).
+    
+    skip_recent_hours: if set (e.g. 12), outlets scraped more recently than
+    this number of hours are skipped entirely. Useful for "top up" runs that
+    only finish what a previous run missed. Leave None for full daily refreshes.
+    """
     init_db()
     sync_outlets(OUTLETS)
     
     with get_conn() as conn:
-        query = "SELECT * FROM outlets"
+        query = """
+            SELECT * FROM outlets
+            WHERE 1=1
+        """
         params = []
         if region_filter:
-            query += " WHERE region LIKE ?"
+            query += " AND region LIKE ?"
             params.append(f"%{region_filter}%")
+        # Order: never-scraped first (NULL), then oldest scraped first.
+        # This means a partial recovery run picks up where it left off.
+        query += " ORDER BY last_scraped IS NOT NULL, last_scraped ASC"
         outlets = conn.execute(query, params).fetchall()
+    
+    # Optionally skip outlets recently scraped (for manual top-up runs)
+    if skip_recent_hours is not None:
+        from datetime import datetime, timedelta
+        cutoff = datetime.utcnow() - timedelta(hours=skip_recent_hours)
+        skipped = 0
+        filtered = []
+        for o in outlets:
+            ts = o["last_scraped"]
+            if ts:
+                try:
+                    last = datetime.fromisoformat(ts.replace("Z", "").split(".")[0])
+                    if last >= cutoff:
+                        skipped += 1
+                        continue
+                except (ValueError, AttributeError):
+                    pass
+            filtered.append(o)
+        outlets = filtered
+        if skipped:
+            print(f"Skipping {skipped} outlets scraped in last {skip_recent_hours}h", flush=True)
     
     if limit:
         outlets = outlets[:limit]
     
-    # Shuffle so we don't always hit the same domains in order
-    outlets = list(outlets)
-    random.shuffle(outlets)
-    
     print(f"Scraping {len(outlets)} outlets...")
     print(f"Politeness: {MIN_DELAY}-{MAX_DELAY}s jitter, "
           f"crawl-delay honoured, backoff on 429/503", flush=True)
+    if outlets:
+        # Show the order — useful for confirming oldest-first ordering works
+        first_three = [(o["name"], o["last_scraped"] or "never") for o in outlets[:3]]
+        print(f"First 3 in queue: {first_three}", flush=True)
     
     results = {"ok": 0, "no_bylines": 0, "error": 0, "no_seed_data": 0}
     total_bylines = 0

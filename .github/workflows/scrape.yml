@@ -2,17 +2,14 @@ name: Scrape UK press
 
 on:
   schedule:
-    # Daily at ~04:00-05:30 UTC — pick varying minutes for natural jitter.
-    # Multiple cron lines mean GitHub picks the earliest match, but adding
-    # a sleep at the start of the job adds further jitter within the hour.
     - cron: '0 4 * * *'
-  workflow_dispatch:  # allow manual triggering from GitHub UI
+  workflow_dispatch:
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
     permissions:
-      contents: write   # needed to commit the updated DB back
+      contents: write
     
     steps:
       - name: Checkout
@@ -28,10 +25,6 @@ jobs:
           pip install requests beautifulsoup4 feedparser
       
       - name: Apply schedule jitter
-        # Don't let scrapes start at exactly the same second as everyone
-        # else's. Sleeping a random 0-30 minutes spreads our requests out
-        # naturally and is more polite to outlet servers.
-        # Skip jitter on manual runs (workflow_dispatch).
         if: github.event_name == 'schedule'
         run: |
           JITTER=$((RANDOM % 1800))
@@ -43,17 +36,11 @@ jobs:
       
       - name: Run scrape
         id: scrape
-        # If scrape times out or errors, we still want to commit whatever
-        # bylines were collected up to that point. continue-on-error means
-        # subsequent steps still run even if this fails.
         continue-on-error: true
         run: python scraper/scrape.py
         timeout-minutes: 300
       
       - name: Run consolidation
-        # Always run consolidation, even if scrape was killed mid-run —
-        # whatever bylines made it into the DB still benefit from being
-        # consolidated.
         if: always()
         continue-on-error: true
         run: python scraper/consolidate.py
@@ -79,7 +66,6 @@ jobs:
           "
       
       - name: Copy database into dashboard folder
-        # Always — whatever data we have, get it onto the dashboard.
         if: always()
         continue-on-error: true
         run: |
@@ -91,12 +77,15 @@ jobs:
             echo "No database to copy"
           fi
       
-      - name: Commit updated database
-        # Always commit, even on partial scrapes. The push-retry logic
-        # handles any race conditions if multiple workflows finish around
-        # the same time.
+      - name: Commit and push results (binary-safe)
+        # Robust binary-file commit/push.
+        # Strategy: stash our scrape output, fetch latest, force-overwrite the
+        # binary database files with our version (the scrape always wins for
+        # the database — it's the most recent data). This avoids binary merge
+        # conflicts that a normal git pull --rebase can't resolve.
         if: always()
         run: |
+          set +e
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
@@ -105,16 +94,77 @@ jobs:
             exit 0
           fi
           
-          git add data/journalists.db docs/data/journalists.db 2>/dev/null || true
+          # Save our scrape output to a temporary location outside the repo
+          mkdir -p /tmp/scrape-output
+          cp data/journalists.db /tmp/scrape-output/data.db
+          if [ -f docs/data/journalists.db ]; then
+            cp docs/data/journalists.db /tmp/scrape-output/docs-data.db
+          fi
           
-          # If scrape timed out, mark commit as partial in message
+          # Get latest from remote (someone may have committed during the scrape)
+          git fetch origin main
+          
+          # Reset our working tree to match remote, discarding any local changes
+          # to other files. This ensures we don't carry along stale code edits.
+          git reset --hard origin/main
+          
+          # Re-apply our scrape output on top
+          mkdir -p data docs/data
+          cp /tmp/scrape-output/data.db data/journalists.db
+          if [ -f /tmp/scrape-output/docs-data.db ]; then
+            cp /tmp/scrape-output/docs-data.db docs/data/journalists.db
+          else
+            cp /tmp/scrape-output/data.db docs/data/journalists.db
+          fi
+          
+          git add data/journalists.db docs/data/journalists.db
+          
           PARTIAL=""
           if [ "${{ steps.scrape.outcome }}" != "success" ]; then
             PARTIAL=" (partial — scrape did not complete cleanly)"
           fi
           
-          git diff --quiet --cached || git commit -m "Daily scrape: $(date -u +%Y-%m-%d)${PARTIAL}"
+          # Only commit if the binary actually changed
+          if git diff --cached --quiet; then
+            echo "Database unchanged — nothing to commit"
+            exit 0
+          fi
           
-          # Robust push: pull-rebase first, then push, retry once on conflict
-          git pull --rebase || true
-          git push || (sleep 5 && git pull --rebase && git push) || (sleep 30 && git pull --rebase && git push)
+          git commit -m "Daily scrape: $(date -u +%Y-%m-%d)${PARTIAL}"
+          
+          # Push with one retry. We've already rebased onto latest origin/main,
+          # so this should succeed. If it fails (someone pushed in the few
+          # seconds since), retry by rebasing on top of fresh origin/main.
+          PUSH_OK=0
+          for attempt in 1 2 3; do
+            if git push origin main; then
+              PUSH_OK=1
+              break
+            fi
+            echo "Push attempt $attempt failed, retrying..."
+            sleep $((5 * attempt))
+            
+            # Save our commit
+            COMMIT_SHA=$(git rev-parse HEAD)
+            
+            # Reset hard onto fresh origin
+            git fetch origin main
+            git reset --hard origin/main
+            
+            # Re-apply just the binary files from our previous commit
+            git checkout $COMMIT_SHA -- data/journalists.db docs/data/journalists.db
+            git add data/journalists.db docs/data/journalists.db
+            
+            if git diff --cached --quiet; then
+              echo "Nothing changed after rebase, giving up cleanly"
+              PUSH_OK=1
+              break
+            fi
+            
+            git commit -m "Daily scrape: $(date -u +%Y-%m-%d)${PARTIAL} (retry $attempt)"
+          done
+          
+          if [ "$PUSH_OK" -ne 1 ]; then
+            echo "All push attempts failed"
+            exit 1
+          fi

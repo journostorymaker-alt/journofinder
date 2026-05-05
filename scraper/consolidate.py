@@ -27,7 +27,38 @@ the classification logic without re-scraping.
 """
 
 from collections import Counter, defaultdict
+from pathlib import Path
 from db import get_conn
+
+
+# Load excluded names — guest contributors who aren't journalists
+# (MPs, academics, activists who byline op-eds at outlets like Byline Times,
+# openDemocracy, The Canary, Morning Star).
+def _load_excluded_names():
+    """Returns a set of normalised names to exclude from journalist records."""
+    exclude_file = Path(__file__).parent / "excluded_names.txt"
+    excluded = set()
+    if exclude_file.exists():
+        for line in exclude_file.read_text().splitlines():
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            # Normalise: lowercase, strip post-nominals
+            import re
+            n = re.sub(r"[^\w\s]", "", line.lower())
+            n = re.sub(r"\s+", " ", n).strip()
+            # Strip post-nominals like "MP", "OBE" (same logic as scrape.py)
+            POST_NOMINALS = {"mp", "msp", "ms", "mep", "am", "obe", "cbe", "mbe",
+                             "kbe", "dbe", "phd", "md", "qc", "kc", "rev", "revd",
+                             "bsc", "ba", "ma", "msc", "mba", "llb", "llm", "jr", "sr"}
+            parts = n.split()
+            while len(parts) > 2 and parts[-1] in POST_NOMINALS:
+                parts.pop()
+            excluded.add(" ".join(parts))
+    return excluded
+
+
+EXCLUDED_NAMES = _load_excluded_names()
 from outlets import OUTLETS
 
 # Keep first letter case-aware lookups
@@ -56,9 +87,35 @@ def _format_pattern(pattern, first, last):
     )
 
 
+NEWSROOM_PATTERN_LOCALS = {
+    "newsdesk", "news", "tips", "tipoff",
+    "editor", "editorial",
+    "info", "hello", "contact",
+    "letters", "comment", "press", "admin",
+    "team", "office",
+}
+
+
 def _generate_emails(first, last, pattern_str, fallback_domain=None):
-    """Return list of (email, confidence) tuples."""
+    """Return list of (email, confidence, source) tuples.
+    
+    If the outlet's email_pattern is a generic newsroom-style address that
+    doesn't substitute {first}/{last}, return empty list. We don't want to
+    assign newsdesk@ to individual journalists; that's a newsroom contact,
+    not a personal email.
+    """
     emails = []
+    
+    # Detect generic newsroom-style patterns and refuse to generate from them
+    if pattern_str and pattern_str != "unknown":
+        first_pattern = pattern_str.split("|")[0].strip()
+        # If pattern has no name placeholder, it's a generic email
+        if "{" not in first_pattern:
+            # Check if local part is a newsroom term
+            if "@" in first_pattern:
+                local = first_pattern.split("@")[0].lower().strip()
+                if local in NEWSROOM_PATTERN_LOCALS:
+                    return []  # don't assign newsroom email to a journalist
     
     if pattern_str and pattern_str != "unknown":
         # Pattern can have multiple alternatives separated by |
@@ -226,6 +283,25 @@ def consolidate():
     print("Consolidating journalist data...")
     
     with get_conn() as conn:
+        # ===== STEP 1: Remove excluded journalists (guest contributors) =====
+        if EXCLUDED_NAMES:
+            removed = 0
+            removed_bylines = 0
+            for r in conn.execute("SELECT id, full_name, name_normalised FROM journalists").fetchall():
+                if r["name_normalised"] in EXCLUDED_NAMES:
+                    n_byl = conn.execute(
+                        "SELECT COUNT(*) FROM bylines WHERE journalist_id = ?", (r["id"],)
+                    ).fetchone()[0]
+                    conn.execute("DELETE FROM bylines WHERE journalist_id = ?", (r["id"],))
+                    conn.execute("DELETE FROM journalist_emails WHERE journalist_id = ?", (r["id"],))
+                    conn.execute("DELETE FROM journalist_specialisms WHERE journalist_id = ?", (r["id"],))
+                    conn.execute("DELETE FROM journalists WHERE id = ?", (r["id"],))
+                    removed += 1
+                    removed_bylines += n_byl
+            if removed:
+                print(f"  Removed {removed} excluded names ({removed_bylines} bylines)")
+            conn.commit()
+        
         journalists = conn.execute("SELECT id, first_name, last_name FROM journalists").fetchall()
         print(f"  Processing {len(journalists)} journalists...")
         
@@ -290,6 +366,35 @@ def consolidate():
                             (journalist_id, email, confidence, source, is_primary)
                         VALUES (?, ?, ?, ?, ?)
                     """, (jid, email, conf, source, 1 if i == 0 else 0))
+        
+        # ===== STEP 2: Flag email ambiguity =====
+        # When the same primary email is assigned to 2+ journalists, downgrade
+        # all of them to 'guess' confidence, because we can't tell which one
+        # the email actually belongs to.
+        # Common cause: outlets with first-name-only patterns (Mill Media, Byline Times)
+        # where two journalists share a first name.
+        ambiguous_count = 0
+        rows = conn.execute("""
+            SELECT email, COUNT(DISTINCT journalist_id) as n_journalists
+            FROM journalist_emails
+            WHERE is_primary = 1 AND confidence != 'verified'
+            GROUP BY email
+            HAVING n_journalists > 1
+        """).fetchall()
+        
+        for r in rows:
+            email = r["email"]
+            n = r["n_journalists"]
+            conn.execute("""
+                UPDATE journalist_emails
+                SET confidence = 'guess'
+                WHERE email = ? AND confidence != 'verified'
+            """, (email,))
+            ambiguous_count += n
+        
+        if ambiguous_count:
+            print(f"  Flagged {len(rows)} ambiguous email addresses "
+                  f"affecting {ambiguous_count} journalists (confidence -> guess)")
         
         print("  Done.")
         
