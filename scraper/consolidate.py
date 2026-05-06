@@ -9,12 +9,16 @@ Run this AFTER scrape.py. It does four things:
    probably a different person from Sarah Smith at News UK).
 
 2. Classification. We label each journalist as:
-     - 'local_staff'      -- 80%+ of bylines on one local/regional outlet
-     - 'regional_staff'   -- bylines spread across one group's titles in one region
-     - 'network_reporter' -- bylines spread across one group's titles in many regions
+     - 'local_staff'      -- bylines dominated by one outlet, or all from a single outlet
+     - 'regional_staff'   -- bylines spread across one publisher group's titles
+     - 'network_reporter' -- bylines genuinely scattered across multiple unrelated groups
      - 'national'         -- primary outlet is national tier
-     - 'unclear'          -- not enough data
-   This is the key signal for filtering "real local journalists" in the dashboard.
+     - 'unclear'          -- not enough data, or no clear pattern
+
+   The classifier groups bylines by *publisher group* first (Newsquest, Reach,
+   BBC, etc), then looks at outlet dominance within that group. This stops a
+   Brighton Argus reporter being mislabelled "network reporter" just because
+   Newsquest's CMS auto-syndicates her stories across sister titles.
 
 3. Email generation. Apply the outlet's known pattern to first/last name,
    then add fallback guesses with lower confidence. We never claim to have
@@ -151,9 +155,29 @@ def _generate_emails(first, last, pattern_str, fallback_domain=None):
 def _classify_journalist(jid, conn):
     """Decide if a journalist is local_staff, network_reporter, etc.
     
-    Looks at all bylines for this journalist, with recent ones weighted 3x heavier.
-    This means journalists who change outlets get reclassified within weeks
-    rather than being locked into their first observed pattern.
+    The rules walk down a list, stopping at the first match:
+    
+      1. national tier → 'national' (a Guardian or Mirror staffer)
+      2. only 1 outlet seen → 'local_staff' (trust the single source)
+      3. <3 bylines and 2+ outlets → 'unclear' (too little to call)
+      4. one outlet has >=70% of bylines → 'local_staff' there
+      5. one publisher group has >=80% of bylines → staff within that group
+         - 'local_staff' if the dominant outlet within the group has >=50%
+         - 'regional_staff' otherwise (spread across sister titles)
+      6. top outlet <50% AND 2+ groups each >=25% → 'network_reporter'
+         (genuinely scattered across unrelated publishers)
+      7. anything else → 'unclear'
+    
+    Bylines are recency-weighted: last 30 days count 3x, last 30-90 days
+    count 1.5x, older count 1x. This means journalists who change outlets
+    get reclassified within weeks rather than being locked into their
+    first observed pattern.
+    
+    Grouping bylines by publisher group is the key fix vs. earlier rules:
+    a Brighton Argus reporter whose stories auto-syndicate to Hampshire
+    Chronicle, Bournemouth Echo etc via Newsquest's shared CMS no longer
+    gets mistakenly tagged as a 'network reporter' just because her bylines
+    appear on multiple titles in multiple regions.
     """
     # Get all bylines with their dates
     rows = conn.execute("""
@@ -166,13 +190,14 @@ def _classify_journalist(jid, conn):
     if not rows:
         return ("unclear", 0, 0, 0, 0, None, None, None, None, None)
     
-    # Compute recency-weighted byline counts per outlet.
+    # Compute recency-weighted byline counts per outlet AND per publisher group.
     # Bylines from the last 30 days count 3x. 30-90 days count 1.5x. Older count 1x.
     from datetime import datetime, timedelta
     now = datetime.now()
     
     outlet_weighted = {}  # outlet_id -> weighted count
-    outlet_meta = {}  # outlet_id -> dict of metadata
+    outlet_meta = {}      # outlet_id -> dict of metadata
+    group_weighted = {}   # group_name -> weighted count (key fix: group-level view)
     most_recent_byline_date = None
     most_recent_outlet_id = None
     
@@ -195,6 +220,12 @@ def _classify_journalist(jid, conn):
         outlet_meta[oid] = {
             "name": r["name"], "tier": r["tier"], "region": r["region"], "group_name": r["group_name"]
         }
+        # Group-level weighting. Outlets without a group_name are bucketed alone
+        # so a solo independent outlet doesn't accidentally collapse into other
+        # solo independents.
+        gname = r["group_name"] if r["group_name"] else f"_solo_{r['name']}"
+        group_weighted[gname] = group_weighted.get(gname, 0) + weight
+        
         if most_recent_byline_date is None or seen_at > most_recent_byline_date:
             most_recent_byline_date = seen_at
             most_recent_outlet_id = oid
@@ -210,10 +241,15 @@ def _classify_journalist(jid, conn):
     primary_meta = outlet_meta[primary_oid]
     primary_share = outlet_weighted[primary_oid] / total_weighted if total_weighted else 0
     
+    # Primary publisher group by weighted score
+    primary_group = max(group_weighted, key=group_weighted.get) if group_weighted else None
+    primary_group_share = group_weighted[primary_group] / total_weighted if total_weighted and primary_group else 0
+    
     # Days since last byline
     days_since = (now - most_recent_byline_date).days if most_recent_byline_date else None
     
-    # Syndication score (Herfindahl, on weighted shares)
+    # Syndication score (Herfindahl, on weighted shares) — kept as a useful
+    # filter signal in the dashboard even though the classifier no longer uses it
     if total_weighted == 0:
         synd = 0
     else:
@@ -221,17 +257,43 @@ def _classify_journalist(jid, conn):
         concentration = sum(s * s for s in shares)
         synd = int(round((1 - concentration) * 100))
     
-    # Classification
+    # ===== Classification rules (walk down, first match wins) =====
+    
+    # Rule 1: national outlet → 'national', regardless of share
     if primary_meta["tier"] == "national":
         classification = "national"
-    elif distinct_regions >= 4 and distinct_outlets >= 4:
-        classification = "network_reporter"
-    elif distinct_outlets >= 3 and distinct_groups == 1:
-        classification = "regional_staff"
-    elif primary_share >= 0.7 and distinct_outlets <= 2:
+    
+    # Rule 2: only one outlet seen → trust it (permissive single-outlet rule)
+    elif distinct_outlets == 1:
         classification = "local_staff"
-    elif distinct_outlets <= 2:
+    
+    # Rule 3: very thin evidence and multiple outlets → 'unclear'
+    elif total_bylines < 3:
+        classification = "unclear"
+    
+    # Rule 4: one outlet dominates (≥70% of weighted bylines) → 'local_staff'
+    elif primary_share >= 0.70:
         classification = "local_staff"
+    
+    # Rule 5: one publisher group dominates (≥80%) → staff within that group
+    elif primary_group_share >= 0.80:
+        if primary_share >= 0.50:
+            classification = "local_staff"
+        else:
+            classification = "regional_staff"
+    
+    # Rule 6: bylines genuinely scatter across multiple unrelated groups → 'network_reporter'
+    # Top outlet must hold under 50% AND at least 2 groups must each hold ≥25%.
+    # This catches PA Media wire reporters and similar; it does NOT catch local
+    # staff whose work occasionally appears at one or two non-group outlets.
+    elif primary_share < 0.50:
+        big_groups = [g for g, w in group_weighted.items() if w / total_weighted >= 0.25]
+        if len(big_groups) >= 2:
+            classification = "network_reporter"
+        else:
+            classification = "unclear"
+    
+    # Rule 7: catch-all — middling outlet share, no clear group dominance
     else:
         classification = "unclear"
     
