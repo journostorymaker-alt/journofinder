@@ -1,0 +1,63 @@
+name: Ingest Parliament Register
+
+# Manual trigger only — don't want this running on a schedule, since the
+# Register only updates every ~6 weeks and we want to control when the
+# DB gets modified.
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type INGEST to confirm you want to ingest the Register data'
+        required: true
+        default: ''
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    permissions:
+      # Need write access so the workflow can commit the modified DB back
+      contents: write
+
+    steps:
+      - name: Refuse to run unless explicitly confirmed
+        if: ${{ github.event.inputs.confirm != 'INGEST' }}
+        run: |
+          echo "::error ::Confirmation text was not 'INGEST'. Aborting."
+          exit 1
+
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verify required files are present
+        run: |
+          ls -la scraper/ingest_register.py scraper/register_data.json data/journalists.db || (
+            echo "::error ::One or more required files are missing. See message for which."
+            exit 1
+          )
+
+      - name: Run ingestion script
+        working-directory: scraper
+        run: python ingest_register.py
+
+      - name: Promote new database to live
+        run: |
+          mv data/journalists.db data/journalists.db.backup-pre-register-$(date +%Y%m%d-%H%M%S)
+          mv data/journalists.db.new data/journalists.db
+          ls -la data/
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/journalists.db data/journalists.db.backup-pre-register-* || true
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Ingest Parliament Register of Journalists' Interests (20 April 2026)"
+            git push
+          fi
