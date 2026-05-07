@@ -1,0 +1,3872 @@
+[
+  {
+    "name": "John Adderley",
+    "first_name": "John",
+    "last_name": "Adderley",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Aletha Adu",
+    "first_name": "Aletha",
+    "last_name": "Adu",
+    "raw_sponsor": "The Guardian",
+    "outlet_display_name": "The Guardian/Observer",
+    "email_pattern": "{first}.{last}@theguardian.com",
+    "domain": "theguardian.com"
+  },
+  {
+    "name": "Amanda Akass",
+    "first_name": "Amanda",
+    "last_name": "Akass",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Andrew Alexander",
+    "first_name": "Andrew",
+    "last_name": "Alexander",
+    "raw_sponsor": "Times Radio",
+    "outlet_display_name": "The Times / Times Radio (News UK)",
+    "email_pattern": "{first}.{last}@thetimes.co.uk",
+    "domain": "thetimes.co.uk"
+  },
+  {
+    "name": "Anne Alexander",
+    "first_name": "Anne",
+    "last_name": "Alexander",
+    "raw_sponsor": "ITV Good Morning Britain",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Aubrey Allegretti",
+    "first_name": "Aubrey",
+    "last_name": "Allegretti",
+    "raw_sponsor": "The Times",
+    "outlet_display_name": "The Times / Times Radio (News UK)",
+    "email_pattern": "{first}.{last}@thetimes.co.uk",
+    "domain": "thetimes.co.uk"
+  },
+  {
+    "name": "Caroline Allen",
+    "first_name": "Caroline",
+    "last_name": "Allen",
+    "raw_sponsor": "Global Radio (LBC)",
+    "outlet_display_name": "LBC (Global Radio)",
+    "email_pattern": "{first}.{last}@global.com",
+    "domain": "global.com"
+  },
+  {
+    "name": "Isabella Allen",
+    "first_name": "Isabella",
+    "last_name": "Allen",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Kieran Andrews",
+    "first_name": "Kieran",
+    "last_name": "Andrews",
+    "raw_sponsor": "ITV Border",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Kathryn Austin",
+    "first_name": "Kathryn",
+    "last_name": "Austin",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Penelope Ayres",
+    "first_name": "Penelope",
+    "last_name": "Ayres",
+    "raw_sponsor": "Channel 4 News/ITN",
+    "outlet_display_name": "Channel 4 News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Richard Bailey",
+    "first_name": "Richard",
+    "last_name": "Bailey",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Amanda Baker",
+    "first_name": "Amanda",
+    "last_name": "Baker",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Patrick Baker",
+    "first_name": "Patrick",
+    "last_name": "Baker",
+    "raw_sponsor": "Politico",
+    "outlet_display_name": "Politico (UK)",
+    "email_pattern": "{first}{last}@politico.eu|{first}.{last}@politico.eu",
+    "domain": "politico.eu"
+  },
+  {
+    "name": "Timothy Baker",
+    "first_name": "Timothy",
+    "last_name": "Baker",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Holly Bancroft",
+    "first_name": "Holly",
+    "last_name": "Bancroft",
+    "raw_sponsor": "The Independent",
+    "outlet_display_name": "The Independent",
+    "email_pattern": "{first}.{last}@independent.co.uk",
+    "domain": "independent.co.uk"
+  },
+  {
+    "name": "Peter Barnes",
+    "first_name": "Peter",
+    "last_name": "Barnes",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "David Barrett",
+    "first_name": "David",
+    "last_name": "Barrett",
+    "raw_sponsor": "Daily Mail",
+    "outlet_display_name": "Daily Mail / Mail on Sunday",
+    "email_pattern": "{first}.{last}@mailonline.co.uk|{first}.{last}@dailymail.co.uk",
+    "domain": "mailonline.co.uk"
+  },
+  {
+    "name": "Nadine Batchelor-Hunt",
+    "first_name": "Nadine",
+    "last_name": "Batchelor-Hunt",
+    "raw_sponsor": "PoliticsHome/Total Politics",
+    "outlet_display_name": "Dods Group (PoliticsHome / The House)",
+    "email_pattern": "{first}.{last}@dodsgroup.com|{first}.{last}@politicshome.com",
+    "domain": "politicshome.com"
+  },
+  {
+    "name": "Keith Bays",
+    "first_name": "Keith",
+    "last_name": "Bays",
+    "raw_sponsor": "GB News",
+    "outlet_display_name": "GB News",
+    "email_pattern": "{first}.{last}@gbnews.com",
+    "domain": "gbnews.com"
+  },
+  {
+    "name": "Emily Beament",
+    "first_name": "Emily",
+    "last_name": "Beament",
+    "raw_sponsor": "Press Association",
+    "outlet_display_name": "PA Media",
+    "email_pattern": "{first}.{last}@pa.media",
+    "domain": "pa.media"
+  },
+  {
+    "name": "Martin Beckford",
+    "first_name": "Martin",
+    "last_name": "Beckford",
+    "raw_sponsor": "Daily Mail",
+    "outlet_display_name": "Daily Mail / Mail on Sunday",
+    "email_pattern": "{first}.{last}@mailonline.co.uk|{first}.{last}@dailymail.co.uk",
+    "domain": "mailonline.co.uk"
+  },
+  {
+    "name": "Ramzi Bedj-Bedj",
+    "first_name": "Ramzi",
+    "last_name": "Bedj-Bedj",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Rafael Behr",
+    "first_name": "Rafael",
+    "last_name": "Behr",
+    "raw_sponsor": "Guardian Unlimited",
+    "outlet_display_name": "The Guardian/Observer",
+    "email_pattern": "{first}.{last}@theguardian.com",
+    "domain": "theguardian.com"
+  },
+  {
+    "name": "Andrew Bell",
+    "first_name": "Andrew",
+    "last_name": "Bell",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Lorin Bell-Cross",
+    "first_name": "Lorin",
+    "last_name": "Bell-Cross",
+    "raw_sponsor": "The Jewish Chronicle",
+    "outlet_display_name": "The Jewish Chronicle",
+    "email_pattern": "{first}.{last}@thejc.com",
+    "domain": "thejc.com"
+  },
+  {
+    "name": "Martina Betteto",
+    "first_name": "Martina",
+    "last_name": "Betteto",
+    "raw_sponsor": "The Sun",
+    "outlet_display_name": "The Sun / Sun on Sunday",
+    "email_pattern": "{first}.{last}@the-sun.co.uk",
+    "domain": "the-sun.co.uk"
+  },
+  {
+    "name": "Adam Bienkov",
+    "first_name": "Adam",
+    "last_name": "Bienkov",
+    "raw_sponsor": "Byline Times",
+    "outlet_display_name": "Byline Times",
+    "email_pattern": "{first}@bylinetimes.com",
+    "domain": "bylinetimes.com"
+  },
+  {
+    "name": "Jack Blackburn",
+    "first_name": "Jack",
+    "last_name": "Blackburn",
+    "raw_sponsor": "The Times",
+    "outlet_display_name": "The Times / Times Radio (News UK)",
+    "email_pattern": "{first}.{last}@thetimes.co.uk",
+    "domain": "thetimes.co.uk"
+  },
+  {
+    "name": "Ralph Blackburn",
+    "first_name": "Ralph",
+    "last_name": "Blackburn",
+    "raw_sponsor": "National World",
+    "outlet_display_name": "National World plc",
+    "email_pattern": "{first}.{last}@nationalworld.com",
+    "domain": "nationalworld.com"
+  },
+  {
+    "name": "Sam Blewett",
+    "first_name": "Sam",
+    "last_name": "Blewett",
+    "raw_sponsor": "Politico",
+    "outlet_display_name": "Politico (UK)",
+    "email_pattern": "{first}{last}@politico.eu|{first}.{last}@politico.eu",
+    "domain": "politico.eu"
+  },
+  {
+    "name": "Benjamin Bloch",
+    "first_name": "Benjamin",
+    "last_name": "Bloch",
+    "raw_sponsor": "Sky",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Daniel Bloom",
+    "first_name": "Daniel",
+    "last_name": "Bloom",
+    "raw_sponsor": "Politico",
+    "outlet_display_name": "Politico (UK)",
+    "email_pattern": "{first}{last}@politico.eu|{first}.{last}@politico.eu",
+    "domain": "politico.eu"
+  },
+  {
+    "name": "Lucy Boast",
+    "first_name": "Lucy",
+    "last_name": "Boast",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "William Boden",
+    "first_name": "William",
+    "last_name": "Boden",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Antonino Bonsignore",
+    "first_name": "Antonino",
+    "last_name": "Bonsignore",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "John Booker",
+    "first_name": "John",
+    "last_name": "Booker",
+    "raw_sponsor": "GB News",
+    "outlet_display_name": "GB News",
+    "email_pattern": "{first}.{last}@gbnews.com",
+    "domain": "gbnews.com"
+  },
+  {
+    "name": "Stefan Boscia",
+    "first_name": "Stefan",
+    "last_name": "Boscia",
+    "raw_sponsor": "The Times",
+    "outlet_display_name": "The Times / Times Radio (News UK)",
+    "email_pattern": "{first}.{last}@thetimes.co.uk",
+    "domain": "thetimes.co.uk"
+  },
+  {
+    "name": "Adam Boulton",
+    "first_name": "Adam",
+    "last_name": "Boulton",
+    "raw_sponsor": "Times Radio",
+    "outlet_display_name": "The Times / Times Radio (News UK)",
+    "email_pattern": "{first}.{last}@thetimes.co.uk",
+    "domain": "thetimes.co.uk"
+  },
+  {
+    "name": "Maya Bowles",
+    "first_name": "Maya",
+    "last_name": "Bowles",
+    "raw_sponsor": "ITN - ITV News",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Mason Boycott-Owen",
+    "first_name": "Mason",
+    "last_name": "Boycott-Owen",
+    "raw_sponsor": "Politico",
+    "outlet_display_name": "Politico (UK)",
+    "email_pattern": "{first}{last}@politico.eu|{first}.{last}@politico.eu",
+    "domain": "politico.eu"
+  },
+  {
+    "name": "Thomas Bradby",
+    "first_name": "Thomas",
+    "last_name": "Bradby",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Rachel Bradley",
+    "first_name": "Rachel",
+    "last_name": "Bradley",
+    "raw_sponsor": "ITN (ITV News)",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Kit Bradshaw",
+    "first_name": "Kit",
+    "last_name": "Bradshaw",
+    "raw_sponsor": "ITV News",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Paul Brand",
+    "first_name": "Paul",
+    "last_name": "Brand",
+    "raw_sponsor": "ITV News",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Mhari Brougham",
+    "first_name": "Mhari",
+    "last_name": "Brougham",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Alexander Brown",
+    "first_name": "Alexander",
+    "last_name": "Brown",
+    "raw_sponsor": "The Mirror",
+    "outlet_display_name": "Daily Mirror / Sunday Mirror",
+    "email_pattern": "{first}.{last}@reachplc.com|{first}.{last}@mirror.co.uk",
+    "domain": "reachplc.com"
+  },
+  {
+    "name": "Faye Brown",
+    "first_name": "Faye",
+    "last_name": "Brown",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Larisa Brown",
+    "first_name": "Larisa",
+    "last_name": "Brown",
+    "raw_sponsor": "Times",
+    "outlet_display_name": "The Times / Times Radio (News UK)",
+    "email_pattern": "{first}.{last}@thetimes.co.uk",
+    "domain": "thetimes.co.uk"
+  },
+  {
+    "name": "Martyn Brown",
+    "first_name": "Martyn",
+    "last_name": "Brown",
+    "raw_sponsor": "Daily Express",
+    "outlet_display_name": "Daily Express / Sunday Express",
+    "email_pattern": "{first}.{last}@reachplc.com|{first}.{last}@express.co.uk",
+    "domain": "reachplc.com"
+  },
+  {
+    "name": "Lizzy Buchan",
+    "first_name": "Lizzy",
+    "last_name": "Buchan",
+    "raw_sponsor": "Daily Mirror",
+    "outlet_display_name": "Daily Mirror / Sunday Mirror",
+    "email_pattern": "{first}.{last}@reachplc.com|{first}.{last}@mirror.co.uk",
+    "domain": "reachplc.com"
+  },
+  {
+    "name": "Kirsty Buchanan",
+    "first_name": "Kirsty",
+    "last_name": "Buchanan",
+    "raw_sponsor": "The Telegraph",
+    "outlet_display_name": "The Telegraph",
+    "email_pattern": "{first}.{last}@telegraph.co.uk",
+    "domain": "telegraph.co.uk"
+  },
+  {
+    "name": "Jonathan Buckmaster",
+    "first_name": "Jonathan",
+    "last_name": "Buckmaster",
+    "raw_sponsor": "Express Newspapers",
+    "outlet_display_name": "Daily Express / Sunday Express",
+    "email_pattern": "{first}.{last}@reachplc.com|{first}.{last}@express.co.uk",
+    "domain": "reachplc.com"
+  },
+  {
+    "name": "Tamara Bungaroo Valdes",
+    "first_name": "Tamara",
+    "last_name": "Valdes",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Jonathan Bunn",
+    "first_name": "Jonathan",
+    "last_name": "Bunn",
+    "raw_sponsor": "PA Media",
+    "outlet_display_name": "PA Media",
+    "email_pattern": "{first}.{last}@pa.media",
+    "domain": "pa.media"
+  },
+  {
+    "name": "Rachael Burford",
+    "first_name": "Rachael",
+    "last_name": "Burford",
+    "raw_sponsor": "Evening Standard",
+    "outlet_display_name": "Evening Standard",
+    "email_pattern": "{first}.{last}@standard.co.uk",
+    "domain": "standard.co.uk"
+  },
+  {
+    "name": "David Burke",
+    "first_name": "David",
+    "last_name": "Burke",
+    "raw_sponsor": "Daily Mirror",
+    "outlet_display_name": "Daily Mirror / Sunday Mirror",
+    "email_pattern": "{first}.{last}@reachplc.com|{first}.{last}@mirror.co.uk",
+    "domain": "reachplc.com"
+  },
+  {
+    "name": "Emma Burnell",
+    "first_name": "Emma",
+    "last_name": "Burnell",
+    "raw_sponsor": "LabourList",
+    "outlet_display_name": "LabourList",
+    "email_pattern": "{first}.{last}@labourlist.org",
+    "domain": "labourlist.org"
+  },
+  {
+    "name": "Stephen Bush",
+    "first_name": "Stephen",
+    "last_name": "Bush",
+    "raw_sponsor": "Financial Times",
+    "outlet_display_name": "Financial Times",
+    "email_pattern": "{first}.{last}@ft.com",
+    "domain": "ft.com"
+  },
+  {
+    "name": "Christian Calgie",
+    "first_name": "Christian",
+    "last_name": "Calgie",
+    "raw_sponsor": "Daily Mail",
+    "outlet_display_name": "Daily Mail / Mail on Sunday",
+    "email_pattern": "{first}.{last}@mailonline.co.uk|{first}.{last}@dailymail.co.uk",
+    "domain": "mailonline.co.uk"
+  },
+  {
+    "name": "Allan Cameron",
+    "first_name": "Allan",
+    "last_name": "Cameron",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Justine Cameron-Chileshe",
+    "first_name": "Justine",
+    "last_name": "Cameron-Chileshe",
+    "raw_sponsor": "ITN/ITV News",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Gwennan Campbell",
+    "first_name": "Gwennan",
+    "last_name": "Campbell",
+    "raw_sponsor": "ITV",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Peter Cardwell",
+    "first_name": "Peter",
+    "last_name": "Cardwell",
+    "raw_sponsor": "Talk/News UK",
+    "outlet_display_name": "TalkTV (News UK)",
+    "email_pattern": "{first}.{last}@talk.tv",
+    "domain": "talk.tv"
+  },
+  {
+    "name": "Brendan Carlin",
+    "first_name": "Brendan",
+    "last_name": "Carlin",
+    "raw_sponsor": "Mail on Sunday",
+    "outlet_display_name": "Daily Mail / Mail on Sunday",
+    "email_pattern": "{first}.{last}@mailonline.co.uk|{first}.{last}@dailymail.co.uk",
+    "domain": "mailonline.co.uk"
+  },
+  {
+    "name": "Kieran Carter",
+    "first_name": "Kieran",
+    "last_name": "Carter",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Emilio Casalicchio",
+    "first_name": "Emilio",
+    "last_name": "Casalicchio",
+    "raw_sponsor": "Politico",
+    "outlet_display_name": "Politico (UK)",
+    "email_pattern": "{first}{last}@politico.eu|{first}.{last}@politico.eu",
+    "domain": "politico.eu"
+  },
+  {
+    "name": "Helen Catt",
+    "first_name": "Helen",
+    "last_name": "Catt",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Nicholas Cecil",
+    "first_name": "Nicholas",
+    "last_name": "Cecil",
+    "raw_sponsor": "Evening Standard",
+    "outlet_display_name": "Evening Standard",
+    "email_pattern": "{first}.{last}@standard.co.uk",
+    "domain": "standard.co.uk"
+  },
+  {
+    "name": "Agnes Chambre",
+    "first_name": "Agnes",
+    "last_name": "Chambre",
+    "raw_sponsor": "LBC",
+    "outlet_display_name": "LBC (Global Radio)",
+    "email_pattern": "{first}.{last}@global.com",
+    "domain": "global.com"
+  },
+  {
+    "name": "Celine Charles",
+    "first_name": "Celine",
+    "last_name": "Charles",
+    "raw_sponsor": "Goalhanger",
+    "outlet_display_name": "Goalhanger Podcasts",
+    "email_pattern": "info@goalhangerpodcasts.com",
+    "domain": "goalhangerpodcasts.com"
+  },
+  {
+    "name": "William Charley",
+    "first_name": "William",
+    "last_name": "Charley",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Matthew Chorley",
+    "first_name": "Matthew",
+    "last_name": "Chorley",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Sophie Church",
+    "first_name": "Sophie",
+    "last_name": "Church",
+    "raw_sponsor": "Daily Mail",
+    "outlet_display_name": "Daily Mail / Mail on Sunday",
+    "email_pattern": "{first}.{last}@mailonline.co.uk|{first}.{last}@dailymail.co.uk",
+    "domain": "mailonline.co.uk"
+  },
+  {
+    "name": "David Churchill",
+    "first_name": "David",
+    "last_name": "Churchill",
+    "raw_sponsor": "Daily Mail",
+    "outlet_display_name": "Daily Mail / Mail on Sunday",
+    "email_pattern": "{first}.{last}@mailonline.co.uk|{first}.{last}@dailymail.co.uk",
+    "domain": "mailonline.co.uk"
+  },
+  {
+    "name": "Natasha Clark",
+    "first_name": "Natasha",
+    "last_name": "Clark",
+    "raw_sponsor": "LBC/Global",
+    "outlet_display_name": "LBC (Global Radio)",
+    "email_pattern": "{first}.{last}@global.com",
+    "domain": "global.com"
+  },
+  {
+    "name": "Kieron Clarke",
+    "first_name": "Kieron",
+    "last_name": "Clarke",
+    "raw_sponsor": "Good Morning Britain",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Lauren Clarke",
+    "first_name": "Lauren",
+    "last_name": "Clarke",
+    "raw_sponsor": "ITN \u2013 ITV News",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Michael Clarkson",
+    "first_name": "Michael",
+    "last_name": "Clarkson",
+    "raw_sponsor": "ITV",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Ben Clatworthy",
+    "first_name": "Ben",
+    "last_name": "Clatworthy",
+    "raw_sponsor": "The Times",
+    "outlet_display_name": "The Times / Times Radio (News UK)",
+    "email_pattern": "{first}.{last}@thetimes.co.uk",
+    "domain": "thetimes.co.uk"
+  },
+  {
+    "name": "Sam Coates",
+    "first_name": "Sam",
+    "last_name": "Coates",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Eleanor Cole",
+    "first_name": "Eleanor",
+    "last_name": "Cole",
+    "raw_sponsor": "The Guardian",
+    "outlet_display_name": "The Guardian/Observer",
+    "email_pattern": "{first}.{last}@theguardian.com",
+    "domain": "theguardian.com"
+  },
+  {
+    "name": "Matthew Cole",
+    "first_name": "Matthew",
+    "last_name": "Cole",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Oliver Cole",
+    "first_name": "Oliver",
+    "last_name": "Cole",
+    "raw_sponsor": "Times Radio",
+    "outlet_display_name": "The Times / Times Radio (News UK)",
+    "email_pattern": "{first}.{last}@thetimes.co.uk",
+    "domain": "thetimes.co.uk"
+  },
+  {
+    "name": "Philippa Collins",
+    "first_name": "Philippa",
+    "last_name": "Collins",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Richard Collins",
+    "first_name": "Richard",
+    "last_name": "Collins",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Joseph Cook",
+    "first_name": "Joseph",
+    "last_name": "Cook",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Emilia Cooke",
+    "first_name": "Emilia",
+    "last_name": "Cooke",
+    "raw_sponsor": "The Independent",
+    "outlet_display_name": "The Independent",
+    "email_pattern": "{first}.{last}@independent.co.uk",
+    "domain": "independent.co.uk"
+  },
+  {
+    "name": "Kristina Cooper",
+    "first_name": "Kristina",
+    "last_name": "Cooper",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "George Coote",
+    "first_name": "George",
+    "last_name": "Coote",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Helen Corbett",
+    "first_name": "Helen",
+    "last_name": "Corbett",
+    "raw_sponsor": "PA Media",
+    "outlet_display_name": "PA Media",
+    "email_pattern": "{first}.{last}@pa.media",
+    "domain": "pa.media"
+  },
+  {
+    "name": "Stephen Corkett",
+    "first_name": "Stephen",
+    "last_name": "Corkett",
+    "raw_sponsor": "GB News",
+    "outlet_display_name": "GB News",
+    "email_pattern": "{first}.{last}@gbnews.com",
+    "domain": "gbnews.com"
+  },
+  {
+    "name": "David Cornock",
+    "first_name": "David",
+    "last_name": "Cornock",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Stefan Cottrell Tumilowicz",
+    "first_name": "Stefan",
+    "last_name": "Tumilowicz",
+    "raw_sponsor": "ITV",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Eleni Courea",
+    "first_name": "Eleni",
+    "last_name": "Courea",
+    "raw_sponsor": "The Guardian",
+    "outlet_display_name": "The Guardian/Observer",
+    "email_pattern": "{first}.{last}@theguardian.com",
+    "domain": "theguardian.com"
+  },
+  {
+    "name": "Ashley Cowburn",
+    "first_name": "Ashley",
+    "last_name": "Cowburn",
+    "raw_sponsor": "Daily Mirror",
+    "outlet_display_name": "Daily Mirror / Sunday Mirror",
+    "email_pattern": "{first}.{last}@reachplc.com|{first}.{last}@mirror.co.uk",
+    "domain": "reachplc.com"
+  },
+  {
+    "name": "Jason Cowley",
+    "first_name": "Jason",
+    "last_name": "Cowley",
+    "raw_sponsor": "The Sunday Times",
+    "outlet_display_name": "The Sunday Times",
+    "email_pattern": "{first}.{last}@sunday-times.co.uk",
+    "domain": "sunday-times.co.uk"
+  },
+  {
+    "name": "Patrick Cowling",
+    "first_name": "Patrick",
+    "last_name": "Cowling",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "John Crace",
+    "first_name": "John",
+    "last_name": "Crace",
+    "raw_sponsor": "Guardian",
+    "outlet_display_name": "The Guardian/Observer",
+    "email_pattern": "{first}.{last}@theguardian.com",
+    "domain": "theguardian.com"
+  },
+  {
+    "name": "Jon Craig",
+    "first_name": "Jon",
+    "last_name": "Craig",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Eliza Craston",
+    "first_name": "Eliza",
+    "last_name": "Craston",
+    "raw_sponsor": "ITN/Channel 4 News",
+    "outlet_display_name": "Channel 4 News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Pippa Crerar",
+    "first_name": "Pippa",
+    "last_name": "Crerar",
+    "raw_sponsor": "The Guardian",
+    "outlet_display_name": "The Guardian/Observer",
+    "email_pattern": "{first}.{last}@theguardian.com",
+    "domain": "theguardian.com"
+  },
+  {
+    "name": "Ethan Croft",
+    "first_name": "Ethan",
+    "last_name": "Croft",
+    "raw_sponsor": "New Statesman",
+    "outlet_display_name": "New Statesman",
+    "email_pattern": "{first}.{last}@newstatesman.co.uk",
+    "domain": "newstatesman.co.uk"
+  },
+  {
+    "name": "Zoe Crowther",
+    "first_name": "Zoe",
+    "last_name": "Crowther",
+    "raw_sponsor": "Total Politics",
+    "outlet_display_name": "Dods Group (PoliticsHome / The House)",
+    "email_pattern": "{first}.{last}@dodsgroup.com|{first}.{last}@politicshome.com",
+    "domain": "politicshome.com"
+  },
+  {
+    "name": "Edward Cumming",
+    "first_name": "Edward",
+    "last_name": "Cumming",
+    "raw_sponsor": "Telegraph",
+    "outlet_display_name": "The Telegraph",
+    "email_pattern": "{first}.{last}@telegraph.co.uk",
+    "domain": "telegraph.co.uk"
+  },
+  {
+    "name": "Rachel Cunliffe",
+    "first_name": "Rachel",
+    "last_name": "Cunliffe",
+    "raw_sponsor": "New Statesman",
+    "outlet_display_name": "New Statesman",
+    "email_pattern": "{first}.{last}@newstatesman.co.uk",
+    "domain": "newstatesman.co.uk"
+  },
+  {
+    "name": "Sean Curran",
+    "first_name": "Sean",
+    "last_name": "Curran",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Iain Dale",
+    "first_name": "Iain",
+    "last_name": "Dale",
+    "raw_sponsor": "Global Radio (LBC)",
+    "outlet_display_name": "LBC (Global Radio)",
+    "email_pattern": "{first}.{last}@global.com",
+    "domain": "global.com"
+  },
+  {
+    "name": "Matthew Dathan",
+    "first_name": "Matthew",
+    "last_name": "Dathan",
+    "raw_sponsor": "News UK/Times",
+    "outlet_display_name": "The Times / Times Radio (News UK)",
+    "email_pattern": "{first}.{last}@thetimes.co.uk",
+    "domain": "thetimes.co.uk"
+  },
+  {
+    "name": "Bethany Dawson",
+    "first_name": "Bethany",
+    "last_name": "Dawson",
+    "raw_sponsor": "Politico",
+    "outlet_display_name": "Politico (UK)",
+    "email_pattern": "{first}{last}@politico.eu|{first}.{last}@politico.eu",
+    "domain": "politico.eu"
+  },
+  {
+    "name": "Sally Dawson",
+    "first_name": "Sally",
+    "last_name": "Dawson",
+    "raw_sponsor": "Total Politics/The House magazine",
+    "outlet_display_name": "Dods Group (PoliticsHome / The House)",
+    "email_pattern": "{first}.{last}@dodsgroup.com|{first}.{last}@politicshome.com",
+    "domain": "politicshome.com"
+  },
+  {
+    "name": "Annabel Denham",
+    "first_name": "Annabel",
+    "last_name": "Denham",
+    "raw_sponsor": "The Telegraph",
+    "outlet_display_name": "The Telegraph",
+    "email_pattern": "{first}.{last}@telegraph.co.uk",
+    "domain": "telegraph.co.uk"
+  },
+  {
+    "name": "Lewis Denison",
+    "first_name": "Lewis",
+    "last_name": "Denison",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Kate Devlin",
+    "first_name": "Kate",
+    "last_name": "Devlin",
+    "raw_sponsor": "Independent",
+    "outlet_display_name": "The Independent",
+    "email_pattern": "{first}.{last}@independent.co.uk",
+    "domain": "independent.co.uk"
+  },
+  {
+    "name": "Alexander Dibble",
+    "first_name": "Alexander",
+    "last_name": "Dibble",
+    "raw_sponsor": "News UK Broadcasting",
+    "outlet_display_name": "The Times / Times Radio (News UK)",
+    "email_pattern": "{first}.{last}@thetimes.co.uk",
+    "domain": "thetimes.co.uk"
+  },
+  {
+    "name": "Annabelle Dickson",
+    "first_name": "Annabelle",
+    "last_name": "Dickson",
+    "raw_sponsor": "Politico",
+    "outlet_display_name": "Politico (UK)",
+    "email_pattern": "{first}{last}@politico.eu|{first}.{last}@politico.eu",
+    "domain": "politico.eu"
+  },
+  {
+    "name": "Kathryn Dillon",
+    "first_name": "Kathryn",
+    "last_name": "Dillon",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Frederick Dimbleby",
+    "first_name": "Frederick",
+    "last_name": "Dimbleby",
+    "raw_sponsor": "ITV News",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Carl Dinnen",
+    "first_name": "Carl",
+    "last_name": "Dinnen",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Tony Diver",
+    "first_name": "Tony",
+    "last_name": "Diver",
+    "raw_sponsor": "The Telegraph",
+    "outlet_display_name": "The Telegraph",
+    "email_pattern": "{first}.{last}@telegraph.co.uk",
+    "domain": "telegraph.co.uk"
+  },
+  {
+    "name": "Kitty Donaldson",
+    "first_name": "Kitty",
+    "last_name": "Donaldson",
+    "raw_sponsor": "The i Newspaper",
+    "outlet_display_name": "The i Paper",
+    "email_pattern": "{first}.{last}@inews.co.uk",
+    "domain": "inews.co.uk"
+  },
+  {
+    "name": "Lili Donlon-Mansbridge",
+    "first_name": "Lili",
+    "last_name": "Donlon-Mansbridge",
+    "raw_sponsor": "ITV News",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Eric Drewe",
+    "first_name": "Eric",
+    "last_name": "Drewe",
+    "raw_sponsor": "The Times",
+    "outlet_display_name": "The Times / Times Radio (News UK)",
+    "email_pattern": "{first}.{last}@thetimes.co.uk",
+    "domain": "thetimes.co.uk"
+  },
+  {
+    "name": "Scott Duffield",
+    "first_name": "Scott",
+    "last_name": "Duffield",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Lucy Dunn",
+    "first_name": "Lucy",
+    "last_name": "Dunn",
+    "raw_sponsor": "STV",
+    "outlet_display_name": "STV News",
+    "email_pattern": "{first}.{last}@stv.tv",
+    "domain": "stv.tv"
+  },
+  {
+    "name": "Olivia Dunnett-Stone",
+    "first_name": "Olivia",
+    "last_name": "Dunnett-Stone",
+    "raw_sponsor": "GB News",
+    "outlet_display_name": "GB News",
+    "email_pattern": "{first}.{last}@gbnews.com",
+    "domain": "gbnews.com"
+  },
+  {
+    "name": "William Durrant",
+    "first_name": "William",
+    "last_name": "Durrant",
+    "raw_sponsor": "PA Media",
+    "outlet_display_name": "PA Media",
+    "email_pattern": "{first}.{last}@pa.media",
+    "domain": "pa.media"
+  },
+  {
+    "name": "Henry Dyer",
+    "first_name": "Henry",
+    "last_name": "Dyer",
+    "raw_sponsor": "The Guardian",
+    "outlet_display_name": "The Guardian/Observer",
+    "email_pattern": "{first}.{last}@theguardian.com",
+    "domain": "theguardian.com"
+  },
+  {
+    "name": "Nicholas Eardley",
+    "first_name": "Nicholas",
+    "last_name": "Eardley",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Daisy Eastlake",
+    "first_name": "Daisy",
+    "last_name": "Eastlake",
+    "raw_sponsor": "The Times",
+    "outlet_display_name": "The Times / Times Radio (News UK)",
+    "email_pattern": "{first}.{last}@thetimes.co.uk",
+    "domain": "thetimes.co.uk"
+  },
+  {
+    "name": "Giles Edwards",
+    "first_name": "Giles",
+    "last_name": "Edwards",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Claire Ellicott",
+    "first_name": "Claire",
+    "last_name": "Ellicott",
+    "raw_sponsor": "Daily Mail",
+    "outlet_display_name": "Daily Mail / Mail on Sunday",
+    "email_pattern": "{first}.{last}@mailonline.co.uk|{first}.{last}@dailymail.co.uk",
+    "domain": "mailonline.co.uk"
+  },
+  {
+    "name": "Alan Elliott",
+    "first_name": "Alan",
+    "last_name": "Elliott",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Francis Elliott",
+    "first_name": "Francis",
+    "last_name": "Elliott",
+    "raw_sponsor": "Dods Group",
+    "outlet_display_name": "Dods Group (PoliticsHome / The House)",
+    "email_pattern": "{first}.{last}@dodsgroup.com|{first}.{last}@politicshome.com",
+    "domain": "politicshome.com"
+  },
+  {
+    "name": "Jack Elsom",
+    "first_name": "Jack",
+    "last_name": "Elsom",
+    "raw_sponsor": "Sun",
+    "outlet_display_name": "The Sun / Sun on Sunday",
+    "email_pattern": "{first}.{last}@the-sun.co.uk",
+    "domain": "the-sun.co.uk"
+  },
+  {
+    "name": "Ava Evans",
+    "first_name": "Ava",
+    "last_name": "Evans",
+    "raw_sponsor": "JOE Media",
+    "outlet_display_name": "JOE Media",
+    "email_pattern": "{first}.{last}@joe.co.uk",
+    "domain": "joe.co.uk"
+  },
+  {
+    "name": "Harry Farley",
+    "first_name": "Harry",
+    "last_name": "Farley",
+    "raw_sponsor": "BBC News",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Jason Farrington",
+    "first_name": "Jason",
+    "last_name": "Farrington",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Jack Fenwick",
+    "first_name": "Jack",
+    "last_name": "Fenwick",
+    "raw_sponsor": "BBC News",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Alona Ferber",
+    "first_name": "Alona",
+    "last_name": "Ferber",
+    "raw_sponsor": "Prospect Magazine",
+    "outlet_display_name": "Prospect Magazine",
+    "email_pattern": "{first}.{last}@prospectmagazine.co.uk",
+    "domain": "prospectmagazine.co.uk"
+  },
+  {
+    "name": "Katherine Ferguson",
+    "first_name": "Katherine",
+    "last_name": "Ferguson",
+    "raw_sponsor": "News UK/The Sun on Sunday",
+    "outlet_display_name": "The Sun / Sun on Sunday",
+    "email_pattern": "{first}.{last}@the-sun.co.uk",
+    "domain": "the-sun.co.uk"
+  },
+  {
+    "name": "Lucy Fisher",
+    "first_name": "Lucy",
+    "last_name": "Fisher",
+    "raw_sponsor": "Financial Times",
+    "outlet_display_name": "Financial Times",
+    "email_pattern": "{first}.{last}@ft.com",
+    "domain": "ft.com"
+  },
+  {
+    "name": "Alicia Fitzgerald",
+    "first_name": "Alicia",
+    "last_name": "Fitzgerald",
+    "raw_sponsor": "ITV News",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Laura Fitzpatrick",
+    "first_name": "Laura",
+    "last_name": "Fitzpatrick",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Alexander Fleming-Brown",
+    "first_name": "Alexander",
+    "last_name": "Fleming-Brown",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Katherine Forster",
+    "first_name": "Katherine",
+    "last_name": "Forster",
+    "raw_sponsor": "GB News",
+    "outlet_display_name": "GB News",
+    "email_pattern": "{first}.{last}@gbnews.com",
+    "domain": "gbnews.com"
+  },
+  {
+    "name": "Alexandra Forsyth",
+    "first_name": "Alexandra",
+    "last_name": "Forsyth",
+    "raw_sponsor": "BBC News",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Aine Fox",
+    "first_name": "Aine",
+    "last_name": "Fox",
+    "raw_sponsor": "PA Media",
+    "outlet_display_name": "PA Media",
+    "email_pattern": "{first}.{last}@pa.media",
+    "domain": "pa.media"
+  },
+  {
+    "name": "David Francis",
+    "first_name": "David",
+    "last_name": "Francis",
+    "raw_sponsor": "Politico",
+    "outlet_display_name": "Politico (UK)",
+    "email_pattern": "{first}{last}@politico.eu|{first}.{last}@politico.eu",
+    "domain": "politico.eu"
+  },
+  {
+    "name": "Natalie Fraser",
+    "first_name": "Natalie",
+    "last_name": "Fraser",
+    "raw_sponsor": "Conservative Home (Total Politics)",
+    "outlet_display_name": "Dods Group (PoliticsHome / The House)",
+    "email_pattern": "{first}.{last}@dodsgroup.com|{first}.{last}@politicshome.com",
+    "domain": "politicshome.com"
+  },
+  {
+    "name": "Phoebe Frieze",
+    "first_name": "Phoebe",
+    "last_name": "Frieze",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Lewis Frost",
+    "first_name": "Lewis",
+    "last_name": "Frost",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Josh Gafson",
+    "first_name": "Josh",
+    "last_name": "Gafson",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Freya Gascoigne",
+    "first_name": "Freya",
+    "last_name": "Gascoigne",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Gary Gibbon",
+    "first_name": "Gary",
+    "last_name": "Gibbon",
+    "raw_sponsor": "ITN - Channel 4 News",
+    "outlet_display_name": "Channel 4 News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Josh Glancy",
+    "first_name": "Josh",
+    "last_name": "Glancy",
+    "raw_sponsor": "The Sunday Times",
+    "outlet_display_name": "The Sunday Times",
+    "email_pattern": "{first}.{last}@sunday-times.co.uk",
+    "domain": "sunday-times.co.uk"
+  },
+  {
+    "name": "Elizabeth Glinka-Saull",
+    "first_name": "Elizabeth",
+    "last_name": "Glinka-Saull",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Paris Gourtsoyannis",
+    "first_name": "Paris",
+    "last_name": "Gourtsoyannis",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Damian Grammaticas",
+    "first_name": "Damian",
+    "last_name": "Grammaticas",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Madeline Grant",
+    "first_name": "Madeline",
+    "last_name": "Grant",
+    "raw_sponsor": "The Spectator",
+    "outlet_display_name": "The Spectator",
+    "email_pattern": "{first}.{last}@spectator.co.uk",
+    "domain": "spectator.co.uk"
+  },
+  {
+    "name": "Matthew Grant",
+    "first_name": "Matthew",
+    "last_name": "Grant",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Daniel Green",
+    "first_name": "Daniel",
+    "last_name": "Green",
+    "raw_sponsor": "LabourList",
+    "outlet_display_name": "LabourList",
+    "email_pattern": "{first}.{last}@labourlist.org",
+    "domain": "labourlist.org"
+  },
+  {
+    "name": "Miranda Green",
+    "first_name": "Miranda",
+    "last_name": "Green",
+    "raw_sponsor": "Financial Times",
+    "outlet_display_name": "Financial Times",
+    "email_pattern": "{first}.{last}@ft.com",
+    "domain": "ft.com"
+  },
+  {
+    "name": "Tony Grew",
+    "first_name": "Tony",
+    "last_name": "Grew",
+    "raw_sponsor": "Sunday Times",
+    "outlet_display_name": "The Sunday Times",
+    "email_pattern": "{first}.{last}@sunday-times.co.uk",
+    "domain": "sunday-times.co.uk"
+  },
+  {
+    "name": "Dominic Gribbin",
+    "first_name": "Dominic",
+    "last_name": "Gribbin",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Andrew Grice",
+    "first_name": "Andrew",
+    "last_name": "Grice",
+    "raw_sponsor": "Independent",
+    "outlet_display_name": "The Independent",
+    "email_pattern": "{first}.{last}@independent.co.uk",
+    "domain": "independent.co.uk"
+  },
+  {
+    "name": "Anna Gross",
+    "first_name": "Anna",
+    "last_name": "Gross",
+    "raw_sponsor": "Financial Times",
+    "outlet_display_name": "Financial Times",
+    "email_pattern": "{first}.{last}@ft.com",
+    "domain": "ft.com"
+  },
+  {
+    "name": "Bethan Grossman",
+    "first_name": "Bethan",
+    "last_name": "Grossman",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Jason Groves",
+    "first_name": "Jason",
+    "last_name": "Groves",
+    "raw_sponsor": "Daily Mail",
+    "outlet_display_name": "Daily Mail / Mail on Sunday",
+    "email_pattern": "{first}.{last}@mailonline.co.uk|{first}.{last}@dailymail.co.uk",
+    "domain": "mailonline.co.uk"
+  },
+  {
+    "name": "Sian Grzeszczyk",
+    "first_name": "Sian",
+    "last_name": "Grzeszczyk",
+    "raw_sponsor": "British Forces Broadcasting Service (BFBS)",
+    "outlet_display_name": "BFBS",
+    "email_pattern": "{first}.{last}@bfbs.com",
+    "domain": "bfbs.com"
+  },
+  {
+    "name": "Sri Guru-Murthy",
+    "first_name": "Sri",
+    "last_name": "Guru-Murthy",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Nicholas Gutteridge",
+    "first_name": "Nicholas",
+    "last_name": "Gutteridge",
+    "raw_sponsor": "Daily Telegraph",
+    "outlet_display_name": "The Telegraph",
+    "email_pattern": "{first}.{last}@telegraph.co.uk",
+    "domain": "telegraph.co.uk"
+  },
+  {
+    "name": "Hugo Gye",
+    "first_name": "Hugo",
+    "last_name": "Gye",
+    "raw_sponsor": "The i Newspaper",
+    "outlet_display_name": "The i Paper",
+    "email_pattern": "{first}.{last}@inews.co.uk",
+    "domain": "inews.co.uk"
+  },
+  {
+    "name": "Anna Haines",
+    "first_name": "Anna",
+    "last_name": "Haines",
+    "raw_sponsor": "Mentorn Media",
+    "outlet_display_name": "Mentorn Media",
+    "email_pattern": "info@mentorn.tv",
+    "domain": "mentorn.tv"
+  },
+  {
+    "name": "Harold Haines",
+    "first_name": "Harold",
+    "last_name": "Haines",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Robert Hamilton",
+    "first_name": "Robert",
+    "last_name": "Hamilton",
+    "raw_sponsor": "Channel 4 TV/News",
+    "outlet_display_name": "Channel 4 News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "James Hancock",
+    "first_name": "James",
+    "last_name": "Hancock",
+    "raw_sponsor": "DQ Magazine",
+    "outlet_display_name": "DQ Magazine",
+    "email_pattern": "editor@dq-magazine.co.uk",
+    "domain": "dq-magazine.co.uk"
+  },
+  {
+    "name": "Thomas Harding",
+    "first_name": "Thomas",
+    "last_name": "Harding",
+    "raw_sponsor": "The National",
+    "outlet_display_name": "The National (Scotland)",
+    "email_pattern": "{first}.{last}@newsquest.co.uk|{first}.{last}@thenational.scot",
+    "domain": "thenational.scot"
+  },
+  {
+    "name": "Lee Harpin",
+    "first_name": "Lee",
+    "last_name": "Harpin",
+    "raw_sponsor": "Jewish News",
+    "outlet_display_name": "Jewish News",
+    "email_pattern": "{first}@jewishnews.co.uk",
+    "domain": "jewishnews.co.uk"
+  },
+  {
+    "name": "Katie Harris",
+    "first_name": "Katie",
+    "last_name": "Harris",
+    "raw_sponsor": "Daily Express",
+    "outlet_display_name": "Daily Express / Sunday Express",
+    "email_pattern": "{first}.{last}@reachplc.com|{first}.{last}@express.co.uk",
+    "domain": "reachplc.com"
+  },
+  {
+    "name": "Matthew Harris",
+    "first_name": "Matthew",
+    "last_name": "Harris",
+    "raw_sponsor": "LBC/Global",
+    "outlet_display_name": "LBC (Global Radio)",
+    "email_pattern": "{first}.{last}@global.com",
+    "domain": "global.com"
+  },
+  {
+    "name": "Simon Harris",
+    "first_name": "Simon",
+    "last_name": "Harris",
+    "raw_sponsor": "ITV London",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Kevin Harrison",
+    "first_name": "Kevin",
+    "last_name": "Harrison",
+    "raw_sponsor": "ITV",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Thomas Harwood",
+    "first_name": "Thomas",
+    "last_name": "Harwood",
+    "raw_sponsor": "GB News",
+    "outlet_display_name": "GB News",
+    "email_pattern": "{first}.{last}@gbnews.com",
+    "domain": "gbnews.com"
+  },
+  {
+    "name": "William Hazell",
+    "first_name": "William",
+    "last_name": "Hazell",
+    "raw_sponsor": "The i Newspaper",
+    "outlet_display_name": "The i Paper",
+    "email_pattern": "{first}.{last}@inews.co.uk",
+    "domain": "inews.co.uk"
+  },
+  {
+    "name": "Gregory Heffer",
+    "first_name": "Gregory",
+    "last_name": "Heffer",
+    "raw_sponsor": "MailOnline/DMGT",
+    "outlet_display_name": "Daily Mail / Mail on Sunday",
+    "email_pattern": "{first}.{last}@mailonline.co.uk|{first}.{last}@dailymail.co.uk",
+    "domain": "mailonline.co.uk"
+  },
+  {
+    "name": "David Hencke",
+    "first_name": "David",
+    "last_name": "Hencke",
+    "raw_sponsor": "Tribune",
+    "outlet_display_name": "Tribune Magazine",
+    "email_pattern": "editorial@tribunemag.co.uk",
+    "domain": "tribunemag.co.uk"
+  },
+  {
+    "name": "Grant Henderson",
+    "first_name": "Grant",
+    "last_name": "Henderson",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Daniel Hewitt",
+    "first_name": "Daniel",
+    "last_name": "Hewitt",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Daniel Hodges",
+    "first_name": "Daniel",
+    "last_name": "Hodges",
+    "raw_sponsor": "Mail on Sunday",
+    "outlet_display_name": "Daily Mail / Mail on Sunday",
+    "email_pattern": "{first}.{last}@mailonline.co.uk|{first}.{last}@dailymail.co.uk",
+    "domain": "mailonline.co.uk"
+  },
+  {
+    "name": "Noa Hoffman",
+    "first_name": "Noa",
+    "last_name": "Hoffman",
+    "raw_sponsor": "Sun",
+    "outlet_display_name": "The Sun / Sun on Sunday",
+    "email_pattern": "{first}.{last}@the-sun.co.uk",
+    "domain": "the-sun.co.uk"
+  },
+  {
+    "name": "Genevieve Holl-Allen",
+    "first_name": "Genevieve",
+    "last_name": "Holl-Allen",
+    "raw_sponsor": "Telegraph Media Group",
+    "outlet_display_name": "The Telegraph",
+    "email_pattern": "{first}.{last}@telegraph.co.uk",
+    "domain": "telegraph.co.uk"
+  },
+  {
+    "name": "Ryan Hooper",
+    "first_name": "Ryan",
+    "last_name": "Hooper",
+    "raw_sponsor": "Daily Mail",
+    "outlet_display_name": "Daily Mail / Mail on Sunday",
+    "email_pattern": "{first}.{last}@mailonline.co.uk|{first}.{last}@dailymail.co.uk",
+    "domain": "mailonline.co.uk"
+  },
+  {
+    "name": "Christopher Hope",
+    "first_name": "Christopher",
+    "last_name": "Hope",
+    "raw_sponsor": "GB News",
+    "outlet_display_name": "GB News",
+    "email_pattern": "{first}.{last}@gbnews.com",
+    "domain": "gbnews.com"
+  },
+  {
+    "name": "Harry Horton",
+    "first_name": "Harry",
+    "last_name": "Horton",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Anahita Hossein-Pour",
+    "first_name": "Anahita",
+    "last_name": "Hossein-Pour",
+    "raw_sponsor": "PA Media",
+    "outlet_display_name": "PA Media",
+    "email_pattern": "{first}.{last}@pa.media",
+    "domain": "pa.media"
+  },
+  {
+    "name": "Emily Hudson",
+    "first_name": "Emily",
+    "last_name": "Hudson",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "David Hughes",
+    "first_name": "David",
+    "last_name": "Hughes",
+    "raw_sponsor": "PA Media",
+    "outlet_display_name": "PA Media",
+    "email_pattern": "{first}.{last}@pa.media",
+    "domain": "pa.media"
+  },
+  {
+    "name": "David Hughes",
+    "first_name": "David",
+    "last_name": "Hughes",
+    "raw_sponsor": "ITV News",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Helen Hughes",
+    "first_name": "Helen",
+    "last_name": "Hughes",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Susan Hulme",
+    "first_name": "Susan",
+    "last_name": "Hulme",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Sophie Huskisson",
+    "first_name": "Sophie",
+    "last_name": "Huskisson",
+    "raw_sponsor": "The Mirror",
+    "outlet_display_name": "Daily Mirror / Sunday Mirror",
+    "email_pattern": "{first}.{last}@reachplc.com|{first}.{last}@mirror.co.uk",
+    "domain": "reachplc.com"
+  },
+  {
+    "name": "Paul Hutcheon",
+    "first_name": "Paul",
+    "last_name": "Hutcheon",
+    "raw_sponsor": "Scottish Daily Record",
+    "outlet_display_name": "Daily Record (Scotland)",
+    "email_pattern": "{first}.{last}@reachplc.com|{first}.{last}@dailyrecord.co.uk",
+    "domain": "dailyrecord.co.uk"
+  },
+  {
+    "name": "Robert Hutton",
+    "first_name": "Robert",
+    "last_name": "Hutton",
+    "raw_sponsor": "The Critic",
+    "outlet_display_name": "The Critic",
+    "email_pattern": "editorial@thecritic.co.uk",
+    "domain": "thecritic.co.uk"
+  },
+  {
+    "name": "Charles Hymas",
+    "first_name": "Charles",
+    "last_name": "Hymas",
+    "raw_sponsor": "Daily Telegraph",
+    "outlet_display_name": "The Telegraph",
+    "email_pattern": "{first}.{last}@telegraph.co.uk",
+    "domain": "telegraph.co.uk"
+  },
+  {
+    "name": "Tim Iredale",
+    "first_name": "Tim",
+    "last_name": "Iredale",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Imaan Irfan",
+    "first_name": "Imaan",
+    "last_name": "Irfan",
+    "raw_sponsor": "Prospect Magazine",
+    "outlet_display_name": "Prospect Magazine",
+    "email_pattern": "{first}.{last}@prospectmagazine.co.uk",
+    "domain": "prospectmagazine.co.uk"
+  },
+  {
+    "name": "Anna Isaac",
+    "first_name": "Anna",
+    "last_name": "Isaac",
+    "raw_sponsor": "The Guardian",
+    "outlet_display_name": "The Guardian/Observer",
+    "email_pattern": "{first}.{last}@theguardian.com",
+    "domain": "theguardian.com"
+  },
+  {
+    "name": "Nicholas Jackson",
+    "first_name": "Nicholas",
+    "last_name": "Jackson",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Kumail Jaffer",
+    "first_name": "Kumail",
+    "last_name": "Jaffer",
+    "raw_sponsor": "My London",
+    "outlet_display_name": "MyLondon (Reach)",
+    "email_pattern": "{first}.{last}@reachplc.com",
+    "domain": "reachplc.com"
+  },
+  {
+    "name": "Daniel James",
+    "first_name": "Daniel",
+    "last_name": "James",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Louisa James",
+    "first_name": "Louisa",
+    "last_name": "James",
+    "raw_sponsor": "Good Morning Britain",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Rhiannon James",
+    "first_name": "Rhiannon",
+    "last_name": "James",
+    "raw_sponsor": "PA Media",
+    "outlet_display_name": "PA Media",
+    "email_pattern": "{first}.{last}@pa.media",
+    "domain": "pa.media"
+  },
+  {
+    "name": "Shanade James",
+    "first_name": "Shanade",
+    "last_name": "James",
+    "raw_sponsor": "BBC News",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Catherine Janes",
+    "first_name": "Catherine",
+    "last_name": "Janes",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Alan Jones",
+    "first_name": "Alan",
+    "last_name": "Jones",
+    "raw_sponsor": "PA Media",
+    "outlet_display_name": "PA Media",
+    "email_pattern": "{first}.{last}@pa.media",
+    "domain": "pa.media"
+  },
+  {
+    "name": "Catrin Jones",
+    "first_name": "Catrin",
+    "last_name": "Jones",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Elizabeth Jukes",
+    "first_name": "Elizabeth",
+    "last_name": "Jukes",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Noah Keate",
+    "first_name": "Noah",
+    "last_name": "Keate",
+    "raw_sponsor": "Politico",
+    "outlet_display_name": "Politico (UK)",
+    "email_pattern": "{first}{last}@politico.eu|{first}.{last}@politico.eu",
+    "domain": "politico.eu"
+  },
+  {
+    "name": "Phillip Kemp",
+    "first_name": "Phillip",
+    "last_name": "Kemp",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Billy Kenber",
+    "first_name": "Billy",
+    "last_name": "Kenber",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Max Kendix",
+    "first_name": "Max",
+    "last_name": "Kendix",
+    "raw_sponsor": "The Times",
+    "outlet_display_name": "The Times / Times Radio (News UK)",
+    "email_pattern": "{first}.{last}@thetimes.co.uk",
+    "domain": "thetimes.co.uk"
+  },
+  {
+    "name": "Megan Kenyon",
+    "first_name": "Megan",
+    "last_name": "Kenyon",
+    "raw_sponsor": "New Statesman",
+    "outlet_display_name": "New Statesman",
+    "email_pattern": "{first}.{last}@newstatesman.co.uk",
+    "domain": "newstatesman.co.uk"
+  },
+  {
+    "name": "Charanpreet Khaira",
+    "first_name": "Charanpreet",
+    "last_name": "Khaira",
+    "raw_sponsor": "ITV News",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Shehab Khan",
+    "first_name": "Shehab",
+    "last_name": "Khan",
+    "raw_sponsor": "ITN/ITV News",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Michael Knowles",
+    "first_name": "Michael",
+    "last_name": "Knowles",
+    "raw_sponsor": "Daily Express",
+    "outlet_display_name": "Daily Express / Sunday Express",
+    "email_pattern": "{first}.{last}@reachplc.com|{first}.{last}@express.co.uk",
+    "domain": "reachplc.com"
+  },
+  {
+    "name": "Emil Kunda",
+    "first_name": "Emil",
+    "last_name": "Kunda",
+    "raw_sponsor": "GB News",
+    "outlet_display_name": "GB News",
+    "email_pattern": "{first}.{last}@gbnews.com",
+    "domain": "gbnews.com"
+  },
+  {
+    "name": "James Landale",
+    "first_name": "James",
+    "last_name": "Landale",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Eleanor Langford",
+    "first_name": "Eleanor",
+    "last_name": "Langford",
+    "raw_sponsor": "The i Newspaper",
+    "outlet_display_name": "The i Paper",
+    "email_pattern": "{first}.{last}@inews.co.uk",
+    "domain": "inews.co.uk"
+  },
+  {
+    "name": "Finn Lehane",
+    "first_name": "Finn",
+    "last_name": "Lehane",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Nicholas Lester",
+    "first_name": "Nicholas",
+    "last_name": "Lester",
+    "raw_sponsor": "PA Media",
+    "outlet_display_name": "PA Media",
+    "email_pattern": "{first}.{last}@pa.media",
+    "domain": "pa.media"
+  },
+  {
+    "name": "Quentin Letts",
+    "first_name": "Quentin",
+    "last_name": "Letts",
+    "raw_sponsor": "Daily Mail",
+    "outlet_display_name": "Daily Mail / Mail on Sunday",
+    "email_pattern": "{first}.{last}@mailonline.co.uk|{first}.{last}@dailymail.co.uk",
+    "domain": "mailonline.co.uk"
+  },
+  {
+    "name": "Samantha Lister",
+    "first_name": "Samantha",
+    "last_name": "Lister",
+    "raw_sponsor": "Daily Express",
+    "outlet_display_name": "Daily Express / Sunday Express",
+    "email_pattern": "{first}.{last}@reachplc.com|{first}.{last}@express.co.uk",
+    "domain": "reachplc.com"
+  },
+  {
+    "name": "George Lithgow",
+    "first_name": "George",
+    "last_name": "Lithgow",
+    "raw_sponsor": "Press Association",
+    "outlet_display_name": "PA Media",
+    "email_pattern": "{first}.{last}@pa.media",
+    "domain": "pa.media"
+  },
+  {
+    "name": "Antony Livsey",
+    "first_name": "Antony",
+    "last_name": "Livsey",
+    "raw_sponsor": "ITV News",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Abigail Llewelyn",
+    "first_name": "Abigail",
+    "last_name": "Llewelyn",
+    "raw_sponsor": "PA Media",
+    "outlet_display_name": "PA Media",
+    "email_pattern": "{first}.{last}@pa.media",
+    "domain": "pa.media"
+  },
+  {
+    "name": "James Llewelyn",
+    "first_name": "James",
+    "last_name": "Llewelyn",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Nina Lloyd",
+    "first_name": "Nina",
+    "last_name": "Lloyd",
+    "raw_sponsor": "PA Media",
+    "outlet_display_name": "PA Media",
+    "email_pattern": "{first}.{last}@pa.media",
+    "domain": "pa.media"
+  },
+  {
+    "name": "Isobel Losseff",
+    "first_name": "Isobel",
+    "last_name": "Losseff",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Robert Lownie",
+    "first_name": "Robert",
+    "last_name": "Lownie",
+    "raw_sponsor": "UnHerd",
+    "outlet_display_name": "UnHerd",
+    "email_pattern": "{first}.{last}@unherd.com",
+    "domain": "unherd.com"
+  },
+  {
+    "name": "Tessa Lucy",
+    "first_name": "Tessa",
+    "last_name": "Lucy",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "David Lynch",
+    "first_name": "David",
+    "last_name": "Lynch",
+    "raw_sponsor": "PA Media",
+    "outlet_display_name": "PA Media",
+    "email_pattern": "{first}.{last}@pa.media",
+    "domain": "pa.media"
+  },
+  {
+    "name": "Alison MacDonald",
+    "first_name": "Alison",
+    "last_name": "MacDonald",
+    "raw_sponsor": "BBC News",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Calum Macdonald",
+    "first_name": "Calum",
+    "last_name": "Macdonald",
+    "raw_sponsor": "Times Radio",
+    "outlet_display_name": "The Times / Times Radio (News UK)",
+    "email_pattern": "{first}.{last}@thetimes.co.uk",
+    "domain": "thetimes.co.uk"
+  },
+  {
+    "name": "Alison Mackenzie",
+    "first_name": "Alison",
+    "last_name": "Mackenzie",
+    "raw_sponsor": "ITV Central",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "David Maddox",
+    "first_name": "David",
+    "last_name": "Maddox",
+    "raw_sponsor": "The Independent",
+    "outlet_display_name": "The Independent",
+    "email_pattern": "{first}.{last}@independent.co.uk",
+    "domain": "independent.co.uk"
+  },
+  {
+    "name": "Kevin Maguire",
+    "first_name": "Kevin",
+    "last_name": "Maguire",
+    "raw_sponsor": "Daily Mirror",
+    "outlet_display_name": "Daily Mirror / Sunday Mirror",
+    "email_pattern": "{first}.{last}@reachplc.com|{first}.{last}@mirror.co.uk",
+    "domain": "reachplc.com"
+  },
+  {
+    "name": "Patrick Maguire",
+    "first_name": "Patrick",
+    "last_name": "Maguire",
+    "raw_sponsor": "Times",
+    "outlet_display_name": "The Times / Times Radio (News UK)",
+    "email_pattern": "{first}.{last}@thetimes.co.uk",
+    "domain": "thetimes.co.uk"
+  },
+  {
+    "name": "Sienna Malik",
+    "first_name": "Sienna",
+    "last_name": "Malik",
+    "raw_sponsor": "Daily Mail",
+    "outlet_display_name": "Daily Mail / Mail on Sunday",
+    "email_pattern": "{first}.{last}@mailonline.co.uk|{first}.{last}@dailymail.co.uk",
+    "domain": "mailonline.co.uk"
+  },
+  {
+    "name": "Caroline Malley",
+    "first_name": "Caroline",
+    "last_name": "Malley",
+    "raw_sponsor": "The I Newspaper",
+    "outlet_display_name": "The i Paper",
+    "email_pattern": "{first}.{last}@inews.co.uk",
+    "domain": "inews.co.uk"
+  },
+  {
+    "name": "Aliraza Manji",
+    "first_name": "Aliraza",
+    "last_name": "Manji",
+    "raw_sponsor": "Times Radio",
+    "outlet_display_name": "The Times / Times Radio (News UK)",
+    "email_pattern": "{first}.{last}@thetimes.co.uk",
+    "domain": "thetimes.co.uk"
+  },
+  {
+    "name": "Andrew Marr",
+    "first_name": "Andrew",
+    "last_name": "Marr",
+    "raw_sponsor": "Global Radio (LBC)",
+    "outlet_display_name": "LBC (Global Radio)",
+    "email_pattern": "{first}.{last}@global.com",
+    "domain": "global.com"
+  },
+  {
+    "name": "Daniel Martin",
+    "first_name": "Daniel",
+    "last_name": "Martin",
+    "raw_sponsor": "Telegraph",
+    "outlet_display_name": "The Telegraph",
+    "email_pattern": "{first}.{last}@telegraph.co.uk",
+    "domain": "telegraph.co.uk"
+  },
+  {
+    "name": "Diana Martin",
+    "first_name": "Diana",
+    "last_name": "Martin",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Matilda Martin",
+    "first_name": "Matilda",
+    "last_name": "Martin",
+    "raw_sponsor": "PoliticsHome",
+    "outlet_display_name": "Dods Group (PoliticsHome / The House)",
+    "email_pattern": "{first}.{last}@dodsgroup.com|{first}.{last}@politicshome.com",
+    "domain": "politicshome.com"
+  },
+  {
+    "name": "Christopher Mason",
+    "first_name": "Christopher",
+    "last_name": "Mason",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Rowena Mason",
+    "first_name": "Rowena",
+    "last_name": "Mason",
+    "raw_sponsor": "The Guardian",
+    "outlet_display_name": "The Guardian/Observer",
+    "email_pattern": "{first}.{last}@theguardian.com",
+    "domain": "theguardian.com"
+  },
+  {
+    "name": "Thomas Mason",
+    "first_name": "Thomas",
+    "last_name": "Mason",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Adrian Masters",
+    "first_name": "Adrian",
+    "last_name": "Masters",
+    "raw_sponsor": "ITV Wales",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Alicia McCarthy",
+    "first_name": "Alicia",
+    "last_name": "McCarthy",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Enda McClafferty",
+    "first_name": "Enda",
+    "last_name": "McClafferty",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Lucy McDaid",
+    "first_name": "Lucy",
+    "last_name": "McDaid",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Anne Mcelvoy",
+    "first_name": "Anne",
+    "last_name": "Mcelvoy",
+    "raw_sponsor": "Politico",
+    "outlet_display_name": "Politico (UK)",
+    "email_pattern": "{first}{last}@politico.eu|{first}.{last}@politico.eu",
+    "domain": "politico.eu"
+  },
+  {
+    "name": "Geraldine Mckelvie",
+    "first_name": "Geraldine",
+    "last_name": "Mckelvie",
+    "raw_sponsor": "The Guardian",
+    "outlet_display_name": "The Guardian/Observer",
+    "email_pattern": "{first}.{last}@theguardian.com",
+    "domain": "theguardian.com"
+  },
+  {
+    "name": "Christopher McKeon",
+    "first_name": "Christopher",
+    "last_name": "McKeon",
+    "raw_sponsor": "PA Media",
+    "outlet_display_name": "PA Media",
+    "email_pattern": "{first}.{last}@pa.media",
+    "domain": "pa.media"
+  },
+  {
+    "name": "Christopher McLaughlin",
+    "first_name": "Christopher",
+    "last_name": "McLaughlin",
+    "raw_sponsor": "Tribune",
+    "outlet_display_name": "Tribune Magazine",
+    "email_pattern": "editorial@tribunemag.co.uk",
+    "domain": "tribunemag.co.uk"
+  },
+  {
+    "name": "Lise McNally",
+    "first_name": "Lise",
+    "last_name": "McNally",
+    "raw_sponsor": "ITV",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Paul McNamara",
+    "first_name": "Paul",
+    "last_name": "McNamara",
+    "raw_sponsor": "Channel 4 TV/News",
+    "outlet_display_name": "Channel 4 News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Andrew McSmith",
+    "first_name": "Andrew",
+    "last_name": "McSmith",
+    "raw_sponsor": "Order! Order! Magazine",
+    "outlet_display_name": "Guido Fawkes / Order Order",
+    "email_pattern": "tips@order-order.com",
+    "domain": "order-order.com"
+  },
+  {
+    "name": "Christina McSorley",
+    "first_name": "Christina",
+    "last_name": "McSorley",
+    "raw_sponsor": "BBC News",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Elisa Menendez",
+    "first_name": "Elisa",
+    "last_name": "Menendez",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Karl Mercer",
+    "first_name": "Karl",
+    "last_name": "Mercer",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Jane Merrick",
+    "first_name": "Jane",
+    "last_name": "Merrick",
+    "raw_sponsor": "The i Newspaper",
+    "outlet_display_name": "The i Paper",
+    "email_pattern": "{first}.{last}@inews.co.uk",
+    "domain": "inews.co.uk"
+  },
+  {
+    "name": "Sam Merriman",
+    "first_name": "Sam",
+    "last_name": "Merriman",
+    "raw_sponsor": "Daily Mail",
+    "outlet_display_name": "Daily Mail / Mail on Sunday",
+    "email_pattern": "{first}.{last}@mailonline.co.uk|{first}.{last}@dailymail.co.uk",
+    "domain": "mailonline.co.uk"
+  },
+  {
+    "name": "Anna Mikhailova",
+    "first_name": "Anna",
+    "last_name": "Mikhailova",
+    "raw_sponsor": "Times Radio",
+    "outlet_display_name": "The Times / Times Radio (News UK)",
+    "email_pattern": "{first}.{last}@thetimes.co.uk",
+    "domain": "thetimes.co.uk"
+  },
+  {
+    "name": "Hugh Milbourn",
+    "first_name": "Hugh",
+    "last_name": "Milbourn",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Gabriel Millard-Clothier",
+    "first_name": "Gabriel",
+    "last_name": "Millard-Clothier",
+    "raw_sponsor": "Mail on Sunday",
+    "outlet_display_name": "Daily Mail / Mail on Sunday",
+    "email_pattern": "{first}.{last}@mailonline.co.uk|{first}.{last}@dailymail.co.uk",
+    "domain": "mailonline.co.uk"
+  },
+  {
+    "name": "Sabrina Miller",
+    "first_name": "Sabrina",
+    "last_name": "Miller",
+    "raw_sponsor": "The Sunday Telegraph",
+    "outlet_display_name": "The Telegraph",
+    "email_pattern": "{first}.{last}@telegraph.co.uk",
+    "domain": "telegraph.co.uk"
+  },
+  {
+    "name": "Andrew Mills",
+    "first_name": "Andrew",
+    "last_name": "Mills",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Harbinder Minhas",
+    "first_name": "Harbinder",
+    "last_name": "Minhas",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Sandra Mitchell",
+    "first_name": "Sandra",
+    "last_name": "Mitchell",
+    "raw_sponsor": "News UK/Times Radio",
+    "outlet_display_name": "The Times / Times Radio (News UK)",
+    "email_pattern": "{first}.{last}@thetimes.co.uk",
+    "domain": "thetimes.co.uk"
+  },
+  {
+    "name": "Freya Moorhouse",
+    "first_name": "Freya",
+    "last_name": "Moorhouse",
+    "raw_sponsor": "Financial Times",
+    "outlet_display_name": "Financial Times",
+    "email_pattern": "{first}.{last}@ft.com",
+    "domain": "ft.com"
+  },
+  {
+    "name": "Hamish Morrison",
+    "first_name": "Hamish",
+    "last_name": "Morrison",
+    "raw_sponsor": "The National/Newsquest",
+    "outlet_display_name": "The National (Scotland)",
+    "email_pattern": "{first}.{last}@newsquest.co.uk|{first}.{last}@thenational.scot",
+    "domain": "thenational.scot"
+  },
+  {
+    "name": "Josiah Mortimer",
+    "first_name": "Josiah",
+    "last_name": "Mortimer",
+    "raw_sponsor": "Byline Times",
+    "outlet_display_name": "Byline Times",
+    "email_pattern": "{first}@bylinetimes.com",
+    "domain": "bylinetimes.com"
+  },
+  {
+    "name": "Ruth Mosalski",
+    "first_name": "Ruth",
+    "last_name": "Mosalski",
+    "raw_sponsor": "Media Wales",
+    "outlet_display_name": "Media Wales (Reach)",
+    "email_pattern": "{first}.{last}@walesonline.co.uk|{first}.{last}@reachplc.com",
+    "domain": "walesonline.co.uk"
+  },
+  {
+    "name": "Richard Moss",
+    "first_name": "Richard",
+    "last_name": "Moss",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Enoch Mukungu",
+    "first_name": "Enoch",
+    "last_name": "Mukungu",
+    "raw_sponsor": "ITN (ITV News)",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Craig Munro",
+    "first_name": "Craig",
+    "last_name": "Munro",
+    "raw_sponsor": "Metro",
+    "outlet_display_name": "Metro",
+    "email_pattern": "{first}.{last}@metro.co.uk",
+    "domain": "metro.co.uk"
+  },
+  {
+    "name": "Darryl Murphy",
+    "first_name": "Darryl",
+    "last_name": "Murphy",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Joe Murphy",
+    "first_name": "Joe",
+    "last_name": "Murphy",
+    "raw_sponsor": "The Independent",
+    "outlet_display_name": "The Independent",
+    "email_pattern": "{first}.{last}@independent.co.uk",
+    "domain": "independent.co.uk"
+  },
+  {
+    "name": "Andrew Murray",
+    "first_name": "Andrew",
+    "last_name": "Murray",
+    "raw_sponsor": "Morning Star Newspaper",
+    "outlet_display_name": "Morning Star",
+    "email_pattern": "{first}.{last}@peoples-press.com|newsdesk@peoples-press.com",
+    "domain": "peoples-press.com"
+  },
+  {
+    "name": "Ewan Murrie",
+    "first_name": "Ewan",
+    "last_name": "Murrie",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Iona Napier",
+    "first_name": "Iona",
+    "last_name": "Napier",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Alice Neil",
+    "first_name": "Alice",
+    "last_name": "Neil",
+    "raw_sponsor": "ITN (ITV News)",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Catherine Neilan",
+    "first_name": "Catherine",
+    "last_name": "Neilan",
+    "raw_sponsor": "Tortoise Media",
+    "outlet_display_name": "Tortoise Media",
+    "email_pattern": "{first}.{last}@tortoisemedia.com",
+    "domain": "tortoisemedia.com"
+  },
+  {
+    "name": "Nigel Nelson",
+    "first_name": "Nigel",
+    "last_name": "Nelson",
+    "raw_sponsor": "Sunday Mirror/Sunday People",
+    "outlet_display_name": "Daily Mirror / Sunday Mirror",
+    "email_pattern": "{first}.{last}@reachplc.com|{first}.{last}@mirror.co.uk",
+    "domain": "reachplc.com"
+  },
+  {
+    "name": "Joshua Nevett",
+    "first_name": "Joshua",
+    "last_name": "Nevett",
+    "raw_sponsor": "BBC News",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Aaron Newbury",
+    "first_name": "Aaron",
+    "last_name": "Newbury",
+    "raw_sponsor": "Daily Express",
+    "outlet_display_name": "Daily Express / Sunday Express",
+    "email_pattern": "{first}.{last}@reachplc.com|{first}.{last}@express.co.uk",
+    "domain": "reachplc.com"
+  },
+  {
+    "name": "Rebeca Newnes",
+    "first_name": "Rebeca",
+    "last_name": "Newnes",
+    "raw_sponsor": "GB News",
+    "outlet_display_name": "GB News",
+    "email_pattern": "{first}.{last}@gbnews.com",
+    "domain": "gbnews.com"
+  },
+  {
+    "name": "Katharine Nicholson",
+    "first_name": "Katharine",
+    "last_name": "Nicholson",
+    "raw_sponsor": "HuffPost UK",
+    "outlet_display_name": "HuffPost UK",
+    "email_pattern": "{first}.{last}@huffpost.com",
+    "domain": "huffpost.com"
+  },
+  {
+    "name": "Mari Novik",
+    "first_name": "Mari",
+    "last_name": "Novik",
+    "raw_sponsor": "Financial Times",
+    "outlet_display_name": "Financial Times",
+    "email_pattern": "{first}.{last}@ft.com",
+    "domain": "ft.com"
+  },
+  {
+    "name": "Martyn Oates",
+    "first_name": "Martyn",
+    "last_name": "Oates",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Lisa O'Carroll",
+    "first_name": "Lisa",
+    "last_name": "O'Carroll",
+    "raw_sponsor": "Guardian",
+    "outlet_display_name": "The Guardian/Observer",
+    "email_pattern": "{first}.{last}@theguardian.com",
+    "domain": "theguardian.com"
+  },
+  {
+    "name": "Ayesha Omar",
+    "first_name": "Ayesha",
+    "last_name": "Omar",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Hilary O'Neill",
+    "first_name": "Hilary",
+    "last_name": "O'Neill",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Eleanor Ormsby",
+    "first_name": "Eleanor",
+    "last_name": "Ormsby",
+    "raw_sponsor": "LabourList",
+    "outlet_display_name": "LabourList",
+    "email_pattern": "{first}.{last}@labourlist.org",
+    "domain": "labourlist.org"
+  },
+  {
+    "name": "Sascha O'Sullivan",
+    "first_name": "Sascha",
+    "last_name": "O'Sullivan",
+    "raw_sponsor": "Politico",
+    "outlet_display_name": "Politico (UK)",
+    "email_pattern": "{first}{last}@politico.eu|{first}.{last}@politico.eu",
+    "domain": "politico.eu"
+  },
+  {
+    "name": "Leala Padmanabhan",
+    "first_name": "Leala",
+    "last_name": "Padmanabhan",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "George Parker",
+    "first_name": "George",
+    "last_name": "Parker",
+    "raw_sponsor": "Financial Times",
+    "outlet_display_name": "Financial Times",
+    "email_pattern": "{first}.{last}@ft.com",
+    "domain": "ft.com"
+  },
+  {
+    "name": "Clare Parry",
+    "first_name": "Clare",
+    "last_name": "Parry",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Alexander Partridge",
+    "first_name": "Alexander",
+    "last_name": "Partridge",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Adam Payne",
+    "first_name": "Adam",
+    "last_name": "Payne",
+    "raw_sponsor": "PoliticsHome",
+    "outlet_display_name": "Dods Group (PoliticsHome / The House)",
+    "email_pattern": "{first}.{last}@dodsgroup.com|{first}.{last}@politicshome.com",
+    "domain": "politicshome.com"
+  },
+  {
+    "name": "Tom Peck",
+    "first_name": "Tom",
+    "last_name": "Peck",
+    "raw_sponsor": "The Times",
+    "outlet_display_name": "The Times / Times Radio (News UK)",
+    "email_pattern": "{first}.{last}@thetimes.co.uk",
+    "domain": "thetimes.co.uk"
+  },
+  {
+    "name": "Dominic Penna",
+    "first_name": "Dominic",
+    "last_name": "Penna",
+    "raw_sponsor": "Telegraph",
+    "outlet_display_name": "The Telegraph",
+    "email_pattern": "{first}.{last}@telegraph.co.uk",
+    "domain": "telegraph.co.uk"
+  },
+  {
+    "name": "Robert Peston",
+    "first_name": "Robert",
+    "last_name": "Peston",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Shelley Phelps",
+    "first_name": "Shelley",
+    "last_name": "Phelps",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "James Pickard",
+    "first_name": "James",
+    "last_name": "Pickard",
+    "raw_sponsor": "Financial Times",
+    "outlet_display_name": "Financial Times",
+    "email_pattern": "{first}.{last}@ft.com",
+    "domain": "ft.com"
+  },
+  {
+    "name": "Andrew Pierce",
+    "first_name": "Andrew",
+    "last_name": "Pierce",
+    "raw_sponsor": "Daily Mail",
+    "outlet_display_name": "Daily Mail / Mail on Sunday",
+    "email_pattern": "{first}.{last}@mailonline.co.uk|{first}.{last}@dailymail.co.uk",
+    "domain": "mailonline.co.uk"
+  },
+  {
+    "name": "Joe Pike",
+    "first_name": "Joe",
+    "last_name": "Pike",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Adrian Pinsent",
+    "first_name": "Adrian",
+    "last_name": "Pinsent",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Gabriel Pogrund",
+    "first_name": "Gabriel",
+    "last_name": "Pogrund",
+    "raw_sponsor": "Sunday Times",
+    "outlet_display_name": "The Sunday Times",
+    "email_pattern": "{first}.{last}@sunday-times.co.uk",
+    "domain": "sunday-times.co.uk"
+  },
+  {
+    "name": "Robert Powell",
+    "first_name": "Robert",
+    "last_name": "Powell",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Georgina Prodromou",
+    "first_name": "Georgina",
+    "last_name": "Prodromou",
+    "raw_sponsor": "Bauer Media Group",
+    "outlet_display_name": "Bauer Media",
+    "email_pattern": "{first}.{last}@bauermedia.co.uk",
+    "domain": "bauermedia.co.uk"
+  },
+  {
+    "name": "Oliver Pscherer",
+    "first_name": "Oliver",
+    "last_name": "Pscherer",
+    "raw_sponsor": "GB News",
+    "outlet_display_name": "GB News",
+    "email_pattern": "{first}.{last}@gbnews.com",
+    "domain": "gbnews.com"
+  },
+  {
+    "name": "Andrew Quinn",
+    "first_name": "Andrew",
+    "last_name": "Quinn",
+    "raw_sponsor": "The Scotsman",
+    "outlet_display_name": "The Scotsman",
+    "email_pattern": "{first}.{last}@scotsman.com",
+    "domain": "scotsman.com"
+  },
+  {
+    "name": "Ben Quinn",
+    "first_name": "Ben",
+    "last_name": "Quinn",
+    "raw_sponsor": "The Guardian",
+    "outlet_display_name": "The Guardian/Observer",
+    "email_pattern": "{first}.{last}@theguardian.com",
+    "domain": "theguardian.com"
+  },
+  {
+    "name": "Randeep Ramesh",
+    "first_name": "Randeep",
+    "last_name": "Ramesh",
+    "raw_sponsor": "Guardian",
+    "outlet_display_name": "The Guardian/Observer",
+    "email_pattern": "{first}.{last}@theguardian.com",
+    "domain": "theguardian.com"
+  },
+  {
+    "name": "Madeline Ratcliffe",
+    "first_name": "Madeline",
+    "last_name": "Ratcliffe",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Andrew Rawnsley",
+    "first_name": "Andrew",
+    "last_name": "Rawnsley",
+    "raw_sponsor": "Observer",
+    "outlet_display_name": "The Guardian/Observer",
+    "email_pattern": "{first}.{last}@theguardian.com",
+    "domain": "theguardian.com"
+  },
+  {
+    "name": "Ailbhe Rea",
+    "first_name": "Ailbhe",
+    "last_name": "Rea",
+    "raw_sponsor": "New Statesman",
+    "outlet_display_name": "New Statesman",
+    "email_pattern": "{first}.{last}@newstatesman.co.uk",
+    "domain": "newstatesman.co.uk"
+  },
+  {
+    "name": "John Rentoul",
+    "first_name": "John",
+    "last_name": "Rentoul",
+    "raw_sponsor": "Independent",
+    "outlet_display_name": "The Independent",
+    "email_pattern": "{first}.{last}@independent.co.uk",
+    "domain": "independent.co.uk"
+  },
+  {
+    "name": "Faith Ridler",
+    "first_name": "Faith",
+    "last_name": "Ridler",
+    "raw_sponsor": "The i Newspaper",
+    "outlet_display_name": "The i Paper",
+    "email_pattern": "{first}.{last}@inews.co.uk",
+    "domain": "inews.co.uk"
+  },
+  {
+    "name": "Elizabeth Rigby",
+    "first_name": "Elizabeth",
+    "last_name": "Rigby",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Henry Riley",
+    "first_name": "Henry",
+    "last_name": "Riley",
+    "raw_sponsor": "LBC",
+    "outlet_display_name": "LBC (Global Radio)",
+    "email_pattern": "{first}.{last}@global.com",
+    "domain": "global.com"
+  },
+  {
+    "name": "Ben Riley-Smith",
+    "first_name": "Ben",
+    "last_name": "Riley-Smith",
+    "raw_sponsor": "The Telegraph",
+    "outlet_display_name": "The Telegraph",
+    "email_pattern": "{first}.{last}@telegraph.co.uk",
+    "domain": "telegraph.co.uk"
+  },
+  {
+    "name": "Duncan Robinson",
+    "first_name": "Duncan",
+    "last_name": "Robinson",
+    "raw_sponsor": "The Economist",
+    "outlet_display_name": "The Economist",
+    "email_pattern": "{first}{last}@economist.com",
+    "domain": "economist.com"
+  },
+  {
+    "name": "Nicholas Robinson",
+    "first_name": "Nicholas",
+    "last_name": "Robinson",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Sienna Rodgers Orsaz",
+    "first_name": "Sienna",
+    "last_name": "Orsaz",
+    "raw_sponsor": "The House",
+    "outlet_display_name": "Dods Group (PoliticsHome / The House)",
+    "email_pattern": "{first}.{last}@dodsgroup.com|{first}.{last}@politicshome.com",
+    "domain": "politicshome.com"
+  },
+  {
+    "name": "Alexandra Rogers",
+    "first_name": "Alexandra",
+    "last_name": "Rogers",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Amy Rogers",
+    "first_name": "Amy",
+    "last_name": "Rogers",
+    "raw_sponsor": "The Telegraph",
+    "outlet_display_name": "The Telegraph",
+    "email_pattern": "{first}.{last}@telegraph.co.uk",
+    "domain": "telegraph.co.uk"
+  },
+  {
+    "name": "Emma Ross",
+    "first_name": "Emma",
+    "last_name": "Ross",
+    "raw_sponsor": "ITV",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Jennifer Ross",
+    "first_name": "Jennifer",
+    "last_name": "Ross",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Tim Ross",
+    "first_name": "Tim",
+    "last_name": "Ross",
+    "raw_sponsor": "Politico",
+    "outlet_display_name": "Politico (UK)",
+    "email_pattern": "{first}{last}@politico.eu|{first}.{last}@politico.eu",
+    "domain": "politico.eu"
+  },
+  {
+    "name": "Stefan Rousseau",
+    "first_name": "Stefan",
+    "last_name": "Rousseau",
+    "raw_sponsor": "PA Media",
+    "outlet_display_name": "PA Media",
+    "email_pattern": "{first}.{last}@pa.media",
+    "domain": "pa.media"
+  },
+  {
+    "name": "Daniel Sabbagh",
+    "first_name": "Daniel",
+    "last_name": "Sabbagh",
+    "raw_sponsor": "The Guardian",
+    "outlet_display_name": "The Guardian/Observer",
+    "email_pattern": "{first}.{last}@theguardian.com",
+    "domain": "theguardian.com"
+  },
+  {
+    "name": "Ryan Sabey",
+    "first_name": "Ryan",
+    "last_name": "Sabey",
+    "raw_sponsor": "The Sun (News UK)",
+    "outlet_display_name": "The Sun / Sun on Sunday",
+    "email_pattern": "{first}.{last}@the-sun.co.uk",
+    "domain": "the-sun.co.uk"
+  },
+  {
+    "name": "Peter Saull",
+    "first_name": "Peter",
+    "last_name": "Saull",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Michael Savage",
+    "first_name": "Michael",
+    "last_name": "Savage",
+    "raw_sponsor": "Guardian",
+    "outlet_display_name": "The Guardian/Observer",
+    "email_pattern": "{first}.{last}@theguardian.com",
+    "domain": "theguardian.com"
+  },
+  {
+    "name": "Benjamin Schofield",
+    "first_name": "Benjamin",
+    "last_name": "Schofield",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Kevin Schofield",
+    "first_name": "Kevin",
+    "last_name": "Schofield",
+    "raw_sponsor": "HuffPost UK",
+    "outlet_display_name": "HuffPost UK",
+    "email_pattern": "{first}.{last}@huffpost.com",
+    "domain": "huffpost.com"
+  },
+  {
+    "name": "Tom Scotson",
+    "first_name": "Tom",
+    "last_name": "Scotson",
+    "raw_sponsor": "Politics Home",
+    "outlet_display_name": "Dods Group (PoliticsHome / The House)",
+    "email_pattern": "{first}.{last}@dodsgroup.com|{first}.{last}@politicshome.com",
+    "domain": "politicshome.com"
+  },
+  {
+    "name": "Geraldine Scott",
+    "first_name": "Geraldine",
+    "last_name": "Scott",
+    "raw_sponsor": "Times",
+    "outlet_display_name": "The Times / Times Radio (News UK)",
+    "email_pattern": "{first}.{last}@thetimes.co.uk",
+    "domain": "thetimes.co.uk"
+  },
+  {
+    "name": "Joseph Scowen",
+    "first_name": "Joseph",
+    "last_name": "Scowen",
+    "raw_sponsor": "GB News",
+    "outlet_display_name": "GB News",
+    "email_pattern": "{first}.{last}@gbnews.com",
+    "domain": "gbnews.com"
+  },
+  {
+    "name": "Tobias Sealey",
+    "first_name": "Tobias",
+    "last_name": "Sealey",
+    "raw_sponsor": "Talk TV (News UK)",
+    "outlet_display_name": "TalkTV (News UK)",
+    "email_pattern": "{first}.{last}@talk.tv",
+    "domain": "talk.tv"
+  },
+  {
+    "name": "Josh Self",
+    "first_name": "Josh",
+    "last_name": "Self",
+    "raw_sponsor": "Politics.co.uk",
+    "outlet_display_name": "Politics.co.uk",
+    "email_pattern": "{first}.{last}@politics.co.uk",
+    "domain": "politics.co.uk"
+  },
+  {
+    "name": "Thomas Sheldrick",
+    "first_name": "Thomas",
+    "last_name": "Sheldrick",
+    "raw_sponsor": "ITV",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "David Sheppard",
+    "first_name": "David",
+    "last_name": "Sheppard",
+    "raw_sponsor": "Financial Times",
+    "outlet_display_name": "Financial Times",
+    "email_pattern": "{first}.{last}@ft.com",
+    "domain": "ft.com"
+  },
+  {
+    "name": "Ethan Shone",
+    "first_name": "Ethan",
+    "last_name": "Shone",
+    "raw_sponsor": "Open Democracy",
+    "outlet_display_name": "openDemocracy",
+    "email_pattern": "{first}.{last}@opendemocracy.net",
+    "domain": "opendemocracy.net"
+  },
+  {
+    "name": "Robert Shrimsley",
+    "first_name": "Robert",
+    "last_name": "Shrimsley",
+    "raw_sponsor": "Financial Times",
+    "outlet_display_name": "Financial Times",
+    "email_pattern": "{first}.{last}@ft.com",
+    "domain": "ft.com"
+  },
+  {
+    "name": "Andrew Sinclair",
+    "first_name": "Andrew",
+    "last_name": "Sinclair",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Arjun Singh",
+    "first_name": "Arjun",
+    "last_name": "Singh",
+    "raw_sponsor": "The i Newspaper",
+    "outlet_display_name": "The i Paper",
+    "email_pattern": "{first}.{last}@inews.co.uk",
+    "domain": "inews.co.uk"
+  },
+  {
+    "name": "Anna Slater",
+    "first_name": "Anna",
+    "last_name": "Slater",
+    "raw_sponsor": "ITN (ITV News)",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Jack Slater",
+    "first_name": "Jack",
+    "last_name": "Slater",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Sophia Sleigh",
+    "first_name": "Sophia",
+    "last_name": "Sleigh",
+    "raw_sponsor": "Sun",
+    "outlet_display_name": "The Sun / Sun on Sunday",
+    "email_pattern": "{first}.{last}@the-sun.co.uk",
+    "domain": "the-sun.co.uk"
+  },
+  {
+    "name": "Emily Smith",
+    "first_name": "Emily",
+    "last_name": "Smith",
+    "raw_sponsor": "The Telegraph",
+    "outlet_display_name": "The Telegraph",
+    "email_pattern": "{first}.{last}@telegraph.co.uk",
+    "domain": "telegraph.co.uk"
+  },
+  {
+    "name": "Michael Smith",
+    "first_name": "Michael",
+    "last_name": "Smith",
+    "raw_sponsor": "Daily Mirror",
+    "outlet_display_name": "Daily Mirror / Sunday Mirror",
+    "email_pattern": "{first}.{last}@reachplc.com|{first}.{last}@mirror.co.uk",
+    "domain": "reachplc.com"
+  },
+  {
+    "name": "Simon Smith",
+    "first_name": "Simon",
+    "last_name": "Smith",
+    "raw_sponsor": "BBC Scotland",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Christopher Smyth",
+    "first_name": "Christopher",
+    "last_name": "Smyth",
+    "raw_sponsor": "Financial Times",
+    "outlet_display_name": "Financial Times",
+    "email_pattern": "{first}.{last}@ft.com",
+    "domain": "ft.com"
+  },
+  {
+    "name": "Jennifer Sneesby",
+    "first_name": "Jennifer",
+    "last_name": "Sneesby",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Pieter Snepvangers",
+    "first_name": "Pieter",
+    "last_name": "Snepvangers",
+    "raw_sponsor": "The Daily Telegraph",
+    "outlet_display_name": "The Telegraph",
+    "email_pattern": "{first}.{last}@telegraph.co.uk",
+    "domain": "telegraph.co.uk"
+  },
+  {
+    "name": "Peter Snowdon",
+    "first_name": "Peter",
+    "last_name": "Snowdon",
+    "raw_sponsor": "Politico",
+    "outlet_display_name": "Politico (UK)",
+    "email_pattern": "{first}{last}@politico.eu|{first}.{last}@politico.eu",
+    "domain": "politico.eu"
+  },
+  {
+    "name": "Andrew Sparrow",
+    "first_name": "Andrew",
+    "last_name": "Sparrow",
+    "raw_sponsor": "Guardian",
+    "outlet_display_name": "The Guardian/Observer",
+    "email_pattern": "{first}.{last}@theguardian.com",
+    "domain": "theguardian.com"
+  },
+  {
+    "name": "Lara Spirit",
+    "first_name": "Lara",
+    "last_name": "Spirit",
+    "raw_sponsor": "The Sunday Times",
+    "outlet_display_name": "The Sunday Times",
+    "email_pattern": "{first}.{last}@sunday-times.co.uk",
+    "domain": "sunday-times.co.uk"
+  },
+  {
+    "name": "Stephania Spyropoulou",
+    "first_name": "Stephania",
+    "last_name": "Spyropoulou",
+    "raw_sponsor": "Daily Express",
+    "outlet_display_name": "Daily Express / Sunday Express",
+    "email_pattern": "{first}.{last}@reachplc.com|{first}.{last}@express.co.uk",
+    "domain": "reachplc.com"
+  },
+  {
+    "name": "Kiran Stacey",
+    "first_name": "Kiran",
+    "last_name": "Stacey",
+    "raw_sponsor": "The Guardian",
+    "outlet_display_name": "The Guardian/Observer",
+    "email_pattern": "{first}.{last}@theguardian.com",
+    "domain": "theguardian.com"
+  },
+  {
+    "name": "Timothy Stanley",
+    "first_name": "Timothy",
+    "last_name": "Stanley",
+    "raw_sponsor": "Telegraph Media Group",
+    "outlet_display_name": "The Telegraph",
+    "email_pattern": "{first}.{last}@telegraph.co.uk",
+    "domain": "telegraph.co.uk"
+  },
+  {
+    "name": "Athena Stavrou",
+    "first_name": "Athena",
+    "last_name": "Stavrou",
+    "raw_sponsor": "The Independent",
+    "outlet_display_name": "The Independent",
+    "email_pattern": "{first}.{last}@independent.co.uk",
+    "domain": "independent.co.uk"
+  },
+  {
+    "name": "Gerard Sudlow",
+    "first_name": "Gerard",
+    "last_name": "Sudlow",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Jamie Summers",
+    "first_name": "Jamie",
+    "last_name": "Summers",
+    "raw_sponsor": "ITN/ITV News",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Alexander Sutton",
+    "first_name": "Alexander",
+    "last_name": "Sutton",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Steven Swinford",
+    "first_name": "Steven",
+    "last_name": "Swinford",
+    "raw_sponsor": "Times",
+    "outlet_display_name": "The Times / Times Radio (News UK)",
+    "email_pattern": "{first}.{last}@thetimes.co.uk",
+    "domain": "thetimes.co.uk"
+  },
+  {
+    "name": "Rajeev Syal",
+    "first_name": "Rajeev",
+    "last_name": "Syal",
+    "raw_sponsor": "Guardian",
+    "outlet_display_name": "The Guardian/Observer",
+    "email_pattern": "{first}.{last}@theguardian.com",
+    "domain": "theguardian.com"
+  },
+  {
+    "name": "Rachel Sylvester",
+    "first_name": "Rachel",
+    "last_name": "Sylvester",
+    "raw_sponsor": "Observer",
+    "outlet_display_name": "The Guardian/Observer",
+    "email_pattern": "{first}.{last}@theguardian.com",
+    "domain": "theguardian.com"
+  },
+  {
+    "name": "Jennifer Sym",
+    "first_name": "Jennifer",
+    "last_name": "Sym",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Harriet Symonds",
+    "first_name": "Harriet",
+    "last_name": "Symonds",
+    "raw_sponsor": "Dods Group (Total Politics and The House Magazine)",
+    "outlet_display_name": "Dods Group (PoliticsHome / The House)",
+    "email_pattern": "{first}.{last}@dodsgroup.com|{first}.{last}@politicshome.com",
+    "domain": "politicshome.com"
+  },
+  {
+    "name": "James Tapsfield",
+    "first_name": "James",
+    "last_name": "Tapsfield",
+    "raw_sponsor": "MailOnline",
+    "outlet_display_name": "Daily Mail / Mail on Sunday",
+    "email_pattern": "{first}.{last}@mailonline.co.uk|{first}.{last}@dailymail.co.uk",
+    "domain": "mailonline.co.uk"
+  },
+  {
+    "name": "Henry Taylor",
+    "first_name": "Henry",
+    "last_name": "Taylor",
+    "raw_sponsor": "PA Media",
+    "outlet_display_name": "PA Media",
+    "email_pattern": "{first}.{last}@pa.media",
+    "domain": "pa.media"
+  },
+  {
+    "name": "Bethell Tesfaye",
+    "first_name": "Bethell",
+    "last_name": "Tesfaye",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Alison Thompson",
+    "first_name": "Alison",
+    "last_name": "Thompson",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "George Thompson",
+    "first_name": "George",
+    "last_name": "Thompson",
+    "raw_sponsor": "PA Media",
+    "outlet_display_name": "PA Media",
+    "email_pattern": "{first}.{last}@pa.media",
+    "domain": "pa.media"
+  },
+  {
+    "name": "James Tibbitts",
+    "first_name": "James",
+    "last_name": "Tibbitts",
+    "raw_sponsor": "LabourList",
+    "outlet_display_name": "LabourList",
+    "email_pattern": "{first}.{last}@labourlist.org",
+    "domain": "labourlist.org"
+  },
+  {
+    "name": "Anna Tobi",
+    "first_name": "Anna",
+    "last_name": "Tobi",
+    "raw_sponsor": "The Guardian",
+    "outlet_display_name": "The Guardian/Observer",
+    "email_pattern": "{first}.{last}@theguardian.com",
+    "domain": "theguardian.com"
+  },
+  {
+    "name": "Alain Tolhurst",
+    "first_name": "Alain",
+    "last_name": "Tolhurst",
+    "raw_sponsor": "PoliticsHome",
+    "outlet_display_name": "Dods Group (PoliticsHome / The House)",
+    "email_pattern": "{first}.{last}@dodsgroup.com|{first}.{last}@politicshome.com",
+    "domain": "politicshome.com"
+  },
+  {
+    "name": "Camilla Tominey",
+    "first_name": "Camilla",
+    "last_name": "Tominey",
+    "raw_sponsor": "Telegraph",
+    "outlet_display_name": "The Telegraph",
+    "email_pattern": "{first}.{last}@telegraph.co.uk",
+    "domain": "telegraph.co.uk"
+  },
+  {
+    "name": "Alexandra Topping",
+    "first_name": "Alexandra",
+    "last_name": "Topping",
+    "raw_sponsor": "The Guardian",
+    "outlet_display_name": "The Guardian/Observer",
+    "email_pattern": "{first}.{last}@theguardian.com",
+    "domain": "theguardian.com"
+  },
+  {
+    "name": "Madeleine Trimmer",
+    "first_name": "Madeleine",
+    "last_name": "Trimmer",
+    "raw_sponsor": "BBC News",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Camilla Turner",
+    "first_name": "Camilla",
+    "last_name": "Turner",
+    "raw_sponsor": "Daily Telegraph",
+    "outlet_display_name": "The Telegraph",
+    "email_pattern": "{first}.{last}@telegraph.co.uk",
+    "domain": "telegraph.co.uk"
+  },
+  {
+    "name": "Paul Twinn",
+    "first_name": "Paul",
+    "last_name": "Twinn",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Richard Vaughan",
+    "first_name": "Richard",
+    "last_name": "Vaughan",
+    "raw_sponsor": "The i Newspaper",
+    "outlet_display_name": "The i Paper",
+    "email_pattern": "{first}.{last}@inews.co.uk",
+    "domain": "inews.co.uk"
+  },
+  {
+    "name": "Ahmed Versi",
+    "first_name": "Ahmed",
+    "last_name": "Versi",
+    "raw_sponsor": "Muslim News",
+    "outlet_display_name": "The Muslim News",
+    "email_pattern": "info@muslimnews.co.uk",
+    "domain": "muslimnews.co.uk"
+  },
+  {
+    "name": "Noah Vickers",
+    "first_name": "Noah",
+    "last_name": "Vickers",
+    "raw_sponsor": "The House Magazine (Total Politics)",
+    "outlet_display_name": "Dods Group (PoliticsHome / The House)",
+    "email_pattern": "{first}.{last}@dodsgroup.com|{first}.{last}@politicshome.com",
+    "domain": "politicshome.com"
+  },
+  {
+    "name": "Jonathan Walker",
+    "first_name": "Jonathan",
+    "last_name": "Walker",
+    "raw_sponsor": "Sunday Express",
+    "outlet_display_name": "Daily Express / Sunday Express",
+    "email_pattern": "{first}.{last}@reachplc.com|{first}.{last}@express.co.uk",
+    "domain": "reachplc.com"
+  },
+  {
+    "name": "Peter Walker",
+    "first_name": "Peter",
+    "last_name": "Walker",
+    "raw_sponsor": "Guardian",
+    "outlet_display_name": "The Guardian/Observer",
+    "email_pattern": "{first}.{last}@theguardian.com",
+    "domain": "theguardian.com"
+  },
+  {
+    "name": "Jack Walters",
+    "first_name": "Jack",
+    "last_name": "Walters",
+    "raw_sponsor": "GB News",
+    "outlet_display_name": "GB News",
+    "email_pattern": "{first}.{last}@gbnews.com",
+    "domain": "gbnews.com"
+  },
+  {
+    "name": "Iain Watson",
+    "first_name": "Iain",
+    "last_name": "Watson",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Rob Watson",
+    "first_name": "Rob",
+    "last_name": "Watson",
+    "raw_sponsor": "BBC News",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Nicholas Watt",
+    "first_name": "Nicholas",
+    "last_name": "Watt",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "James Webb",
+    "first_name": "James",
+    "last_name": "Webb",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Esther Webber",
+    "first_name": "Esther",
+    "last_name": "Webber",
+    "raw_sponsor": "Politico",
+    "outlet_display_name": "Politico (UK)",
+    "email_pattern": "{first}{last}@politico.eu|{first}.{last}@politico.eu",
+    "domain": "politico.eu"
+  },
+  {
+    "name": "Romilly Weeks",
+    "first_name": "Romilly",
+    "last_name": "Weeks",
+    "raw_sponsor": "ITN",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Kate Whannel",
+    "first_name": "Kate",
+    "last_name": "Whannel",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Brian Wheeler",
+    "first_name": "Brian",
+    "last_name": "Wheeler",
+    "raw_sponsor": "BBC News",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Gwenneth Whitby",
+    "first_name": "Gwenneth",
+    "last_name": "Whitby",
+    "raw_sponsor": "ITV",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Alan White",
+    "first_name": "Alan",
+    "last_name": "White",
+    "raw_sponsor": "Total Politics",
+    "outlet_display_name": "Dods Group (PoliticsHome / The House)",
+    "email_pattern": "{first}.{last}@dodsgroup.com|{first}.{last}@politicshome.com",
+    "domain": "politicshome.com"
+  },
+  {
+    "name": "David Wilcock",
+    "first_name": "David",
+    "last_name": "Wilcock",
+    "raw_sponsor": "MailOnline/DMGT",
+    "outlet_display_name": "Daily Mail / Mail on Sunday",
+    "email_pattern": "{first}.{last}@mailonline.co.uk|{first}.{last}@dailymail.co.uk",
+    "domain": "mailonline.co.uk"
+  },
+  {
+    "name": "Martin Williams",
+    "first_name": "Martin",
+    "last_name": "Williams",
+    "raw_sponsor": "Declassified UK",
+    "outlet_display_name": "Declassified UK",
+    "email_pattern": "{first}@declassifieduk.org",
+    "domain": "declassifieduk.org"
+  },
+  {
+    "name": "David Williamson",
+    "first_name": "David",
+    "last_name": "Williamson",
+    "raw_sponsor": "Express Newspapers",
+    "outlet_display_name": "Daily Express / Sunday Express",
+    "email_pattern": "{first}.{last}@reachplc.com|{first}.{last}@express.co.uk",
+    "domain": "reachplc.com"
+  },
+  {
+    "name": "Sophie Wingate",
+    "first_name": "Sophie",
+    "last_name": "Wingate",
+    "raw_sponsor": "PA Media",
+    "outlet_display_name": "PA Media",
+    "email_pattern": "{first}.{last}@pa.media",
+    "domain": "pa.media"
+  },
+  {
+    "name": "David Wood",
+    "first_name": "David",
+    "last_name": "Wood",
+    "raw_sponsor": "ITV West Country",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "David Wooding",
+    "first_name": "David",
+    "last_name": "Wooding",
+    "raw_sponsor": "Express Newspapers",
+    "outlet_display_name": "Daily Express / Sunday Express",
+    "email_pattern": "{first}.{last}@reachplc.com|{first}.{last}@express.co.uk",
+    "domain": "reachplc.com"
+  },
+  {
+    "name": "Hannah Woodward",
+    "first_name": "Hannah",
+    "last_name": "Woodward",
+    "raw_sponsor": "Sky News",
+    "outlet_display_name": "Sky News",
+    "email_pattern": "{first}.{last}@sky.uk",
+    "domain": "sky.uk"
+  },
+  {
+    "name": "Giles Wooltorton",
+    "first_name": "Giles",
+    "last_name": "Wooltorton",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Benjamin Wright",
+    "first_name": "Benjamin",
+    "last_name": "Wright",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Oliver Wright",
+    "first_name": "Oliver",
+    "last_name": "Wright",
+    "raw_sponsor": "The Times",
+    "outlet_display_name": "The Times / Times Radio (News UK)",
+    "email_pattern": "{first}.{last}@thetimes.co.uk",
+    "domain": "thetimes.co.uk"
+  },
+  {
+    "name": "Harry Yorke",
+    "first_name": "Harry",
+    "last_name": "Yorke",
+    "raw_sponsor": "The Sunday Times",
+    "outlet_display_name": "The Sunday Times",
+    "email_pattern": "{first}.{last}@sunday-times.co.uk",
+    "domain": "sunday-times.co.uk"
+  },
+  {
+    "name": "Emily Youlton",
+    "first_name": "Emily",
+    "last_name": "Youlton",
+    "raw_sponsor": "ITV Regional News",
+    "outlet_display_name": "ITV News (via ITN)",
+    "email_pattern": "{first}.{last}@itn.co.uk",
+    "domain": "itn.co.uk"
+  },
+  {
+    "name": "Maximilian Young",
+    "first_name": "Maximilian",
+    "last_name": "Young",
+    "raw_sponsor": "Guido Fawkes",
+    "outlet_display_name": "Guido Fawkes / Order Order",
+    "email_pattern": "tips@order-order.com",
+    "domain": "order-order.com"
+  },
+  {
+    "name": "Victoria Young",
+    "first_name": "Victoria",
+    "last_name": "Young",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Eleanor Zaniewicka",
+    "first_name": "Eleanor",
+    "last_name": "Zaniewicka",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  },
+  {
+    "name": "Henry Zeffman",
+    "first_name": "Henry",
+    "last_name": "Zeffman",
+    "raw_sponsor": "BBC",
+    "outlet_display_name": "BBC News (Westminster/Politics)",
+    "email_pattern": "{first}.{last}@bbc.co.uk",
+    "domain": "bbc.co.uk"
+  }
+]
