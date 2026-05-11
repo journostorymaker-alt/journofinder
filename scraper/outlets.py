@@ -30,7 +30,7 @@ OUTLETS = [
     {"name": "The Telegraph", "domain": "telegraph.co.uk", "tier": "national", "region": "UK", "group": "Telegraph Media Group", "email_pattern": "{first}.{last}@telegraph.co.uk", "team_urls": ["https://www.telegraph.co.uk/authors/"], "rss": ["https://www.telegraph.co.uk/rss.xml"]},
     {"name": "The Independent", "domain": "independent.co.uk", "tier": "national", "region": "UK", "group": "Independent Digital News and Media", "email_pattern": "{f}.{last}@independent.co.uk", "team_urls": ["https://www.independent.co.uk/author"], "rss": ["https://www.independent.co.uk/news/uk/rss"]},
     {"name": "The i Paper", "domain": "inews.co.uk", "tier": "national", "region": "UK", "group": "DMG Media", "email_pattern": "{first}.{last}@inews.co.uk", "team_urls": [], "rss": ["https://inews.co.uk/feed"]},
-    {"name": "Daily Mail", "domain": "dailymail.co.uk", "tier": "national", "region": "UK", "group": "DMG Media", "email_pattern": "{f}.{last}@dailymail.co.uk", "team_urls": [], "rss": ["https://www.dailymail.co.uk/articles.rss"]},
+    {"name": "Daily Mail", "domain": "dailymail.co.uk", "tier": "national", "region": "UK", "group": "DMG Media", "email_pattern": "{first}.{last}@mailonline.co.uk|{first}.{last}@dailymail.co.uk", "team_urls": [], "rss": ["https://www.dailymail.co.uk/articles.rss"]},
     {"name": "The Mirror", "domain": "mirror.co.uk", "tier": "national", "region": "UK", "group": "Reach plc", "email_pattern": "{first}.{last}@mirror.co.uk|{first}.{last}@reachplc.com", "team_urls": ["https://www.mirror.co.uk/authors/"], "rss": ["https://www.mirror.co.uk/news/?service=rss"]},
     {"name": "The Sun", "domain": "thesun.co.uk", "tier": "national", "region": "UK", "group": "News UK", "email_pattern": "{first}.{last}@the-sun.co.uk|{first}.{last}@news.co.uk", "team_urls": [], "rss": ["https://www.thesun.co.uk/feed/"]},
     {"name": "Daily Express", "domain": "express.co.uk", "tier": "national", "region": "UK", "group": "Reach plc", "email_pattern": "{first}.{last}@reachplc.com|{first}.{last}@express.co.uk", "team_urls": ["https://www.express.co.uk/authors"], "rss": ["https://www.express.co.uk/posts/rss/1"]},
@@ -277,7 +277,7 @@ OUTLETS = [
     # =========================================================================
     # AGENCIES
     # =========================================================================
-    {"name": "Press Association / PA Media", "domain": "pamediagroup.com", "tier": "specialist", "region": "UK", "group": "PA Media", "email_pattern": "{first}.{last}@pamediagroup.com|{first}.{last}@pamedia.co.uk", "team_urls": [], "rss": []},
+    {"name": "Press Association / PA Media", "domain": "pa.media", "tier": "specialist", "region": "UK", "group": "PA Media", "email_pattern": "{first}.{last}@pa.media|{first}.{last}@pamediagroup.com", "team_urls": [], "rss": []},
     {"name": "Reuters UK", "domain": "reuters.com", "tier": "specialist", "region": "UK", "group": "Reuters", "email_pattern": "{first}.{last}@thomsonreuters.com", "team_urls": [], "rss": []},
 ]
 
