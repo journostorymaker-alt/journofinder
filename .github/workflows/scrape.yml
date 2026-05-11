@@ -5,7 +5,7 @@ on:
     # Twice weekly: Tuesday and Friday at 04:00 UTC
     # (free GitHub Actions tier gives 2,000 minutes/month — daily 5h scrapes
     # would burn 9,000+ minutes; twice-weekly keeps us well within budget)
-    - cron: '0 4 * * 2,5'
+    - cron: '0 2 * * 2,5'
   workflow_dispatch:
 
 jobs:
