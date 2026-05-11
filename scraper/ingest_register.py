@@ -296,16 +296,35 @@ def main():
                 print(f"  ✎ UPDATED outlet {existing_id} '{row['name']}' email_pattern → {update_pattern}")
                 patterns_updated += 1
         else:
-            # Create new outlet
-            cur = conn.execute("""
-                INSERT INTO outlets (name, domain, tier, region, group_name, email_pattern)
-                VALUES (?, ?, ?, ?, ?, ?)
-            """, (new_outlet['name'], new_outlet['domain'], new_outlet['tier'],
-                  new_outlet['region'], new_outlet['group_name'], new_outlet['email_pattern']))
-            new_id = cur.lastrowid
-            canonical_to_outlet_id[canonical_name] = new_id
-            print(f"  + CREATED outlet id={new_id} '{new_outlet['name']}' ({new_outlet['domain']})")
-            new_outlets_created += 1
+            # First check whether an outlet with the same name already exists.
+            # This handles the case where this script has been run before and
+            # created the outlets — we should reuse them rather than crash on
+            # the UNIQUE constraint.
+            existing_by_name = conn.execute(
+                "SELECT id, name, email_pattern FROM outlets WHERE name = ?",
+                (new_outlet['name'],)
+            ).fetchone()
+            if existing_by_name:
+                canonical_to_outlet_id[canonical_name] = existing_by_name['id']
+                # If the email pattern in the existing record differs from the one
+                # we'd set, update it to match our plan
+                if existing_by_name['email_pattern'] != new_outlet['email_pattern']:
+                    conn.execute("UPDATE outlets SET email_pattern = ? WHERE id = ?",
+                                 (new_outlet['email_pattern'], existing_by_name['id']))
+                    print(f"  ↻ REUSED outlet id={existing_by_name['id']} '{new_outlet['name']}' (email pattern updated)")
+                else:
+                    print(f"  ↻ REUSED outlet id={existing_by_name['id']} '{new_outlet['name']}'")
+            else:
+                # Genuinely new — create it
+                cur = conn.execute("""
+                    INSERT INTO outlets (name, domain, tier, region, group_name, email_pattern)
+                    VALUES (?, ?, ?, ?, ?, ?)
+                """, (new_outlet['name'], new_outlet['domain'], new_outlet['tier'],
+                      new_outlet['region'], new_outlet['group_name'], new_outlet['email_pattern']))
+                new_id = cur.lastrowid
+                canonical_to_outlet_id[canonical_name] = new_id
+                print(f"  + CREATED outlet id={new_id} '{new_outlet['name']}' ({new_outlet['domain']})")
+                new_outlets_created += 1
 
     conn.commit()
     print(f"\n  → {new_outlets_created} new outlets, {patterns_updated} email patterns updated")
