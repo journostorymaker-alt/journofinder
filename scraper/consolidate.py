@@ -25,6 +25,10 @@ Run this AFTER scrape.py. It does four things:
    verified an email unless we actually saw it on a page.
 
 4. Specialisms. Aggregate keywords across each journalist's bylines.
+   Note: byline-derived specialisms use scores in the 1-99 range (literally
+   the keyword count). Externally-added tags (e.g. 'westminster_lobby' from
+   the Parliament Register ingestion) use score=100 so they survive the
+   rebuild step below.
 
 This is run separately from scraping so it's cheap to re-run as we tune
 the classification logic without re-scraping.
@@ -398,9 +402,23 @@ def consolidate():
             """, (classification, total, n_outlets, n_groups, synd, primary_region, primary_tier,
                   last_active_oid, moved_from_oid, days_since, jid))
             
-            # Specialisms
-            conn.execute("DELETE FROM journalist_specialisms WHERE journalist_id = ?", (jid,))
+            # Specialisms — only wipe byline-derived (low-score, <100) ones, preserving
+            # externally-added high-score tags like 'westminster_lobby' (score=100) added
+            # by ingestion scripts. Otherwise those tags get wiped on every scrape and
+            # we lose useful filter labels.
+            conn.execute("""
+                DELETE FROM journalist_specialisms
+                WHERE journalist_id = ? AND score < 100
+            """, (jid,))
             for spec, count in _extract_specialisms(jid, conn).most_common(5):
+                # Don't insert a byline-derived spec if the same name is already
+                # there at score >= 100 — the high-score one stays untouched.
+                existing = conn.execute("""
+                    SELECT score FROM journalist_specialisms
+                    WHERE journalist_id = ? AND specialism = ?
+                """, (jid, spec)).fetchone()
+                if existing and existing[0] >= 100:
+                    continue
                 conn.execute("""
                     INSERT INTO journalist_specialisms (journalist_id, specialism, score)
                     VALUES (?, ?, ?)
