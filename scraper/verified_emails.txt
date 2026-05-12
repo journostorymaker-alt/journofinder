@@ -1,0 +1,42 @@
+# Verified emails — ground truth that overrides pattern guesses
+# =============================================================
+#
+# Format (one entry per line):
+#     Full Name | Outlet name | verified.email@domain.com
+#
+# Examples:
+#     Helen Catt | BBC News | helen.catt@bbc.co.uk
+#     David Hughes | PA Media | david.hughes@pa.media
+#     David Hughes | ITV News | david.hughes@itv.com
+#
+# Notes:
+# - Outlet name must match the outlet's name in the database (case-insensitive).
+#   If you're not sure, look up the journalist in the dashboard — the "Company"
+#   column is the outlet name to use.
+# - Lines starting with # are ignored. You can use these for notes to yourself
+#   (e.g., "# confirmed by reply 12 May 2026").
+# - Blank lines are ignored.
+# - Order doesn't matter.
+# - These emails get 'verified' confidence in the database — the highest level.
+#   They appear first in the dashboard and survive every future scrape.
+# - If the journalist doesn't exist in the database yet, they'll be CREATED
+#   from this entry — useful for journalists at outlets we can't currently
+#   scrape (e.g., Times, Telegraph, Sky News behind bot-blocking).
+# - You can have multiple verified emails for the same journalist (e.g.,
+#   work email + personal email). Just add separate lines.
+#
+# How to add a new verified email:
+# 1. Click pencil/edit icon ✏️ at top right of this file on GitHub
+# 2. Add your new line at the bottom (or anywhere — order doesn't matter)
+# 3. Scroll down, click green "Commit changes" button
+# 4. Verified status takes effect at the next scrape (Tuesday/Friday 2am UTC)
+
+# === Verified by Rupert via direct correspondence, May 2026 ===
+
+Dan Whitehead | Sky News | dan.whitehead@sky.uk
+Claire Hayhurst | Press Association / PA Media | claire.hayhurst@pa.media
+Elizabeth Haigh | Daily Mail | elizabeth.haigh@mailonline.co.uk
+Steve Bird | The Telegraph | steve.bird@telegraph.co.uk
+Steven Morris | The Guardian | steven.morris@theguardian.com
+Daisy Graham-Brown | Daily Mail | daisy.graham-brown@dailymail.co.uk
+Adam Vaughan | The Times | adam.vaughan@thetimes.co.uk
