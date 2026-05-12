@@ -69,6 +69,51 @@ def _load_excluded_names():
 EXCLUDED_NAMES = _load_excluded_names()
 from outlets import OUTLETS
 
+
+def _load_verified_emails():
+    """Load verified emails from scraper/verified_emails.txt.
+    
+    Returns a list of (name_normalised, outlet_name_lowercase, email) tuples.
+    
+    The file format is:
+        Full Name | Outlet name | verified.email@domain.com
+    
+    Lines starting with # and blank lines are ignored.
+    
+    These emails are the ground truth — they override pattern guesses and
+    survive every future scrape (because the existing code only deletes
+    journalist_emails with confidence != 'verified' on each consolidation pass).
+    """
+    import re
+    verified_file = Path(__file__).parent / "verified_emails.txt"
+    if not verified_file.exists():
+        return []
+    
+    entries = []
+    for line in verified_file.read_text().splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        parts = [p.strip() for p in line.split("|")]
+        if len(parts) != 3:
+            print(f"  WARN: verified_emails.txt malformed line: {line[:80]}")
+            continue
+        name, outlet, email = parts
+        # Normalise name: lowercase, strip punctuation, collapse whitespace
+        # (matches the normalisation used elsewhere in the codebase)
+        name_norm = re.sub(r"[^\w\s]", "", name.lower())
+        name_norm = re.sub(r"\s+", " ", name_norm).strip()
+        outlet_norm = re.sub(r"\s+", " ", outlet.lower()).strip()
+        if "@" not in email or "." not in email.split("@")[-1]:
+            print(f"  WARN: verified_emails.txt invalid email skipped: {email}")
+            continue
+        entries.append((name_norm, outlet_norm, email))
+    
+    return entries
+
+
+VERIFIED_EMAILS = _load_verified_emails()
+
 # Keep first letter case-aware lookups
 OUTLET_BY_NAME = {o["name"]: o for o in OUTLETS}
 
@@ -446,6 +491,136 @@ def consolidate():
                             (journalist_id, email, confidence, source, is_primary)
                         VALUES (?, ?, ?, ?, ?)
                     """, (jid, email, conf, source, 1 if i == 0 else 0))
+        
+        # ===== STEP 1.5: Apply verified emails from verified_emails.txt =====
+        # These are emails the user has confirmed work (e.g., from sent
+        # correspondence). They override pattern guesses, get 'verified'
+        # confidence, become primary, and survive all future scrapes.
+        # 
+        # If the journalist isn't already in the database (e.g., because the
+        # scraper is blocked from their outlet), they get CREATED from this
+        # entry. This means verified_emails.txt is also a way to add valuable
+        # contacts even where the scraper can't reach.
+        if VERIFIED_EMAILS:
+            from datetime import datetime as _dt
+            _now = _dt.now().isoformat(sep=' ', timespec='seconds')
+            
+            verified_added = 0
+            verified_promoted = 0
+            verified_journalists_created = 0
+            verified_unmatched = 0
+            
+            for name_norm, outlet_norm, email in VERIFIED_EMAILS:
+                # Find the matching journalist by name+outlet.
+                rows = conn.execute("""
+                    SELECT j.id, j.full_name
+                    FROM journalists j
+                    LEFT JOIN outlets o ON o.id = j.primary_outlet_id
+                    WHERE j.name_normalised = ?
+                      AND LOWER(o.name) = ?
+                """, (name_norm, outlet_norm)).fetchall()
+                
+                journalist_ids = []
+                
+                if rows:
+                    journalist_ids = [r["id"] for r in rows]
+                else:
+                    # No exact name+outlet match. Before creating a new journalist,
+                    # check whether this name is unique in the database. If there's
+                    # exactly ONE journalist with this name, trust they're the same
+                    # person and apply the verified email even if their outlet differs
+                    # — they might have been picked up via a syndicated byline.
+                    same_name_rows = conn.execute("""
+                        SELECT id FROM journalists WHERE name_normalised = ?
+                    """, (name_norm,)).fetchall()
+                    
+                    if len(same_name_rows) == 1:
+                        journalist_ids = [same_name_rows[0]["id"]]
+                    else:
+                        # Either zero matches (need to create) or multiple (ambiguous).
+                        # Look up the outlet.
+                        outlet_row = conn.execute(
+                            "SELECT id FROM outlets WHERE LOWER(name) = ?", (outlet_norm,)
+                        ).fetchone()
+                        
+                        if not outlet_row:
+                            print(f"  ✗ verified email unmatched (outlet '{outlet_norm}' not in DB): {email}")
+                            verified_unmatched += 1
+                            continue
+                        
+                        if len(same_name_rows) > 1:
+                            # Multiple journalists share this name, none at the right outlet.
+                            # This is the genuine collision case — don't guess; user needs
+                            # to add a more specific entry. Skip with a warning.
+                            print(f"  ✗ verified email ambiguous ('{name_norm}' exists at {len(same_name_rows)} different outlets, none match '{outlet_norm}'): {email}")
+                            verified_unmatched += 1
+                            continue
+                        
+                        # Zero matches — create the journalist
+                        local = email.split("@")[0]
+                        name_parts = local.replace(".", " ").split()
+                        full_name = " ".join(p.capitalize() for p in name_parts)
+                        if not name_parts or (len(name_parts) == 1 and "-" not in name_parts[0]):
+                            full_name = " ".join(p.capitalize() for p in name_norm.split())
+                        
+                        nparts = name_norm.split()
+                        first = nparts[0].capitalize() if nparts else ""
+                        last = nparts[-1].capitalize() if len(nparts) > 1 else ""
+                        
+                        cur = conn.execute("""
+                            INSERT INTO journalists
+                                (full_name, name_normalised, first_name, last_name,
+                                 primary_outlet_id, classification, total_bylines,
+                                 distinct_outlets, distinct_groups, syndication_score,
+                                 first_seen, last_seen)
+                            VALUES (?, ?, ?, ?, ?, 'unclear', 0, 0, 0, 0, ?, ?)
+                        """, (full_name, name_norm, first, last, outlet_row["id"], _now, _now))
+                        new_jid = cur.lastrowid
+                        
+                        tr = conn.execute(
+                            "SELECT tier, region FROM outlets WHERE id = ?", (outlet_row["id"],)
+                        ).fetchone()
+                        conn.execute("""
+                            UPDATE journalists SET primary_tier = ?, primary_region = ?
+                            WHERE id = ?
+                        """, (tr["tier"] if tr else None, tr["region"] if tr else None, new_jid))
+                        
+                        journalist_ids = [new_jid]
+                        verified_journalists_created += 1
+                        print(f"  + verified email created journalist: '{full_name}' @ outlet id={outlet_row['id']}")
+                
+                # Now apply the verified email to each matched/created journalist
+                for jid in journalist_ids:
+                    # Demote any existing 'primary' flag — the verified one wins
+                    conn.execute("""
+                        UPDATE journalist_emails
+                        SET is_primary = 0
+                        WHERE journalist_id = ?
+                    """, (jid,))
+                    
+                    # Check if this exact email already exists
+                    existing = conn.execute("""
+                        SELECT id, confidence FROM journalist_emails
+                        WHERE journalist_id = ? AND email = ?
+                    """, (jid, email)).fetchone()
+                    
+                    if existing:
+                        conn.execute("""
+                            UPDATE journalist_emails
+                            SET confidence = 'verified', is_primary = 1, source = 'verified_emails.txt'
+                            WHERE id = ?
+                        """, (existing["id"],))
+                        verified_promoted += 1
+                    else:
+                        conn.execute("""
+                            INSERT INTO journalist_emails
+                                (journalist_id, email, confidence, source, is_primary)
+                            VALUES (?, ?, 'verified', 'verified_emails.txt', 1)
+                        """, (jid, email))
+                        verified_added += 1
+            
+            print(f"  Verified emails: {verified_added} added, {verified_promoted} promoted, "
+                  f"{verified_journalists_created} journalists created, {verified_unmatched} unmatched")
         
         # ===== STEP 2: Flag email ambiguity =====
         # When the same primary email is assigned to 2+ journalists, downgrade
