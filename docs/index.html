@@ -657,6 +657,164 @@ footer {
   /* On mobile let the table scroll horizontally rather than squashing columns */
   table { table-layout: auto; min-width: 700px; }
 }
+
+/* Verify/bounce buttons added by Rupert's verification UI */
+.cell-email {
+  position: relative;
+}
+.verify-btns {
+  display: inline-flex;
+  gap: 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.verify-btn {
+  border: 1px solid var(--bdr);
+  background: white;
+  padding: 1px 5px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  border-radius: 3px;
+  user-select: none;
+  font-family: var(--fb);
+  color: var(--txt);
+  line-height: 1;
+}
+.verify-btn:hover { background: var(--off); }
+.verify-btn.btn-verify { color: #16803d; }
+.verify-btn.btn-bounce { color: #9b1c1c; }
+
+.cell-email.email-verified {
+  background: rgba(151, 194, 33, 0.18); /* faint green */
+}
+.cell-email.email-bounced {
+  background: rgba(214, 50, 50, 0.18); /* faint red */
+  text-decoration: line-through;
+}
+.cell-email .email-status-label {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 0.62rem;
+  font-family: var(--fb);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.email-verified .email-status-label { color: #16803d; background: rgba(22, 128, 61, 0.12); }
+.email-bounced  .email-status-label { color: #9b1c1c; background: rgba(155, 28, 28, 0.12); }
+
+/* Sidebar verifications panel */
+#verifyPanel {
+  background: var(--off);
+  border: 1px solid var(--bdr);
+  border-radius: 8px;
+  padding: 0.65rem 0.75rem;
+  margin-bottom: 1rem;
+  font-family: var(--fb);
+}
+#verifyPanel .vp-title {
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--txl);
+  margin-bottom: 0.4rem;
+}
+#verifyPanel .vp-counts {
+  font-size: 0.85rem;
+  color: var(--txt);
+  margin-bottom: 0.55rem;
+}
+#verifyPanel .vp-counts .vp-green { color: #16803d; font-weight: 700; }
+#verifyPanel .vp-counts .vp-red   { color: #9b1c1c; font-weight: 700; }
+#verifyPanel .vp-btn {
+  display: block;
+  width: 100%;
+  padding: 0.4rem 0.5rem;
+  background: var(--navy);
+  color: white;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-family: var(--fb);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+#verifyPanel .vp-btn:hover { background: var(--gd); color: var(--navy); }
+#verifyPanel .vp-btn:disabled {
+  background: var(--grey);
+  color: var(--txl);
+  cursor: not-allowed;
+}
+
+/* Modal for export */
+#exportModal {
+  display: none;
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(19, 24, 32, 0.6);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+#exportModal.show { display: flex; }
+#exportModal .em-inner {
+  background: white;
+  border-radius: 12px;
+  max-width: 700px;
+  max-height: 85vh;
+  width: 90%;
+  padding: 1.4rem;
+  overflow-y: auto;
+}
+#exportModal h2 {
+  font-family: 'Arial Black', sans-serif;
+  font-size: 1.05rem;
+  color: var(--navy);
+  margin: 0 0 0.6rem 0;
+}
+#exportModal h3 {
+  font-family: var(--fb);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--txl);
+  margin: 1.2rem 0 0.4rem 0;
+}
+#exportModal p { font-size: 0.85rem; color: var(--txt); margin: 0.4rem 0; }
+#exportModal .em-textarea {
+  width: 100%;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 0.75rem;
+  border: 1px solid var(--bdr);
+  border-radius: 4px;
+  padding: 0.5rem;
+  min-height: 80px;
+  resize: vertical;
+}
+#exportModal .em-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  justify-content: flex-end;
+}
+#exportModal .em-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--fb);
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+#exportModal .em-btn-primary { background: var(--navy); color: white; }
+#exportModal .em-btn-primary:hover { background: var(--gd); color: var(--navy); }
+#exportModal .em-btn-secondary { background: white; color: var(--txt); border: 1px solid var(--bdr); }
+#exportModal .em-btn-secondary:hover { background: var(--off); }
+
 </style>
 </head>
 <body>
@@ -722,6 +880,12 @@ footer {
       <button class="btn-clear" id="btnClear">Clear all</button>
     </div>
     <div class="sidebar-body">
+
+      <div id="verifyPanel">
+        <div class="vp-title">Verifications</div>
+        <div class="vp-counts" id="vpCounts">0 verified · 0 bounced pending export</div>
+        <button class="vp-btn" id="vpExportBtn" disabled>Export for GitHub</button>
+      </div>
 
       <div class="fgroup">
         <div class="flabel">Search</div>
@@ -1273,7 +1437,11 @@ function renderJournalists(data, container) {
     
     // Email + small confidence pill
     if (j.primary_email) {
-      html += `<td class="cell-email"><a href="mailto:${esc(j.primary_email)}" title="${esc(j.primary_email)}">${esc(j.primary_email)}</a> <span class="pill conf-pill conf-${j.primary_confidence}">${esc((j.primary_confidence || '').replace('_', ' '))}</span></td>`;
+      const _ve_status = window.__vrStatusForEmail ? window.__vrStatusForEmail(j.full_name, j.outlet_name, j.primary_email) : '';
+      const _ve_cellCls = _ve_status === 'verified' ? 'email-verified' : (_ve_status === 'bounced' ? 'email-bounced' : '');
+      const _ve_label = _ve_status === 'verified' ? '<span class="email-status-label">✓ verified</span>' : (_ve_status === 'bounced' ? '<span class="email-status-label">✗ bounced</span>' : '');
+      const _ve_buttons = `<span class="verify-btns"><button class="verify-btn btn-verify" data-vr-action="verify" data-vr-name="${esc(j.full_name)}" data-vr-outlet="${esc(j.outlet_name)}" data-vr-email="${esc(j.primary_email)}" title="Mark this email as verified working">✓</button><button class="verify-btn btn-bounce" data-vr-action="bounce" data-vr-name="${esc(j.full_name)}" data-vr-outlet="${esc(j.outlet_name)}" data-vr-email="${esc(j.primary_email)}" title="Mark this email as bounced/wrong">✗</button></span>`;
+      html += `<td class="cell-email ${_ve_cellCls}"><a href="mailto:${esc(j.primary_email)}" title="${esc(j.primary_email)}">${esc(j.primary_email)}</a> <span class="pill conf-pill conf-${j.primary_confidence}">${esc((j.primary_confidence || '').replace('_', ' '))}</span>${_ve_label}${_ve_buttons}</td>`;
     } else {
       html += `<td class="cell-email" style="color:var(--txl)">—</td>`;
     }
@@ -1392,6 +1560,179 @@ function copyEmails() {
 }
 
 init();
+
+
+// ===== Verification UI (verified_emails.txt / bounced_emails.txt helper) =====
+// Stores click-to-verify state in browser localStorage. Periodically the user
+// exports their accumulated marks as text to paste into the repo files.
+(function() {
+  const STORAGE_KEY = 'jf_verifications_v1';
+  
+  function loadStore() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    } catch (e) {
+      console.warn('Verification store corrupt, resetting', e);
+      return {};
+    }
+  }
+  
+  function saveStore(store) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+    } catch (e) {
+      console.error('Could not save verification store', e);
+    }
+  }
+  
+  // Each entry keyed by "name||outlet||email" to be specific
+  function keyFor(name, outlet, email) {
+    return `${(name||'').toLowerCase()}||${(outlet||'').toLowerCase()}||${(email||'').toLowerCase()}`;
+  }
+  
+  // Look up status for rendering
+  window.__vrStatusForEmail = function(name, outlet, email) {
+    if (!email) return '';
+    const store = loadStore();
+    const entry = store[keyFor(name, outlet, email)];
+    return entry ? entry.status : '';
+  };
+  
+  function updatePanel() {
+    const store = loadStore();
+    let verified = 0, bounced = 0;
+    for (const k in store) {
+      if (store[k].status === 'verified') verified++;
+      else if (store[k].status === 'bounced') bounced++;
+    }
+    const countsEl = document.getElementById('vpCounts');
+    const btnEl = document.getElementById('vpExportBtn');
+    if (countsEl) {
+      countsEl.innerHTML = `<span class="vp-green">${verified} verified</span> · <span class="vp-red">${bounced} bounced</span> pending export`;
+    }
+    if (btnEl) {
+      btnEl.disabled = (verified + bounced === 0);
+    }
+  }
+  
+  function handleVerifyClick(e) {
+    const btn = e.target.closest('[data-vr-action]');
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const action = btn.getAttribute('data-vr-action');
+    const name = btn.getAttribute('data-vr-name');
+    const outlet = btn.getAttribute('data-vr-outlet');
+    const email = btn.getAttribute('data-vr-email');
+    
+    if (!email) return;
+    
+    const store = loadStore();
+    const k = keyFor(name, outlet, email);
+    
+    // Toggle: if already in this state, clear it
+    if (store[k] && store[k].status === action) {
+      delete store[k];
+    } else {
+      store[k] = {
+        name, outlet, email,
+        status: action === 'verify' ? 'verified' : 'bounced',
+        clicked_at: new Date().toISOString().split('T')[0]
+      };
+    }
+    saveStore(store);
+    updatePanel();
+    
+    // Re-render the table so the row colour updates
+    if (typeof render === 'function') render();
+  }
+  
+  document.addEventListener('click', handleVerifyClick);
+  
+  // ===== Export modal =====
+  function showExportModal() {
+    const store = loadStore();
+    const verified = [];
+    const bounced = [];
+    for (const k in store) {
+      const e = store[k];
+      const line = `${e.name} | ${e.outlet} | ${e.email}`;
+      if (e.status === 'verified') verified.push(line);
+      else if (e.status === 'bounced') bounced.push(line);
+    }
+    
+    document.getElementById('emVerifiedTextarea').value = verified.join('\n');
+    document.getElementById('emBouncedTextarea').value = bounced.join('\n');
+    document.getElementById('emVerifiedCount').textContent = verified.length;
+    document.getElementById('emBouncedCount').textContent = bounced.length;
+    document.getElementById('exportModal').classList.add('show');
+  }
+  
+  function hideExportModal() {
+    document.getElementById('exportModal').classList.remove('show');
+  }
+  
+  function copyToClipboard(textareaId) {
+    const el = document.getElementById(textareaId);
+    el.select();
+    document.execCommand('copy');
+  }
+  
+  function clearStore() {
+    if (confirm('Clear all browser verifications? Do this only AFTER you have copied them into the GitHub repo files. This cannot be undone.')) {
+      localStorage.removeItem(STORAGE_KEY);
+      updatePanel();
+      hideExportModal();
+      if (typeof render === 'function') render();
+    }
+  }
+  
+  // Wait for DOM to be ready, then wire up the panel buttons
+  function init() {
+    const btn = document.getElementById('vpExportBtn');
+    if (btn) btn.addEventListener('click', showExportModal);
+    const closeBtn = document.getElementById('emCloseBtn');
+    if (closeBtn) closeBtn.addEventListener('click', hideExportModal);
+    const copyV = document.getElementById('emCopyVerified');
+    if (copyV) copyV.addEventListener('click', () => copyToClipboard('emVerifiedTextarea'));
+    const copyB = document.getElementById('emCopyBounced');
+    if (copyB) copyB.addEventListener('click', () => copyToClipboard('emBouncedTextarea'));
+    const clearBtn = document.getElementById('emClearBtn');
+    if (clearBtn) clearBtn.addEventListener('click', clearStore);
+    updatePanel();
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
 </script>
+
+<div id="exportModal">
+  <div class="em-inner">
+    <h2>Export verifications for GitHub</h2>
+    <p>Paste these into the corresponding files in your repo, then commit and run "Refresh Dashboard".</p>
+    
+    <h3>verified_emails.txt — <span id="emVerifiedCount">0</span> entries</h3>
+    <p style="font-size: 0.78rem; color: var(--txl);">Paste these lines at the bottom of <code>scraper/verified_emails.txt</code> on GitHub.</p>
+    <textarea id="emVerifiedTextarea" class="em-textarea" readonly></textarea>
+    <button class="em-btn em-btn-secondary" id="emCopyVerified" style="margin-top: 0.4rem;">Copy verified</button>
+    
+    <h3>bounced_emails.txt — <span id="emBouncedCount">0</span> entries</h3>
+    <p style="font-size: 0.78rem; color: var(--txl);">Paste these lines at the bottom of <code>scraper/bounced_emails.txt</code> on GitHub. (We'll wire bounces in next time we get to it — for now just keep a record.)</p>
+    <textarea id="emBouncedTextarea" class="em-textarea" readonly></textarea>
+    <button class="em-btn em-btn-secondary" id="emCopyBounced" style="margin-top: 0.4rem;">Copy bounced</button>
+    
+    <div class="em-actions">
+      <button class="em-btn em-btn-secondary" id="emClearBtn">Clear local store</button>
+      <button class="em-btn em-btn-primary" id="emCloseBtn">Done</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
