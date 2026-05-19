@@ -663,10 +663,14 @@ footer {
   position: relative;
 }
 .verify-btns {
-  display: inline-flex;
-  gap: 4px;
-  margin-left: 6px;
-  vertical-align: middle;
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+  /* Stays on its own line under the email */
+}
+.verify-btn {
+  min-width: 50px;
+  text-align: center;
 }
 .verify-btn {
   border: 1px solid var(--bdr);
@@ -1441,7 +1445,7 @@ function renderJournalists(data, container) {
       const _ve_cellCls = _ve_status === 'verified' ? 'email-verified' : (_ve_status === 'bounced' ? 'email-bounced' : '');
       const _ve_label = _ve_status === 'verified' ? '<span class="email-status-label">✓ verified</span>' : (_ve_status === 'bounced' ? '<span class="email-status-label">✗ bounced</span>' : '');
       const _ve_buttons = `<span class="verify-btns"><button class="verify-btn btn-verify" data-vr-action="verify" data-vr-name="${esc(j.full_name)}" data-vr-outlet="${esc(j.outlet_name)}" data-vr-email="${esc(j.primary_email)}" title="Mark this email as verified working">✓</button><button class="verify-btn btn-bounce" data-vr-action="bounce" data-vr-name="${esc(j.full_name)}" data-vr-outlet="${esc(j.outlet_name)}" data-vr-email="${esc(j.primary_email)}" title="Mark this email as bounced/wrong">✗</button></span>`;
-      html += `<td class="cell-email ${_ve_cellCls}"><a href="mailto:${esc(j.primary_email)}" title="${esc(j.primary_email)}">${esc(j.primary_email)}</a> <span class="pill conf-pill conf-${j.primary_confidence}">${esc((j.primary_confidence || '').replace('_', ' '))}</span>${_ve_label}${_ve_buttons}</td>`;
+      html += `<td class="cell-email ${_ve_cellCls}"><div><a href="mailto:${esc(j.primary_email)}" title="${esc(j.primary_email)}">${esc(j.primary_email)}</a> <span class="pill conf-pill conf-${j.primary_confidence}">${esc((j.primary_confidence || '').replace('_', ' '))}</span>${_ve_label}</div>${_ve_buttons}</td>`;
     } else {
       html += `<td class="cell-email" style="color:var(--txl)">—</td>`;
     }
