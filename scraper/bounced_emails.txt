@@ -1,0 +1,19 @@
+# Bounced emails — emails confirmed not delivering
+# =================================================
+#
+# Format (one entry per line):
+#     Full Name | Outlet name | bounced.email@domain.com
+#
+# When a journalist's email is in this file, the dashboard will mark it
+# as bounced (red highlight, struck-through). The consolidation step will
+# not regenerate this email as a pattern guess on future scrapes.
+#
+# Notes:
+# - Bouncebacks are valuable ground truth. Add an entry every time you get
+#   a "couldn't deliver" message back from Outlook/Office 365.
+# - Lines starting with # are ignored.
+# - Add new entries via the dashboard's "Export verifications" button,
+#   then paste the output here. Or add manually.
+#
+# This file is read by scraper/consolidate.py — wiring TBC.
+
