@@ -71,10 +71,16 @@ TARGETS = {
     "The Sunday Times": (["The Sunday Times", "Sunday Times"], 0),
     "Financial Times": (["Financial Times"], 1),
     "The Sun": (["The Sun"], 0),
-    "Reuters UK": (["Reuters"], 0),
+    "Reuters UK": (["Reuters"], 0),   # searches add "London", see EXTRA_TERMS
     # Trade and specialist titles that matter for GBF
     "Farmers Weekly": (["Farmers Weekly"], 0),
     "ENDS Report": (["ENDS Report", "ENDS"], 0),
+}
+
+# Extra words added to the search for global outlets, so we only find
+# their UK-based staff
+EXTRA_TERMS = {
+    "Reuters UK": '"London"',
 }
 
 # Phrases that look like an outlet match but aren't
@@ -103,10 +109,11 @@ def search(api_key, q, offset=0):
 
 def queries_for(outlet, phrases):
     main = phrases[0]
+    extra = (" " + EXTRA_TERMS[outlet]) if outlet in EXTRA_TERMS else ""
     roles = "(reporter OR correspondent OR editor OR presenter OR journalist OR producer)"
     return [
-        f'site:linkedin.com/in "{main}" {roles}',
-        f'site:muckrack.com "{main}"',
+        f'site:linkedin.com/in "{main}" {roles}{extra}',
+        f'site:muckrack.com "{main}"{extra}',
     ]
 
 
@@ -150,6 +157,10 @@ def parse_result(res, outlet, phrases):
         return None
     if FORMER.search(job_line) or FORMER.search(desc[:80]):
         return None
+    if outlet in EXTRA_TERMS:
+        # Global outlet: the preview must also show they're UK-based
+        if not re.search(r"\b(London|UK|United Kingdom|Britain|British)\b", job_line + " " + desc):
+            return None
     if not JOB_WORDS.search(job_line):
         # "Joe Bloggs – Sky News | LinkedIn" with "Producer at Sky News" in the preview
         first = re.split(r"(?<=[.!?·])\s", desc)[0][:120]
