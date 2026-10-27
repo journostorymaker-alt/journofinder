@@ -134,3 +134,33 @@ Dan Cairns | Sky News | News reporter, Sky News
 
 # ITV News (ITN), from Rupert, 27 Oct 2026
 Chris Choi | ITV News (National) | Consumer Editor, ITN
+
+# Channel 4 News (ITN), from channel4.com/news/team, pasted 27 Oct 2026
+Krishnan Guru-Murthy | Channel 4 News | Presenter, Channel 4 News
+Jackie Long | Channel 4 News | Social Affairs Editor and Presenter, Channel 4 News
+Matt Frei | Channel 4 News | Europe Editor and Presenter, Channel 4 News
+Anushka Asthana | Channel 4 News | US Editor and Presenter, Channel 4 News
+Alex Thomson | Channel 4 News | Chief Correspondent, Channel 4 News
+Gary Gibbon | Channel 4 News | Political Editor, Channel 4 News
+Lindsey Hilsum | Channel 4 News | International Editor, Channel 4 News
+Siobhan Kennedy | Channel 4 News | Technology and Science Editor, Channel 4 News
+Victoria Macdonald | Channel 4 News | Health and Social Care Editor, Channel 4 News
+Helia Ebrahimi | Channel 4 News | Economics Editor, Channel 4 News
+Andy Davies | Channel 4 News | Wales Correspondent, Channel 4 News | Wales
+Liam Dutton | Channel 4 News | Weather Presenter, Channel 4 News
+Paraic O'Brien | Channel 4 News | Foreign Affairs Correspondent, Channel 4 News
+Secunder Kermani | Channel 4 News | Foreign Affairs Correspondent, Channel 4 News
+Ciaran Jenkins | Channel 4 News | Data Correspondent and Presenter, Channel 4 News
+Darshna Soni | Channel 4 News | Communities Editor, Channel 4 News
+Clare Fallon | Channel 4 News | North of England Correspondent, Channel 4 News | North of England
+Kathryn Samson | Channel 4 News | Scotland Correspondent, Channel 4 News | Scotland
+Symeon Brown | Channel 4 News | Home Affairs Correspondent, Channel 4 News
+Ayshah Tull | Channel 4 News | News Correspondent, Channel 4 News
+Jamal Osman | Channel 4 News | Africa Correspondent, Channel 4 News
+Minnie Stephenson | Channel 4 News | Culture Correspondent, Channel 4 News
+Guillermo Galdos | Channel 4 News | Latin America Correspondent, Channel 4 News
+Jordan Jarrett-Bryan | Channel 4 News | Sports Reporter, Channel 4 News
+Paul McNamara | Channel 4 News | Senior Political Correspondent, Channel 4 News
+Kiran Moodley | Channel 4 News | Analysis Correspondent, Channel 4 News
+Anja Popp | Channel 4 News | Correspondent, Channel 4 News
+Andrew Misra | Channel 4 News | Reporter, Channel 4 News
