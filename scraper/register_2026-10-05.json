@@ -1,0 +1,2861 @@
+{
+ "edition": "2026-10-05",
+ "entries": [
+  {
+   "first": "John",
+   "last": "Adderley",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Aletha",
+   "last": "Adu",
+   "sponsor": "The Guardian",
+   "other": "None."
+  },
+  {
+   "first": "Alice",
+   "last": "Aitken",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Amanda",
+   "last": "Akass",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Andrew",
+   "last": "Alexander",
+   "sponsor": "Times Radio",
+   "other": "None."
+  },
+  {
+   "first": "Anne",
+   "last": "Alexander",
+   "sponsor": "ITV Good Morning Britain",
+   "other": "None."
+  },
+  {
+   "first": "Aubrey",
+   "last": "Allegretti",
+   "sponsor": "The Times",
+   "other": "Commentator for BBC, Sky News, LBC, Times Radio and Talk TV."
+  },
+  {
+   "first": "Isabella",
+   "last": "Allen",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Kieran",
+   "last": "Andrews",
+   "sponsor": "ITV Border",
+   "other": "None."
+  },
+  {
+   "first": "Christopher",
+   "last": "Anoyrkatis",
+   "sponsor": "Reuters",
+   "other": "None."
+  },
+  {
+   "first": "Maci-Skye",
+   "last": "Anthony",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Penelope",
+   "last": "Ayres",
+   "sponsor": "Channel 4 News/ITN",
+   "other": "None."
+  },
+  {
+   "first": "Richard",
+   "last": "Bailey",
+   "sponsor": "BBC",
+   "other": "Visiting Professor, University of Leeds."
+  },
+  {
+   "first": "Amanda",
+   "last": "Baker",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Patrick",
+   "last": "Baker",
+   "sponsor": "Politico",
+   "other": "None."
+  },
+  {
+   "first": "Timothy",
+   "last": "Baker",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Holly",
+   "last": "Bancroft",
+   "sponsor": "The Independent",
+   "other": "None."
+  },
+  {
+   "first": "Paul",
+   "last": "Barltrop",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Peter",
+   "last": "Barnes",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Georgia",
+   "last": "Barnett",
+   "sponsor": "The Sun",
+   "other": "None."
+  },
+  {
+   "first": "David",
+   "last": "Barrett",
+   "sponsor": "Daily Mail",
+   "other": "None."
+  },
+  {
+   "first": "Nada",
+   "last": "Bashir",
+   "sponsor": "CNN",
+   "other": "None."
+  },
+  {
+   "first": "Nadine",
+   "last": "Batchelor-Hunt",
+   "sponsor": "PoliticsHome/Total Politics",
+   "other": "Commentator, BBC, Sky News, Times Radio and Monocle (broadcasting)."
+  },
+  {
+   "first": "Keith",
+   "last": "Bays",
+   "sponsor": "GB News",
+   "other": "None."
+  },
+  {
+   "first": "Emily",
+   "last": "Beament",
+   "sponsor": "Press Association",
+   "other": "None."
+  },
+  {
+   "first": "Martin",
+   "last": "Beckford",
+   "sponsor": "Daily Mail",
+   "other": "None."
+  },
+  {
+   "first": "Ramzi",
+   "last": "Bedj-Bedj",
+   "sponsor": "ITN",
+   "other": "None."
+  },
+  {
+   "first": "Rafael",
+   "last": "Behr",
+   "sponsor": "The Guardian",
+   "other": "Political Commentator, Podmasters (podcasting)."
+  },
+  {
+   "first": "Andrew",
+   "last": "Bell",
+   "sponsor": "Channel 5 News",
+   "other": "None."
+  },
+  {
+   "first": "Lorin",
+   "last": "Bell-Cross",
+   "sponsor": "The Jewish Chronicle",
+   "other": "None."
+  },
+  {
+   "first": "Emilia",
+   "last": "Belli",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Martina",
+   "last": "Betteto",
+   "sponsor": "The Sun",
+   "other": "None."
+  },
+  {
+   "first": "Adam",
+   "last": "Bienkov",
+   "sponsor": "Byline Times",
+   "other": "Editor of the ‘Folded with Adam Bienkov’ Substack newsletter."
+  },
+  {
+   "first": "Jack",
+   "last": "Blackburn",
+   "sponsor": "The Times",
+   "other": "None."
+  },
+  {
+   "first": "Ralph",
+   "last": "Blackburn",
+   "sponsor": "National World/Yorkshire Post",
+   "other": "None."
+  },
+  {
+   "first": "Sam",
+   "last": "Blewett",
+   "sponsor": "Politico",
+   "other": "None."
+  },
+  {
+   "first": "Benjamin",
+   "last": "Bloch",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Daniel",
+   "last": "Bloom",
+   "sponsor": "Politico",
+   "other": "Commentator for LBC, occasional BBC."
+  },
+  {
+   "first": "Lucy",
+   "last": "Boast",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Deborah",
+   "last": "Bonetti",
+   "sponsor": "Foreign Press Association",
+   "other": "Journalist, Il Giorno (newspaper)."
+  },
+  {
+   "first": "Antonino",
+   "last": "Bonsignore",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "John",
+   "last": "Booker",
+   "sponsor": "GB News",
+   "other": "None."
+  },
+  {
+   "first": "Stefan",
+   "last": "Boscia",
+   "sponsor": "The Times",
+   "other": "None."
+  },
+  {
+   "first": "Adam",
+   "last": "Boulton",
+   "sponsor": "Times Radio",
+   "other": "None."
+  },
+  {
+   "first": "Maya",
+   "last": "Bowles",
+   "sponsor": "ITN - ITV News",
+   "other": "None."
+  },
+  {
+   "first": "Mason",
+   "last": "Boycott-Owen",
+   "sponsor": "Politico",
+   "other": "None."
+  },
+  {
+   "first": "Thomas",
+   "last": "Bradby",
+   "sponsor": "ITN",
+   "other": "None."
+  },
+  {
+   "first": "Rachel",
+   "last": "Bradley",
+   "sponsor": "ITN (ITV News)",
+   "other": "None."
+  },
+  {
+   "first": "Kit",
+   "last": "Bradshaw",
+   "sponsor": "ITV News",
+   "other": "None."
+  },
+  {
+   "first": "Paul",
+   "last": "Brand",
+   "sponsor": "ITV News",
+   "other": "Presenter, LBC Radio."
+  },
+  {
+   "first": "Alexander",
+   "last": "Brown",
+   "sponsor": "The Mirror",
+   "other": "None."
+  },
+  {
+   "first": "Faye",
+   "last": "Brown",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Larisa",
+   "last": "Brown",
+   "sponsor": "Times",
+   "other": "None."
+  },
+  {
+   "first": "Martyn",
+   "last": "Brown",
+   "sponsor": "Daily Express",
+   "other": "None."
+  },
+  {
+   "first": "Lizzy",
+   "last": "Buchan",
+   "sponsor": "Daily Mirror",
+   "other": "Commentator, BBC (broadcasting)."
+  },
+  {
+   "first": "Kirsty",
+   "last": "Buchanan",
+   "sponsor": "The Telegraph",
+   "other": "Commentator, Sky News and BBC (broadcasting)."
+  },
+  {
+   "first": "Jonathan",
+   "last": "Buckmaster",
+   "sponsor": "Express Newspapers",
+   "other": "None."
+  },
+  {
+   "first": "Jonathan",
+   "last": "Bunn",
+   "sponsor": "PA Media",
+   "other": "None."
+  },
+  {
+   "first": "Rachael",
+   "last": "Burford",
+   "sponsor": "Evening Standard",
+   "other": "None."
+  },
+  {
+   "first": "David",
+   "last": "Burke",
+   "sponsor": "Daily Mirror",
+   "other": "None."
+  },
+  {
+   "first": "Emma",
+   "last": "Burnell",
+   "sponsor": "LabourList",
+   "other": "None."
+  },
+  {
+   "first": "Stephen",
+   "last": "Bush",
+   "sponsor": "Financial Times",
+   "other": "Panellist, The News Quiz BBC and Sky News (broadcasting)."
+  },
+  {
+   "first": "Christian",
+   "last": "Calgie",
+   "sponsor": "Daily Mail",
+   "other": "Commentator, GB News and Sky News (broadcasting)."
+  },
+  {
+   "first": "Allan",
+   "last": "Cameron",
+   "sponsor": "ITN",
+   "other": "None."
+  },
+  {
+   "first": "Justine",
+   "last": "Cameron-Chileshe",
+   "sponsor": "ITN/ITV News",
+   "other": "None."
+  },
+  {
+   "first": "Gwennan",
+   "last": "Campbell",
+   "sponsor": "ITV",
+   "other": "None."
+  },
+  {
+   "first": "Ryan",
+   "last": "Capperauld",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Peter",
+   "last": "Cardwell",
+   "sponsor": "Talk/News UK",
+   "other": "Commentator, BBC, ITV, STV, RTÉ, News24 Australia (broadcasting) (updated 2 September 2026). Commentator and occasional presenter on Times Radio. I provide consulting via my company JCCL to Atticus Partners (political consulting/PR firm), Peninsula/Health Assured/Wisdom Wellbeing (employment law, health and HR firm), Bradshaw Advisory (political consulting firm) and SFXRay/Kemmetech Ltd (material manufacturing specialist firms) (updated 2 September 2026). Freelance articles for The Times and The i Paper (registered 2 September 2026). Book royalties from Biteback (registered 2 September 2026). I am a Senior Visiting Fellow in broadcast journalism at City University (registered 2 September 2026). I am writing a research paper for the Institute for Government (registered 2 September 2026)."
+  },
+  {
+   "first": "Brendan",
+   "last": "Carlin",
+   "sponsor": "Mail on Sunday",
+   "other": "None."
+  },
+  {
+   "first": "Simon",
+   "last": "Carr",
+   "sponsor": "Guido Fawkes",
+   "other": "None."
+  },
+  {
+   "first": "Eva",
+   "last": "Carroll",
+   "sponsor": "ITN/ITV News",
+   "other": "None."
+  },
+  {
+   "first": "Kieran",
+   "last": "Carter",
+   "sponsor": "ITN",
+   "other": "None."
+  },
+  {
+   "first": "Emilio",
+   "last": "Casalicchio",
+   "sponsor": "Politico",
+   "other": "None."
+  },
+  {
+   "first": "Helen",
+   "last": "Catt",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Nicholas",
+   "last": "Cecil",
+   "sponsor": "Evening Standard",
+   "other": "None."
+  },
+  {
+   "first": "Agnes",
+   "last": "Chambre",
+   "sponsor": "LBC",
+   "other": "None."
+  },
+  {
+   "first": "Chloe",
+   "last": "Chaplain",
+   "sponsor": "Bloomberg News",
+   "other": "None."
+  },
+  {
+   "first": "Celine",
+   "last": "Charles",
+   "sponsor": "Goalhanger",
+   "other": "None."
+  },
+  {
+   "first": "William",
+   "last": "Charley",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Adam",
+   "last": "Cherry",
+   "sponsor": "Guido Fawkes",
+   "other": "None."
+  },
+  {
+   "first": "Matthew",
+   "last": "Chorley",
+   "sponsor": "BBC",
+   "other": "Book royalties, Harper Collins. Touring, Phil McIntyre Ltd. Occasional appearances, Have I Got News for You."
+  },
+  {
+   "first": "Sophie",
+   "last": "Church",
+   "sponsor": "Daily Mail",
+   "other": "None."
+  },
+  {
+   "first": "David",
+   "last": "Churchill",
+   "sponsor": "Daily Mail",
+   "other": "None."
+  },
+  {
+   "first": "Thomas",
+   "last": "Clabon",
+   "sponsor": "Bauer Media",
+   "other": "None."
+  },
+  {
+   "first": "Natasha",
+   "last": "Clark",
+   "sponsor": "LBC/Global",
+   "other": "None."
+  },
+  {
+   "first": "Kieron",
+   "last": "Clarke",
+   "sponsor": "Good Morning Britain",
+   "other": "None."
+  },
+  {
+   "first": "Lauren",
+   "last": "Clarke",
+   "sponsor": "ITN – ITV News",
+   "other": "None."
+  },
+  {
+   "first": "Michael",
+   "last": "Clarkson",
+   "sponsor": "ITV",
+   "other": "None."
+  },
+  {
+   "first": "Ben",
+   "last": "Clatworthy",
+   "sponsor": "The Times",
+   "other": "Occasional broadcasting and punditry, BBC TV and Radio (broadcasting)."
+  },
+  {
+   "first": "Sam",
+   "last": "Coates",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Maxim",
+   "last": "Colchester",
+   "sponsor": "Wall Street Journal",
+   "other": "None."
+  },
+  {
+   "first": "Eleanor",
+   "last": "Cole",
+   "sponsor": "The Guardian",
+   "other": "None."
+  },
+  {
+   "first": "Matthew",
+   "last": "Cole",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Oliver",
+   "last": "Cole",
+   "sponsor": "Times Radio",
+   "other": "None."
+  },
+  {
+   "first": "Sarah",
+   "last": "Collier",
+   "sponsor": "Press Association/PA Media",
+   "other": "None."
+  },
+  {
+   "first": "Philippa",
+   "last": "Collins",
+   "sponsor": "ITN",
+   "other": "None."
+  },
+  {
+   "first": "Joseph",
+   "last": "Cook",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Emilia",
+   "last": "Cooke",
+   "sponsor": "The Independent",
+   "other": "Commentator, Sky News (broadcasting)."
+  },
+  {
+   "first": "Kristina",
+   "last": "Cooper",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Helen",
+   "last": "Corbett",
+   "sponsor": "PA Media",
+   "other": "None."
+  },
+  {
+   "first": "Stephen",
+   "last": "Corkett",
+   "sponsor": "GB News",
+   "other": "None."
+  },
+  {
+   "first": "David",
+   "last": "Cornock",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Stefan",
+   "last": "Cottrell Tumilowicz",
+   "sponsor": "ITV",
+   "other": "None."
+  },
+  {
+   "first": "Eleni",
+   "last": "Courea",
+   "sponsor": "The Guardian",
+   "other": "None."
+  },
+  {
+   "first": "Ashley",
+   "last": "Cowburn",
+   "sponsor": "Daily Mirror",
+   "other": "None."
+  },
+  {
+   "first": "Jason",
+   "last": "Cowley",
+   "sponsor": "The Sunday Times",
+   "other": "Commentator, The New Statesman and Swift Press."
+  },
+  {
+   "first": "Patrick",
+   "last": "Cowling",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "John",
+   "last": "Crace",
+   "sponsor": "Guardian",
+   "other": "None."
+  },
+  {
+   "first": "Jon",
+   "last": "Craig",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Pippa",
+   "last": "Crerar",
+   "sponsor": "The Guardian",
+   "other": "Presenter, ITV Peston and The Week in Westminster (BBC). Occasional media appearances with Sky News, BBC, ITV, Channel 4 and international outlets. Under contract to Kirby Jones Management: speaker and host for various individual events and organisations."
+  },
+  {
+   "first": "Ethan",
+   "last": "Croft",
+   "sponsor": "New Statesman",
+   "other": "None."
+  },
+  {
+   "first": "James",
+   "last": "Cropper",
+   "sponsor": "Global (LBC)",
+   "other": "None."
+  },
+  {
+   "first": "Zoe",
+   "last": "Crowther",
+   "sponsor": "Total Politics",
+   "other": "None."
+  },
+  {
+   "first": "Alix",
+   "last": "Culbertson",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Edward",
+   "last": "Cumming",
+   "sponsor": "Telegraph",
+   "other": "None."
+  },
+  {
+   "first": "Sean",
+   "last": "Curran",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Iain",
+   "last": "Dale",
+   "sponsor": "Global Radio (LBC)",
+   "other": "Political Commentary & paper reviews, Sky News; Journalism, Mace Magazine; Weekly political commentary, Good Morning Britain; Book royalties, HarperCollins; Book royalties, Hodder & Stoughton; Book royalties, Atlantic Books; Webinar hosting, Levelling Up Goals/Fit for Purpose; Book and merchandise sales, Politicos.co.uk/Iain Dale Limited; Appearance fees for Jeremy Vine Show, Channel 5; Appearances on Politics Live, Newsnight, BBC; Occasional columnist, New Statesman; Occasional columnist, Daily Telegraph."
+  },
+  {
+   "first": "Adel",
+   "last": "Darwish",
+   "sponsor": "Middle East News",
+   "other": "Political editor, writer and commentator, World Media (publishing and broadcasting)."
+  },
+  {
+   "first": "Matthew",
+   "last": "Dathan",
+   "sponsor": "News UK/Times",
+   "other": "None."
+  },
+  {
+   "first": "Florence",
+   "last": "Davey-Attlee",
+   "sponsor": "CNN",
+   "other": "None."
+  },
+  {
+   "first": "Bethany",
+   "last": "Dawson",
+   "sponsor": "Global/LBC",
+   "other": "Political Commentator, Sky News."
+  },
+  {
+   "first": "Sally",
+   "last": "Dawson",
+   "sponsor": "Total Politics/The House magazine",
+   "other": "None."
+  },
+  {
+   "first": "Oliver",
+   "last": "Dean",
+   "sponsor": "ConservativeHome.Com",
+   "other": "Commentator for GB News."
+  },
+  {
+   "first": "Annabel",
+   "last": "Denham",
+   "sponsor": "The Telegraph",
+   "other": "Commentator, Sky News and Channel 5 (broadcasting)."
+  },
+  {
+   "first": "Lewis",
+   "last": "Denison",
+   "sponsor": "ITN",
+   "other": "None."
+  },
+  {
+   "first": "Kate",
+   "last": "Devlin",
+   "sponsor": "Independent",
+   "other": "Occasional broadcasting, Sky News and BBC (broadcasting)."
+  },
+  {
+   "first": "Frederick",
+   "last": "Dimbleby",
+   "sponsor": "ITV News",
+   "other": "None."
+  },
+  {
+   "first": "Constance",
+   "last": "Dimsdale",
+   "sponsor": "The I Newspaper",
+   "other": "None."
+  },
+  {
+   "first": "Carl",
+   "last": "Dinnen",
+   "sponsor": "ITN",
+   "other": "None."
+  },
+  {
+   "first": "Tony",
+   "last": "Diver",
+   "sponsor": "The Telegraph",
+   "other": "Commentator, Sky, Times, BBC and LBC (broadcasting)."
+  },
+  {
+   "first": "Alice",
+   "last": "Dodson",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Kitty",
+   "last": "Donaldson",
+   "sponsor": "The i Newspaper",
+   "other": "Commentator, Sky, Times and BBC (broadcasting)."
+  },
+  {
+   "first": "Lili",
+   "last": "Donlon-Mansbridge",
+   "sponsor": "ITV News",
+   "other": "None."
+  },
+  {
+   "first": "Joseph",
+   "last": "Draper",
+   "sponsor": "Global Media & Entertainment Limited",
+   "other": "None."
+  },
+  {
+   "first": "Eric",
+   "last": "Drewe",
+   "sponsor": "The Times",
+   "other": "None."
+  },
+  {
+   "first": "Cecile",
+   "last": "Ducourtieux",
+   "sponsor": "Foreign Press Association (Le Monde)",
+   "other": "UK correspondent, Le Monde (French daily newspaper)."
+  },
+  {
+   "first": "Scott",
+   "last": "Duffield",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Lucy",
+   "last": "Dunn",
+   "sponsor": "STV",
+   "other": "None."
+  },
+  {
+   "first": "Olivia",
+   "last": "Dunnett-Stone",
+   "sponsor": "GB News",
+   "other": "None."
+  },
+  {
+   "first": "William",
+   "last": "Durrant",
+   "sponsor": "PA Media",
+   "other": "None."
+  },
+  {
+   "first": "Henry",
+   "last": "Dyer",
+   "sponsor": "The Guardian",
+   "other": "None."
+  },
+  {
+   "first": "Nicholas",
+   "last": "Eardley",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Daisy",
+   "last": "Eastlake",
+   "sponsor": "The Times",
+   "other": "None."
+  },
+  {
+   "first": "Maral",
+   "last": "Ebtehaj",
+   "sponsor": "The Guardian",
+   "other": "None."
+  },
+  {
+   "first": "Giles",
+   "last": "Edwards",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Jessica",
+   "last": "Elgot",
+   "sponsor": "Guardian",
+   "other": "None."
+  },
+  {
+   "first": "Claire",
+   "last": "Ellicott",
+   "sponsor": "Daily Mail",
+   "other": "None."
+  },
+  {
+   "first": "Francis",
+   "last": "Elliott",
+   "sponsor": "Dods Group",
+   "other": "Editor, The House magazine."
+  },
+  {
+   "first": "Jack",
+   "last": "Elsom",
+   "sponsor": "Sun",
+   "other": "None."
+  },
+  {
+   "first": "Ava",
+   "last": "Evans",
+   "sponsor": "JOE Media",
+   "other": "Commentator, Sky News, BBC, News UK, ITV, Channel 4 (ITN) and YouTube (Google)."
+  },
+  {
+   "first": "Patrick",
+   "last": "Evans",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Harry",
+   "last": "Farley",
+   "sponsor": "BBC News",
+   "other": "None."
+  },
+  {
+   "first": "Jason",
+   "last": "Farrell",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Jack",
+   "last": "Fenwick",
+   "sponsor": "BBC News",
+   "other": "None."
+  },
+  {
+   "first": "Alona",
+   "last": "Ferber",
+   "sponsor": "Prospect Magazine",
+   "other": "None."
+  },
+  {
+   "first": "Katherine",
+   "last": "Ferguson",
+   "sponsor": "News UK/The Sun on Sunday",
+   "other": "None."
+  },
+  {
+   "first": "Isobel",
+   "last": "Finkel",
+   "sponsor": "Bloomberg",
+   "other": "None."
+  },
+  {
+   "first": "Lucy",
+   "last": "Fisher",
+   "sponsor": "Financial Times",
+   "other": "Commentator, BBC, Sky News, LBC Times Radio and Al Jazeera. Occasional speaking and moderating engagements for individual events and organisations, including via Chartwell Speakers Bureau and JLA Speakers (registered 1 October 2026)."
+  },
+  {
+   "first": "Alicia",
+   "last": "Fitzgerald",
+   "sponsor": "ITV News",
+   "other": "None."
+  },
+  {
+   "first": "Laura",
+   "last": "Fitzpatrick",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Alexander",
+   "last": "Fleming-Brown",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Felix",
+   "last": "Forbes",
+   "sponsor": "Times Radio",
+   "other": "None."
+  },
+  {
+   "first": "Katherine",
+   "last": "Forster",
+   "sponsor": "GB News",
+   "other": "None."
+  },
+  {
+   "first": "Alexandra",
+   "last": "Forsyth",
+   "sponsor": "BBC News",
+   "other": "None."
+  },
+  {
+   "first": "Alexandra",
+   "last": "Fortescue",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Aine",
+   "last": "Fox",
+   "sponsor": "PA Media",
+   "other": "None."
+  },
+  {
+   "first": "David",
+   "last": "Francis",
+   "sponsor": "Politico",
+   "other": "None."
+  },
+  {
+   "first": "James",
+   "last": "Frater",
+   "sponsor": "CNN",
+   "other": "None."
+  },
+  {
+   "first": "Phoebe",
+   "last": "Frieze",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Josh",
+   "last": "Gafson",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Freya",
+   "last": "Gascoigne",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Gary",
+   "last": "Gibbon",
+   "sponsor": "ITN - Channel 4 News",
+   "other": "None."
+  },
+  {
+   "first": "Josh",
+   "last": "Glancy",
+   "sponsor": "The Sunday Times",
+   "other": "None."
+  },
+  {
+   "first": "Elizabeth",
+   "last": "Glinka-Saull",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Chloe",
+   "last": "Goudenhooft",
+   "sponsor": "L'Opinion",
+   "other": "UK Correspondent, Le Journal des Arts, Le Soir and La Dépêche."
+  },
+  {
+   "first": "Sally",
+   "last": "Gould",
+   "sponsor": "Channel 4 TV/News",
+   "other": "None."
+  },
+  {
+   "first": "Paris",
+   "last": "Gourtsoyannis",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Damian",
+   "last": "Grammaticas",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Madeline",
+   "last": "Grant",
+   "sponsor": "The Spectator",
+   "other": "Commentator, GB News and BBC News."
+  },
+  {
+   "first": "Matthew",
+   "last": "Grant",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Daniel",
+   "last": "Green",
+   "sponsor": "LabourList",
+   "other": "None."
+  },
+  {
+   "first": "Miranda",
+   "last": "Green",
+   "sponsor": "Financial Times",
+   "other": "Commentator, Sky News and BBC."
+  },
+  {
+   "first": "Tony",
+   "last": "Grew",
+   "sponsor": "Sunday Times",
+   "other": "Freelance Online Journalist, BBC."
+  },
+  {
+   "first": "Andrew",
+   "last": "Grice",
+   "sponsor": "Independent",
+   "other": "None."
+  },
+  {
+   "first": "Theo",
+   "last": "Griffiths",
+   "sponsor": "Politics UK",
+   "other": "None."
+  },
+  {
+   "first": "Bethan",
+   "last": "Grossman",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Jason",
+   "last": "Groves",
+   "sponsor": "Daily Mail",
+   "other": "None."
+  },
+  {
+   "first": "Sian",
+   "last": "Grzeszczyk",
+   "sponsor": "British Forces Broadcasting Service (BFBS)",
+   "other": "None."
+  },
+  {
+   "first": "Antonello",
+   "last": "Guerrera",
+   "sponsor": "Foreign Press Association (La Repubblica)",
+   "other": "None."
+  },
+  {
+   "first": "Sri",
+   "last": "Guru-Murthy",
+   "sponsor": "ITN",
+   "other": "None."
+  },
+  {
+   "first": "Nicholas",
+   "last": "Gutteridge",
+   "sponsor": "Daily Telegraph",
+   "other": "None."
+  },
+  {
+   "first": "Hugo",
+   "last": "Gye",
+   "sponsor": "The Economist",
+   "other": "None."
+  },
+  {
+   "first": "Anna",
+   "last": "Haines",
+   "sponsor": "Mentorn Media",
+   "other": "Producer, BBC."
+  },
+  {
+   "first": "Harold",
+   "last": "Haines",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Robert",
+   "last": "Hamilton",
+   "sponsor": "Channel 4 TV/News",
+   "other": "None."
+  },
+  {
+   "first": "James",
+   "last": "Hancock",
+   "sponsor": "DQ Magazine",
+   "other": "None."
+  },
+  {
+   "first": "Thomas",
+   "last": "Harding",
+   "sponsor": "The National",
+   "other": "None."
+  },
+  {
+   "first": "Lee",
+   "last": "Harpin",
+   "sponsor": "Jewish News",
+   "other": "None."
+  },
+  {
+   "first": "Katie",
+   "last": "Harris",
+   "sponsor": "Daily Express",
+   "other": "None."
+  },
+  {
+   "first": "Matthew",
+   "last": "Harris",
+   "sponsor": "LBC/Global",
+   "other": "None."
+  },
+  {
+   "first": "Simon",
+   "last": "Harris",
+   "sponsor": "ITV London",
+   "other": "None."
+  },
+  {
+   "first": "Kevin",
+   "last": "Harrison",
+   "sponsor": "ITV",
+   "other": "None."
+  },
+  {
+   "first": "Thomas",
+   "last": "Harwood",
+   "sponsor": "GB News",
+   "other": "None."
+  },
+  {
+   "first": "William",
+   "last": "Hazell",
+   "sponsor": "The i Newspaper",
+   "other": "None."
+  },
+  {
+   "first": "James",
+   "last": "Heale",
+   "sponsor": "The Spectator",
+   "other": "Commentator, Sky, BBC, GB and TALK (broadcasting). Publishing, HarperCollins Publishers (writing)."
+  },
+  {
+   "first": "Gregory",
+   "last": "Heffer",
+   "sponsor": "MailOnline/DMGT",
+   "other": "None."
+  },
+  {
+   "first": "Grant",
+   "last": "Henderson",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Stephen",
+   "last": "Hendrix",
+   "sponsor": "The Washington Post",
+   "other": "None."
+  },
+  {
+   "first": "Marie",
+   "last": "Heuclin",
+   "sponsor": "AFP",
+   "other": "None."
+  },
+  {
+   "first": "Daniel",
+   "last": "Hewitt",
+   "sponsor": "ITN",
+   "other": "None."
+  },
+  {
+   "first": "Daniel",
+   "last": "Hodges",
+   "sponsor": "Mail on Sunday",
+   "other": "None."
+  },
+  {
+   "first": "Noa",
+   "last": "Hoffman",
+   "sponsor": "The Spectator",
+   "other": "None."
+  },
+  {
+   "first": "Matthew",
+   "last": "Holehouse",
+   "sponsor": "Economist",
+   "other": "None."
+  },
+  {
+   "first": "Genevieve",
+   "last": "Holl-Allen",
+   "sponsor": "Telegraph Media Group",
+   "other": "None."
+  },
+  {
+   "first": "Ryan",
+   "last": "Hooper",
+   "sponsor": "Daily Mail",
+   "other": "None."
+  },
+  {
+   "first": "Christopher",
+   "last": "Hope",
+   "sponsor": "GB News",
+   "other": "Columnist, Daily Telegraph."
+  },
+  {
+   "first": "Harry",
+   "last": "Horton",
+   "sponsor": "ITN",
+   "other": "None."
+  },
+  {
+   "first": "Emily",
+   "last": "Hudson",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "David",
+   "last": "Hughes",
+   "sponsor": "ITV News",
+   "other": "None."
+  },
+  {
+   "first": "David",
+   "last": "Hughes",
+   "sponsor": "PA Media",
+   "other": "None."
+  },
+  {
+   "first": "Helen",
+   "last": "Hughes",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Susan",
+   "last": "Hulme",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Sophie",
+   "last": "Huskisson",
+   "sponsor": "The Mirror",
+   "other": "None."
+  },
+  {
+   "first": "Paul",
+   "last": "Hutcheon",
+   "sponsor": "Scottish Daily Record",
+   "other": "None."
+  },
+  {
+   "first": "Peter",
+   "last": "Hutchison",
+   "sponsor": "Foreign Press Association (Agence France Presse)",
+   "other": "None."
+  },
+  {
+   "first": "Charles",
+   "last": "Hymas",
+   "sponsor": "Daily Telegraph",
+   "other": "None."
+  },
+  {
+   "first": "Saeed",
+   "last": "Ibrahim",
+   "sponsor": "South Wales Argus",
+   "other": "None."
+  },
+  {
+   "first": "Tim",
+   "last": "Iredale",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Imaan",
+   "last": "Irfan",
+   "sponsor": "Prospect Magazine",
+   "other": "None."
+  },
+  {
+   "first": "Joe",
+   "last": "Jackson",
+   "sponsor": "Agence France Presse (Foreign Press Association)",
+   "other": "None."
+  },
+  {
+   "first": "Nicholas",
+   "last": "Jackson",
+   "sponsor": "ITN",
+   "other": "None."
+  },
+  {
+   "first": "Kumail",
+   "last": "Jaffer",
+   "sponsor": "My London",
+   "other": "None."
+  },
+  {
+   "first": "Louisa",
+   "last": "James",
+   "sponsor": "Good Morning Britain",
+   "other": "None."
+  },
+  {
+   "first": "Rhiannon",
+   "last": "James",
+   "sponsor": "PA Media",
+   "other": "None."
+  },
+  {
+   "first": "Shanade",
+   "last": "James",
+   "sponsor": "BBC News",
+   "other": "None."
+  },
+  {
+   "first": "Catherine",
+   "last": "Janes",
+   "sponsor": "ITN",
+   "other": "None."
+  },
+  {
+   "first": "Alan",
+   "last": "Jones",
+   "sponsor": "PA Media",
+   "other": "None."
+  },
+  {
+   "first": "Catrin",
+   "last": "Jones",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Elizabeth",
+   "last": "Jukes",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Constance",
+   "last": "Kampfner",
+   "sponsor": "The Times",
+   "other": "None."
+  },
+  {
+   "first": "Noah",
+   "last": "Keate",
+   "sponsor": "Politico",
+   "other": "None."
+  },
+  {
+   "first": "Chloe",
+   "last": "Keedy",
+   "sponsor": "ITN",
+   "other": "None."
+  },
+  {
+   "first": "Phillip",
+   "last": "Kemp",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Billy",
+   "last": "Kenber",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Max",
+   "last": "Kendix",
+   "sponsor": "The Times",
+   "other": "None."
+  },
+  {
+   "first": "Megan",
+   "last": "Kenyon",
+   "sponsor": "New Statesman",
+   "other": "Commentator, Times Radio."
+  },
+  {
+   "first": "Shehab",
+   "last": "Khan",
+   "sponsor": "Zeteo UK",
+   "other": "Columnist, Hyphen Online (website)."
+  },
+  {
+   "first": "Samuel",
+   "last": "Knight",
+   "sponsor": "The New Yorker",
+   "other": "None."
+  },
+  {
+   "first": "Michael",
+   "last": "Knowles",
+   "sponsor": "Daily Express",
+   "other": "None."
+  },
+  {
+   "first": "Peter",
+   "last": "Knowles",
+   "sponsor": "C-SPAN TV",
+   "other": "Consultant on projects for Westminster Foundation for Democracy (public body supporting democratic institutions outside the UK) and the Commonwealth Parliamentary Association."
+  },
+  {
+   "first": "James",
+   "last": "Landale",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Eleanor",
+   "last": "Langford",
+   "sponsor": "The i Newspaper",
+   "other": "Commentator, BBC News and Times Radio."
+  },
+  {
+   "first": "Jill",
+   "last": "Lawless",
+   "sponsor": "Associated Press",
+   "other": "None."
+  },
+  {
+   "first": "Johannes",
+   "last": "Leithaeuser",
+   "sponsor": "Frankfurter Allgemeine Zeitung",
+   "other": "None."
+  },
+  {
+   "first": "Quentin",
+   "last": "Letts",
+   "sponsor": "Daily Mail",
+   "other": "Columnist, Private Eye (magazine). Commentator, GB News."
+  },
+  {
+   "first": "Jerry",
+   "last": "Lewis",
+   "sponsor": "Foreign Press Association",
+   "other": "None."
+  },
+  {
+   "first": "Harriet",
+   "last": "Line",
+   "sponsor": "Daily Mail",
+   "other": "None."
+  },
+  {
+   "first": "George",
+   "last": "Lithgow",
+   "sponsor": "PA Media",
+   "other": "None."
+  },
+  {
+   "first": "Abigail",
+   "last": "Llewelyn",
+   "sponsor": "PA Media",
+   "other": "None."
+  },
+  {
+   "first": "Nina",
+   "last": "Lloyd",
+   "sponsor": "PA Media",
+   "other": "None."
+  },
+  {
+   "first": "Isobel",
+   "last": "Losseff",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Isabel",
+   "last": "Loubser",
+   "sponsor": "Politico",
+   "other": "None."
+  },
+  {
+   "first": "Robert",
+   "last": "Lownie",
+   "sponsor": "UnHerd",
+   "other": "None."
+  },
+  {
+   "first": "Tessa",
+   "last": "Lucy",
+   "sponsor": "ITN",
+   "other": "Reporter, ITN 5 News."
+  },
+  {
+   "first": "Manali",
+   "last": "Lukha",
+   "sponsor": "ITV",
+   "other": "None."
+  },
+  {
+   "first": "David",
+   "last": "Lynch",
+   "sponsor": "PA Media",
+   "other": "None."
+  },
+  {
+   "first": "Andrew",
+   "last": "MacAskill",
+   "sponsor": "Reuters",
+   "other": "None."
+  },
+  {
+   "first": "Alison",
+   "last": "MacDonald",
+   "sponsor": "BBC News",
+   "other": "None."
+  },
+  {
+   "first": "Calum",
+   "last": "Macdonald",
+   "sponsor": "Times Radio",
+   "other": "Director, Shortbread Media (podcasting)."
+  },
+  {
+   "first": "Alison",
+   "last": "Mackenzie",
+   "sponsor": "ITV Central",
+   "other": "None."
+  },
+  {
+   "first": "Iona",
+   "last": "Macwhirter-Harley",
+   "sponsor": "ITV News",
+   "other": "None."
+  },
+  {
+   "first": "David",
+   "last": "Maddox",
+   "sponsor": "The Independent",
+   "other": "None."
+  },
+  {
+   "first": "Tracey",
+   "last": "Magee",
+   "sponsor": "ITV - Ulster TV",
+   "other": "None."
+  },
+  {
+   "first": "Kevin",
+   "last": "Maguire",
+   "sponsor": "Daily Mirror",
+   "other": "Journalist, New Statesman, Sky News, Talk TV, ITV, GB News and BBC."
+  },
+  {
+   "first": "Patrick",
+   "last": "Maguire",
+   "sponsor": "Times",
+   "other": "None."
+  },
+  {
+   "first": "Sienna",
+   "last": "Malik",
+   "sponsor": "Daily Mail",
+   "other": "None."
+  },
+  {
+   "first": "Aliraza",
+   "last": "Manji",
+   "sponsor": "Times Radio",
+   "other": "None."
+  },
+  {
+   "first": "Andrew",
+   "last": "Marr",
+   "sponsor": "Global Radio (LBC)",
+   "other": "Writer, New Statesman."
+  },
+  {
+   "first": "Daniel",
+   "last": "Martin",
+   "sponsor": "Telegraph",
+   "other": "None."
+  },
+  {
+   "first": "Diana",
+   "last": "Martin",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Matilda",
+   "last": "Martin",
+   "sponsor": "PoliticsHome",
+   "other": "None."
+  },
+  {
+   "first": "Christopher",
+   "last": "Mason",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Rowena",
+   "last": "Mason",
+   "sponsor": "The Guardian",
+   "other": "Occasional commentator, Sky News and BBC."
+  },
+  {
+   "first": "Thomas",
+   "last": "Mason",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Adrian",
+   "last": "Masters",
+   "sponsor": "ITV Wales",
+   "other": "None."
+  },
+  {
+   "first": "Joseph",
+   "last": "Mayes",
+   "sponsor": "Bloomberg News",
+   "other": "None."
+  },
+  {
+   "first": "Kate",
+   "last": "McCann",
+   "sponsor": "Times Radio",
+   "other": "None."
+  },
+  {
+   "first": "Alicia",
+   "last": "McCarthy",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Enda",
+   "last": "McClafferty",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Lucy",
+   "last": "McDaid",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Andrew",
+   "last": "McDonald",
+   "sponsor": "Politico Europe",
+   "other": "None."
+  },
+  {
+   "first": "Arthur",
+   "last": "McElroy",
+   "sponsor": "The National News",
+   "other": "None."
+  },
+  {
+   "first": "Megan",
+   "last": "Mcelroy",
+   "sponsor": "Politico",
+   "other": "None."
+  },
+  {
+   "first": "Anne",
+   "last": "Mcelvoy",
+   "sponsor": "Politico",
+   "other": "None."
+  },
+  {
+   "first": "Tom",
+   "last": "Mcghie",
+   "sponsor": "Daily Star",
+   "other": "None."
+  },
+  {
+   "first": "Dominic",
+   "last": "McGrath",
+   "sponsor": "Business Post",
+   "other": "None."
+  },
+  {
+   "first": "Geraldine",
+   "last": "Mckelvie",
+   "sponsor": "The Guardian",
+   "other": "None."
+  },
+  {
+   "first": "Christopher",
+   "last": "McKeon",
+   "sponsor": "PA Media",
+   "other": "None."
+  },
+  {
+   "first": "Christopher",
+   "last": "McLaughlin",
+   "sponsor": "Tribune",
+   "other": "None."
+  },
+  {
+   "first": "Lise",
+   "last": "McNally",
+   "sponsor": "ITV",
+   "other": "None."
+  },
+  {
+   "first": "Paul",
+   "last": "McNamara",
+   "sponsor": "Channel 4 TV/News",
+   "other": "None."
+  },
+  {
+   "first": "Andrew",
+   "last": "McSmith",
+   "sponsor": "Order! Order! Magazine",
+   "other": "Editor, The Association of Former Members of Parliament."
+  },
+  {
+   "first": "Christina",
+   "last": "McSorley",
+   "sponsor": "BBC News",
+   "other": "None."
+  },
+  {
+   "first": "Jonathan",
+   "last": "Menon",
+   "sponsor": "Mlex",
+   "other": "None."
+  },
+  {
+   "first": "Karl",
+   "last": "Mercer",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Jane",
+   "last": "Merrick",
+   "sponsor": "The i Newspaper",
+   "other": "None."
+  },
+  {
+   "first": "Sam",
+   "last": "Merriman",
+   "sponsor": "Daily Mail",
+   "other": "None."
+  },
+  {
+   "first": "Christoph",
+   "last": "Meyer",
+   "sponsor": "Foreign Press Association (Deutsche Presse Agentur)",
+   "other": "None."
+  },
+  {
+   "first": "Anna",
+   "last": "Mikhailova",
+   "sponsor": "Times Radio",
+   "other": "Commentator, Sky News, GB News and BBC."
+  },
+  {
+   "first": "Hugh",
+   "last": "Milbourn",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Gabriel",
+   "last": "Millard-Clothier",
+   "sponsor": "Mail on Sunday",
+   "other": "None."
+  },
+  {
+   "first": "Sabrina",
+   "last": "Miller",
+   "sponsor": "Daily Telegraph",
+   "other": "None."
+  },
+  {
+   "first": "Ellen",
+   "last": "Milligan",
+   "sponsor": "Bloomberg News",
+   "other": "None."
+  },
+  {
+   "first": "David",
+   "last": "Milliken",
+   "sponsor": "Thomson Reuters",
+   "other": "None."
+  },
+  {
+   "first": "Andrew",
+   "last": "Mills",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Harbinder",
+   "last": "Minhas",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Sandra",
+   "last": "Mitchell",
+   "sponsor": "News UK/Times Radio",
+   "other": "None."
+  },
+  {
+   "first": "Freya",
+   "last": "Moorhouse",
+   "sponsor": "Financial Times",
+   "other": "None."
+  },
+  {
+   "first": "Alexandre",
+   "last": "Morales Frost",
+   "sponsor": "Bloomberg News",
+   "other": "None."
+  },
+  {
+   "first": "Hamish",
+   "last": "Morrison",
+   "sponsor": "The National/Newsquest",
+   "other": "None."
+  },
+  {
+   "first": "Josiah",
+   "last": "Mortimer",
+   "sponsor": "Byline Times",
+   "other": "None."
+  },
+  {
+   "first": "Richard",
+   "last": "Moss",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Enoch",
+   "last": "Mukungu",
+   "sponsor": "ITN (ITV News)",
+   "other": "None."
+  },
+  {
+   "first": "Craig",
+   "last": "Munro",
+   "sponsor": "Metro",
+   "other": "None."
+  },
+  {
+   "first": "Darryl",
+   "last": "Murphy",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Joe",
+   "last": "Murphy",
+   "sponsor": "The Independent",
+   "other": "None."
+  },
+  {
+   "first": "Andrew",
+   "last": "Murray",
+   "sponsor": "Morning Star Newspaper",
+   "other": "None."
+  },
+  {
+   "first": "Ewan",
+   "last": "Murrie",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Iona",
+   "last": "Napier",
+   "sponsor": "ITN",
+   "other": "None."
+  },
+  {
+   "first": "Alice",
+   "last": "Neil",
+   "sponsor": "ITN (ITV News)",
+   "other": "None."
+  },
+  {
+   "first": "Catherine",
+   "last": "Neilan",
+   "sponsor": "The Observer",
+   "other": "Chief Investigative Reporter, Radio 4/Unusual Productions."
+  },
+  {
+   "first": "Nigel",
+   "last": "Nelson",
+   "sponsor": "Sunday Mirror/Sunday People",
+   "other": "Commentator, GB News and TRT World (broadcasting)."
+  },
+  {
+   "first": "Michael",
+   "last": "Neudecker",
+   "sponsor": "Suddeutsche Zeitung",
+   "other": "None."
+  },
+  {
+   "first": "Joshua",
+   "last": "Nevett",
+   "sponsor": "BBC News",
+   "other": "None."
+  },
+  {
+   "first": "Aaron",
+   "last": "Newbury",
+   "sponsor": "Daily Express",
+   "other": "Commentator, GB News."
+  },
+  {
+   "first": "Rebeca",
+   "last": "Newnes",
+   "sponsor": "GB News",
+   "other": "None."
+  },
+  {
+   "first": "Warren",
+   "last": "Nicholas",
+   "sponsor": "PA Media (Formerly Press Association)",
+   "other": "None."
+  },
+  {
+   "first": "Katharine",
+   "last": "Nicholson",
+   "sponsor": "HuffPost UK",
+   "other": "None."
+  },
+  {
+   "first": "Martyn",
+   "last": "Oates",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Ayesha",
+   "last": "Omar",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Sascha",
+   "last": "O'Sullivan",
+   "sponsor": "Politico",
+   "other": "Commentator, Sky News and BBC."
+  },
+  {
+   "first": "Glendower",
+   "last": "Owen",
+   "sponsor": "National Media",
+   "other": "None."
+  },
+  {
+   "first": "Leala",
+   "last": "Padmanabhan",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "George",
+   "last": "Parker",
+   "sponsor": "Financial Times",
+   "other": "Commentator, BBC, Times Radio and HSBC (broadcasting and banking)."
+  },
+  {
+   "first": "Clare",
+   "last": "Parry",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Alexander",
+   "last": "Partridge",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Mark",
+   "last": "Paul",
+   "sponsor": "The Irish Times",
+   "other": "None."
+  },
+  {
+   "first": "Adam",
+   "last": "Payne",
+   "sponsor": "PoliticsHome",
+   "other": "None."
+  },
+  {
+   "first": "Tom",
+   "last": "Peck",
+   "sponsor": "The Times",
+   "other": "None."
+  },
+  {
+   "first": "Dominic",
+   "last": "Penna",
+   "sponsor": "Telegraph",
+   "other": "None."
+  },
+  {
+   "first": "Robert",
+   "last": "Peston",
+   "sponsor": "ITN",
+   "other": "None."
+  },
+  {
+   "first": "Shelley",
+   "last": "Phelps",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "James",
+   "last": "Pickard",
+   "sponsor": "Financial Times",
+   "other": "Commentator for BBC, LBC, Times Radio and GB News (broadcasting)."
+  },
+  {
+   "first": "Andrew",
+   "last": "Pierce",
+   "sponsor": "Daily Mail",
+   "other": "Commentator, GB News and GMB."
+  },
+  {
+   "first": "Joe",
+   "last": "Pike",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Elizabeth",
+   "last": "Piper",
+   "sponsor": "Reuters",
+   "other": "None."
+  },
+  {
+   "first": "Lucy",
+   "last": "Plint",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Gabriel",
+   "last": "Pogrund",
+   "sponsor": "Sunday Times",
+   "other": "Published Author, Penguin Random House and The Bodley Head (publishing)."
+  },
+  {
+   "first": "Claire",
+   "last": "Popplewell",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Robert",
+   "last": "Powell",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Rosa",
+   "last": "Prince",
+   "sponsor": "Bloomberg News",
+   "other": "Commentator, Times Radio, Sky News and BBC."
+  },
+  {
+   "first": "Andrew",
+   "last": "Quinn",
+   "sponsor": "The Scotsman",
+   "other": "None."
+  },
+  {
+   "first": "Ben",
+   "last": "Quinn",
+   "sponsor": "The Guardian",
+   "other": "None."
+  },
+  {
+   "first": "Randeep",
+   "last": "Ramesh",
+   "sponsor": "Guardian",
+   "other": "None."
+  },
+  {
+   "first": "Madeline",
+   "last": "Ratcliffe",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Andrew",
+   "last": "Rawnsley",
+   "sponsor": "Observer",
+   "other": "None."
+  },
+  {
+   "first": "Gordon",
+   "last": "Rayner",
+   "sponsor": "Telegraph Media Group",
+   "other": "None."
+  },
+  {
+   "first": "Ailbhe",
+   "last": "Rea",
+   "sponsor": "New Statesman",
+   "other": "Commentator, BBC."
+  },
+  {
+   "first": "Rachel",
+   "last": "Rees",
+   "sponsor": "Financial Times",
+   "other": "None."
+  },
+  {
+   "first": "John",
+   "last": "Rentoul",
+   "sponsor": "Independent",
+   "other": "Commentator, BBC, Sky News, GB News, RTE, CNN and ABC News."
+  },
+  {
+   "first": "Faith",
+   "last": "Ridler",
+   "sponsor": "The i Newspaper",
+   "other": "None."
+  },
+  {
+   "first": "Elizabeth",
+   "last": "Rigby",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Ben",
+   "last": "Riley-Smith",
+   "sponsor": "Sunday Times",
+   "other": "None."
+  },
+  {
+   "first": "Dominic",
+   "last": "Robertson",
+   "sponsor": "CNN",
+   "other": "None."
+  },
+  {
+   "first": "Duncan",
+   "last": "Robinson",
+   "sponsor": "The Economist",
+   "other": "None."
+  },
+  {
+   "first": "Nicholas",
+   "last": "Robinson",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Sienna",
+   "last": "Rodgers Orsaz",
+   "sponsor": "The House",
+   "other": "None."
+  },
+  {
+   "first": "Alexandra",
+   "last": "Rogers",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Amy",
+   "last": "Rogers",
+   "sponsor": "The Telegraph",
+   "other": "None."
+  },
+  {
+   "first": "Emma",
+   "last": "Ross",
+   "sponsor": "ITV",
+   "other": "None."
+  },
+  {
+   "first": "Stefan",
+   "last": "Rousseau",
+   "sponsor": "PA Media",
+   "other": "None."
+  },
+  {
+   "first": "Daniel",
+   "last": "Sabbagh",
+   "sponsor": "The Guardian",
+   "other": "None."
+  },
+  {
+   "first": "Ryan",
+   "last": "Sabey",
+   "sponsor": "The Sun (News UK)",
+   "other": "Commentator/Paper Review, Sky News."
+  },
+  {
+   "first": "Juliet",
+   "last": "Samuel",
+   "sponsor": "The Times",
+   "other": "None."
+  },
+  {
+   "first": "Peter",
+   "last": "Saull",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Michael",
+   "last": "Savage",
+   "sponsor": "Guardian",
+   "other": "None."
+  },
+  {
+   "first": "Benjamin",
+   "last": "Schofield",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Kevin",
+   "last": "Schofield",
+   "sponsor": "HuffPost UK",
+   "other": "None."
+  },
+  {
+   "first": "Tom",
+   "last": "Scotson",
+   "sponsor": "Total Politics",
+   "other": "None."
+  },
+  {
+   "first": "Brendan",
+   "last": "Scott",
+   "sponsor": "Bloomberg News",
+   "other": "None."
+  },
+  {
+   "first": "Geraldine",
+   "last": "Scott",
+   "sponsor": "Times",
+   "other": "Commentator, BBC, Sky and LBC. Trustee, Student Publication Association (charity)."
+  },
+  {
+   "first": "Joseph",
+   "last": "Scowen",
+   "sponsor": "GB News",
+   "other": "None."
+  },
+  {
+   "first": "Clare",
+   "last": "Sebastian",
+   "sponsor": "CNN",
+   "other": "None."
+  },
+  {
+   "first": "Josh",
+   "last": "Self",
+   "sponsor": "Politics.co.uk",
+   "other": "None."
+  },
+  {
+   "first": "Michael",
+   "last": "Shear",
+   "sponsor": "New York Times",
+   "other": "None."
+  },
+  {
+   "first": "Thomas",
+   "last": "Sheldrick",
+   "sponsor": "ITV",
+   "other": "None."
+  },
+  {
+   "first": "David",
+   "last": "Sheppard",
+   "sponsor": "Financial Times",
+   "other": "None."
+  },
+  {
+   "first": "Robert",
+   "last": "Shrimsley",
+   "sponsor": "Financial Times",
+   "other": "None."
+  },
+  {
+   "first": "Andrew",
+   "last": "Sinclair",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Arjun",
+   "last": "Singh",
+   "sponsor": "The i Newspaper",
+   "other": "None."
+  },
+  {
+   "first": "Anna",
+   "last": "Slater",
+   "sponsor": "ITN (ITV News)",
+   "other": "None."
+  },
+  {
+   "first": "Jack",
+   "last": "Slater",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Sophia",
+   "last": "Sleigh",
+   "sponsor": "Sun",
+   "other": "None."
+  },
+  {
+   "first": "Adam",
+   "last": "Smith",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Michael",
+   "last": "Smith",
+   "sponsor": "Daily Mirror",
+   "other": "Commentator, Times Radio."
+  },
+  {
+   "first": "Simon",
+   "last": "Smith",
+   "sponsor": "BBC Scotland",
+   "other": "None."
+  },
+  {
+   "first": "Alistair",
+   "last": "Smout",
+   "sponsor": "Thomson Reuters",
+   "other": "None."
+  },
+  {
+   "first": "Christopher",
+   "last": "Smyth",
+   "sponsor": "Financial Times",
+   "other": "None."
+  },
+  {
+   "first": "Jennifer",
+   "last": "Sneesby",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Pieter",
+   "last": "Snepvangers",
+   "sponsor": "The Daily Telegraph",
+   "other": "None."
+  },
+  {
+   "first": "Peter",
+   "last": "Snowdon",
+   "sponsor": "Politico",
+   "other": "None."
+  },
+  {
+   "first": "Andrew",
+   "last": "Sparrow",
+   "sponsor": "Guardian",
+   "other": "None."
+  },
+  {
+   "first": "Lara",
+   "last": "Spirit",
+   "sponsor": "The Sunday Times",
+   "other": "Occasional BBC contributor (broadcasting)."
+  },
+  {
+   "first": "Stephania",
+   "last": "Spyropoulou",
+   "sponsor": "Daily Express",
+   "other": "Media Consultant, Off the Record (working with PR, charities and public affairs firms)."
+  },
+  {
+   "first": "Kiran",
+   "last": "Stacey",
+   "sponsor": "The Guardian",
+   "other": "None."
+  },
+  {
+   "first": "Timothy",
+   "last": "Stanley",
+   "sponsor": "Telegraph Media Group",
+   "other": "None."
+  },
+  {
+   "first": "Athena",
+   "last": "Stavrou",
+   "sponsor": "The Independent",
+   "other": "None."
+  },
+  {
+   "first": "Jamie",
+   "last": "Summers",
+   "sponsor": "ITN/ITV News",
+   "other": "None."
+  },
+  {
+   "first": "Ian",
+   "last": "Swanson",
+   "sponsor": "Edinburgh Evening News",
+   "other": "None."
+  },
+  {
+   "first": "Steven",
+   "last": "Swinford",
+   "sponsor": "Times",
+   "other": "None."
+  },
+  {
+   "first": "Rajeev",
+   "last": "Syal",
+   "sponsor": "Guardian",
+   "other": "None."
+  },
+  {
+   "first": "Rachel",
+   "last": "Sylvester",
+   "sponsor": "Observer",
+   "other": "Broadcasting, Sky News."
+  },
+  {
+   "first": "Jennifer",
+   "last": "Sym",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Harriet",
+   "last": "Symonds",
+   "sponsor": "Dods Group (Total Politics and The House Magazine)",
+   "other": "None."
+  },
+  {
+   "first": "James",
+   "last": "Tapsfield",
+   "sponsor": "MailOnline",
+   "other": "None."
+  },
+  {
+   "first": "Katherine",
+   "last": "Tarrant",
+   "sponsor": "Sunday Times",
+   "other": "None."
+  },
+  {
+   "first": "Henry",
+   "last": "Taylor",
+   "sponsor": "PA Media",
+   "other": "Reporter/Sub Editor, The Guardian."
+  },
+  {
+   "first": "Bethel",
+   "last": "Tesfaye",
+   "sponsor": "ITN/Channel 4 News",
+   "other": "None."
+  },
+  {
+   "first": "Alison",
+   "last": "Thompson",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Flora",
+   "last": "Thompson",
+   "sponsor": "PA Media",
+   "other": "None."
+  },
+  {
+   "first": "George",
+   "last": "Thompson",
+   "sponsor": "PA Media",
+   "other": "None."
+  },
+  {
+   "first": "James",
+   "last": "Tibbitts",
+   "sponsor": "LabourList",
+   "other": "None."
+  },
+  {
+   "first": "Anna",
+   "last": "Tobi",
+   "sponsor": "The Guardian",
+   "other": "None."
+  },
+  {
+   "first": "Alain",
+   "last": "Tolhurst",
+   "sponsor": "PoliticsHome",
+   "other": "None."
+  },
+  {
+   "first": "Camilla",
+   "last": "Tominey",
+   "sponsor": "Telegraph",
+   "other": "Presenter, GB News. Commentator, BBC, ITV, and Channel 9 in Australia (broadcasting)."
+  },
+  {
+   "first": "Alexandra",
+   "last": "Topping",
+   "sponsor": "The Guardian",
+   "other": "None."
+  },
+  {
+   "first": "Camilla",
+   "last": "Turner",
+   "sponsor": "Daily Telegraph",
+   "other": "Commentator, Sky, BBC and LBC."
+  },
+  {
+   "first": "Oliver",
+   "last": "Varney",
+   "sponsor": "Al Jazeera",
+   "other": "None."
+  },
+  {
+   "first": "Richard",
+   "last": "Vaughan",
+   "sponsor": "The i Newspaper",
+   "other": "None."
+  },
+  {
+   "first": "Ahmed",
+   "last": "Versi",
+   "sponsor": "Muslim News",
+   "other": "None."
+  },
+  {
+   "first": "Noah",
+   "last": "Vickers",
+   "sponsor": "The House Magazine (Total Politics)",
+   "other": "None."
+  },
+  {
+   "first": "Jonathan",
+   "last": "Walker",
+   "sponsor": "Reach plc/Daily Express",
+   "other": "None."
+  },
+  {
+   "first": "Judith",
+   "last": "Walker",
+   "sponsor": "Times Radio",
+   "other": "None."
+  },
+  {
+   "first": "Peter",
+   "last": "Walker",
+   "sponsor": "Guardian",
+   "other": "None."
+  },
+  {
+   "first": "Imogen",
+   "last": "Wallace",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Jack",
+   "last": "Walters",
+   "sponsor": "GB News",
+   "other": "None."
+  },
+  {
+   "first": "Iain",
+   "last": "Watson",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Rob",
+   "last": "Watson",
+   "sponsor": "BBC News",
+   "other": "None."
+  },
+  {
+   "first": "Nicholas",
+   "last": "Watt",
+   "sponsor": "BBC",
+   "other": "Under contract to Kirby Jones Management, a speaking agency: I delivered a speech and took part in a Q&A on 5 December 2025 at the G15 CEO Meeting of housing association leaders, hosted by the Peabody Group. The booking came via the Speakers’ Corner agency. The fee was paid by the Peabody Group (registered December 2025); I delivered a speech and took part in a subsequent Q&A at The Business of Events: UK Policy Forum on 7 July 2026. The Business of Events describes itself as a global think tank and advocacy network for the business events sector. I was invited to take part by the NMP Live speaker bureau. The fee was paid by The Business of Events (registered July 2026); I delivered a speech, and took part in a subsequent question and answer session, at the Association of Event Organisers (AEO) Business Breakfast on 3 September 2026. The AEO describes itself as the “premier trade association for companies that create, develop, and manage trade and consumer events”. I was invited to take part by the NMP Live speaker bureau. The fee was paid by the Association of Event Organisers (registered 8 September 2026)."
+  },
+  {
+   "first": "Esther",
+   "last": "Webber",
+   "sponsor": "Politico",
+   "other": "None."
+  },
+  {
+   "first": "Romilly",
+   "last": "Weeks",
+   "sponsor": "ITN",
+   "other": "None."
+  },
+  {
+   "first": "Kate",
+   "last": "Whannel",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Brian",
+   "last": "Wheeler",
+   "sponsor": "BBC News",
+   "other": "None."
+  },
+  {
+   "first": "Caroline",
+   "last": "Wheeler",
+   "sponsor": "The I Newspaper",
+   "other": "Presenter, Radio 4. Commentator, Sky News."
+  },
+  {
+   "first": "Richard",
+   "last": "Wheeler",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Sean",
+   "last": "Whelan",
+   "sponsor": "Radio Telefis Eirean",
+   "other": "None."
+  },
+  {
+   "first": "Gwenneth",
+   "last": "Whitby",
+   "sponsor": "ITV",
+   "other": "None."
+  },
+  {
+   "first": "Alan",
+   "last": "White",
+   "sponsor": "Total Politics",
+   "other": "None."
+  },
+  {
+   "first": "Lucy",
+   "last": "White",
+   "sponsor": "Bloomberg News",
+   "other": "None."
+  },
+  {
+   "first": "Alexander",
+   "last": "Wickham",
+   "sponsor": "Bloomberg News",
+   "other": "None."
+  },
+  {
+   "first": "David",
+   "last": "Wilcock",
+   "sponsor": "MailOnline/DMGT",
+   "other": "None."
+  },
+  {
+   "first": "Martin",
+   "last": "Williams",
+   "sponsor": "Declassified UK",
+   "other": "None."
+  },
+  {
+   "first": "David",
+   "last": "Williamson",
+   "sponsor": "Express Newspapers",
+   "other": "None."
+  },
+  {
+   "first": "Sophie",
+   "last": "Wingate",
+   "sponsor": "PA Media",
+   "other": "None."
+  },
+  {
+   "first": "David",
+   "last": "Wood",
+   "sponsor": "ITV West Country",
+   "other": "None."
+  },
+  {
+   "first": "David",
+   "last": "Wooding",
+   "sponsor": "Express Newspapers",
+   "other": "None."
+  },
+  {
+   "first": "Hannah",
+   "last": "Woodward",
+   "sponsor": "Sky News",
+   "other": "None."
+  },
+  {
+   "first": "Giles",
+   "last": "Wooltorton",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Benjamin",
+   "last": "Wright",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Oliver",
+   "last": "Wright",
+   "sponsor": "The Times",
+   "other": "None."
+  },
+  {
+   "first": "Rosalind",
+   "last": "Wynne-Jones",
+   "sponsor": "The Mirror",
+   "other": "None."
+  },
+  {
+   "first": "Emily",
+   "last": "Youlton",
+   "sponsor": "ITV Regional News",
+   "other": "None."
+  },
+  {
+   "first": "Maximilian",
+   "last": "Young",
+   "sponsor": "Guido Fawkes",
+   "other": "None."
+  },
+  {
+   "first": "Victoria",
+   "last": "Young",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Eleanor",
+   "last": "Zaniewicka",
+   "sponsor": "BBC",
+   "other": "None."
+  },
+  {
+   "first": "Henry",
+   "last": "Zeffman",
+   "sponsor": "BBC",
+   "other": "None."
+  }
+ ]
+}
