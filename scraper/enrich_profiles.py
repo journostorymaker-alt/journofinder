@@ -554,8 +554,13 @@ def enrich_web(conn, person, api_key):
                          headers={"X-Subscription-Token": api_key,
                                   "Accept": "application/json"}, timeout=20)
         results = r.json().get("web", {}).get("results", []) if r.status_code == 200 else []
-    except Exception:
-        results = []
+        status = f"http_{r.status_code}"
+        note = r.text[:300] if r.status_code != 200 else f"{len(results)} results"
+    except Exception as ex:
+        results, status, note = [], "error", str(ex)[:300]
+    # Keep a record of every paid search so we can see it working (or not)
+    conn.execute("INSERT INTO scrape_log (outlet_id, url, status, bylines_found, notes) VALUES (NULL, ?, ?, ?, ?)",
+                 (f"brave:{person['full_name']}", status, len(results), note))
     surname = person["full_name"].split()[-1].lower()
     bio = job = url = None
     social = {}
