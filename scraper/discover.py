@@ -45,6 +45,12 @@ JOB_WORDS = re.compile(
     r"\b(reporter|journalist|correspondent|editor|presenter|producer|"
     r"broadcaster|columnist|writer|anchor|newsreader|news ?desk|"
     r"video ?journalist|camera ?operator|planning|bureau chief)\b", re.I)
+# Staff of overseas editions or sister papers abroad (Farmers Weekly NZ,
+# Daily Mail US, Sky News Australia...). Not useful for UK pitching.
+OVERSEAS = re.compile(
+    r"\b(NZ|New Zealand|Australia|Australian|US|U\.S\.|USA|America|American|Canada|"
+    r"India|Asia|Ireland|Irish|Africa|Dubai|Middle East|Hong Kong|Singapore|Sydney|"
+    r"Melbourne|New York|Washington|Los Angeles|Feilding)\b")
 FORMER = re.compile(r"\b(former|formerly|ex-|previously|retired|alumni|alumnus)\b", re.I)
 
 # outlet name in the database -> (phrases that must appear in the job line,
@@ -163,6 +169,8 @@ def parse_result(res, outlet, phrases):
         # Global outlet: the preview must also show they're UK-based
         if not re.search(r"\b(London|UK|United Kingdom|Britain|British)\b", job_line + " " + desc):
             return None
+    if OVERSEAS.search(job_line):
+        return None
     if not JOB_WORDS.search(job_line):
         # "Joe Bloggs – Sky News | LinkedIn" with "Producer at Sky News" in the preview
         first = re.split(r"(?<=[.!?·])\s", desc)[0][:120]

@@ -526,6 +526,8 @@ tbody td {
 .soc-links a { color:var(--txl); text-decoration:none; margin-right:0.25rem; font-weight:700; }
 .soc-links a:hover { color:var(--navy); }
 .patch-list { max-height: 15rem; overflow-y: auto; }
+.found-pill { background: var(--grey); color: var(--txm); text-decoration: none; margin-left: 0.25rem; }
+.found-pill:hover { color: var(--navy); }
 .cell-region {
   font-size: 0.8rem;
   color: var(--txm);
@@ -1568,6 +1570,12 @@ function socialLinks(j) {
   if (j.bio_url && j.bio_source === 'author_page') html += `<a href="${esc(j.bio_url)}" target="_blank" rel="noopener" title="Author page">bio</a>`;
   for (const k of keys) html += `<a href="${esc(s[k])}" target="_blank" rel="noopener" title="${esc(k)}">${SOCIAL_LABEL[k]}</a>`;
   return html + '</span>';
+}
+
+function foundPill(j) {
+  if (j.total_bylines || j.bio_source !== 'web' || !j.bio_url) return '';
+  const where = j.bio_url.includes('linkedin') ? 'LinkedIn' : (j.bio_url.includes('muckrack') ? 'Muck Rack' : 'web search');
+  return `<a class="pill found-pill" href="${esc(j.bio_url)}" target="_blank" rel="noopener" title="No bylines seen yet. Found through their ${where} profile. Click to check it.">via ${where}</a>`;
 }
 
 function stalePill(j) {
