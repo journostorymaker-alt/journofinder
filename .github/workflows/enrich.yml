@@ -1,0 +1,93 @@
+name: Find patches and bios
+
+# Works out each journalist's working patch and job title from public,
+# work-related sources: where their stories are set, their author page on
+# their outlet's site, and their Bluesky bio. Optional paid web search for
+# the gaps if a BRAVE_API_KEY secret is added.
+#
+# Runs twice a week on the days the main scrape does NOT run, so the two
+# never fight over the database. Each run checks as many journalists as it
+# can in the time budget, newest gaps first, and carries on next run.
+
+on:
+  schedule:
+    # Wednesday and Sunday at 02:00 UTC
+    - cron: '0 2 * * 0,3'
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: 'Max journalists per step (0 = no limit). Use 25 for a quick test.'
+        required: false
+        default: '0'
+      minutes:
+        description: 'Time budget in minutes for the web steps'
+        required: false
+        default: '240'
+      web_queries:
+        description: 'Max paid web searches (needs BRAVE_API_KEY secret). 0 = off.'
+        required: false
+        default: '0'
+
+# Only one workflow writes the database at a time
+concurrency:
+  group: database-writer
+  cancel-in-progress: false
+
+jobs:
+  enrich:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4 feedparser
+
+      - name: Find patches and bios
+        continue-on-error: true
+        working-directory: scraper
+        env:
+          BRAVE_API_KEY: ${{ secrets.BRAVE_API_KEY }}
+        run: |
+          python enrich_profiles.py \
+            --limit "${{ github.event.inputs.limit || '0' }}" \
+            --minutes "${{ github.event.inputs.minutes || '240' }}" \
+            --web-queries "${{ github.event.inputs.web_queries || '0' }}"
+
+      - name: Copy database into dashboard folder
+        run: |
+          mkdir -p docs/data
+          cp data/journalists.db docs/data/journalists.db
+
+      - name: Commit and push results
+        run: |
+          set +e
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          mkdir -p /tmp/out
+          cp data/journalists.db /tmp/out/data.db
+          git fetch origin main
+          git reset --hard origin/main
+          cp /tmp/out/data.db data/journalists.db
+          cp /tmp/out/data.db docs/data/journalists.db
+          git add data/journalists.db docs/data/journalists.db
+          if git diff --cached --quiet; then
+            echo "Nothing changed"
+            exit 0
+          fi
+          git commit -m "Patches and bios: $(date -u +%Y-%m-%d)"
+          for attempt in 1 2 3; do
+            git push origin main && exit 0
+            sleep $((5 * attempt))
+          done
+          echo "Push failed"
+          exit 1

@@ -517,6 +517,15 @@ tbody td {
   white-space: nowrap;
   flex-shrink: 0;
 }
+/* Working patch */
+.cell-patch { display:block; margin-top:0.15rem; font-size:0.74rem; color:var(--navy); font-weight:600; white-space:normal; line-height:1.25; }
+.cell-patch .pc { font-weight:400; color:var(--txl); font-size:0.68rem; }
+.cell-patch a { color:inherit; text-decoration:underline dotted; }
+.cell-job { display:block; font-size:0.72rem; color:var(--txm); font-style:italic; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.soc-links { margin-left:0.3rem; font-size:0.66rem; }
+.soc-links a { color:var(--txl); text-decoration:none; margin-right:0.25rem; font-weight:700; }
+.soc-links a:hover { color:var(--navy); }
+.patch-list { max-height: 15rem; overflow-y: auto; }
 .cell-region {
   font-size: 0.8rem;
   color: var(--txm);
@@ -834,7 +843,7 @@ footer {
   <div class="hdr-div"></div>
   <div class="hdr-meta">
     <strong>UK Press Database</strong>
-    Automated byline scraping &middot; refreshed daily
+    Automated byline scraping &middot; refreshed twice a week
   </div>
   <div class="hdr-spacer"></div>
   <div class="hdr-time" id="lastUpdated">Loading&hellip;</div>
@@ -902,6 +911,15 @@ footer {
           <button class="flabel-mini" id="regionCollapseAll">Collapse</button>
         </span></div>
         <div class="region-tree" id="filterRegion"></div>
+      </div>
+
+      <div class="fgroup">
+        <div class="flabel">Working patch</div>
+        <div class="checks">
+          <label><input type="checkbox" id="patchKnownOnly"> Only with a known patch <span class="cb-count" id="cntPatchKnown">&mdash;</span></label>
+          <label><input type="checkbox" id="patchHideLow"> Hide low-confidence patches <span class="cb-count" id="cntPatchLow">&mdash;</span></label>
+        </div>
+        <div class="checks patch-list" id="filterPatch"></div>
       </div>
 
       <div class="fgroup">
@@ -974,6 +992,9 @@ let filters = {
   classes: new Set(),
   specialisms: new Set(),
   confidences: new Set(),
+  patches: new Set(),
+  patchKnownOnly: false,
+  patchHideLow: false,
   hideStale: false,
   hideVeryStale: true,
   movedOnly: false,
@@ -1035,6 +1056,14 @@ function showEmpty(title, msg) {
 }
 
 function loadData() {
+  const hasProfiles = (db.exec(`SELECT name FROM sqlite_master WHERE type='table' AND name='journalist_profiles'`)[0]?.values?.length) > 0;
+  const profileCols = hasProfiles
+    ? `p.patch, p.patch_region, p.patch_source, p.patch_confidence, p.job_title, p.bio, p.bio_url,
+       p.bio_source, p.social_links, p.story_towns, p.story_patch_share, p.story_patch_n`
+    : `NULL as patch, NULL as patch_region, NULL as patch_source, NULL as patch_confidence,
+       NULL as job_title, NULL as bio, NULL as bio_url, NULL as bio_source, NULL as social_links,
+       NULL as story_towns, NULL as story_patch_share, NULL as story_patch_n`;
+  const profileJoin = hasProfiles ? 'LEFT JOIN journalist_profiles p ON p.name_normalised = j.name_normalised' : '';
   const jRows = db.exec(`
     SELECT
       j.id, j.full_name, j.first_name, j.last_name,
@@ -1046,9 +1075,11 @@ function loadData() {
       (SELECT GROUP_CONCAT(email || '|' || confidence, ';;') FROM journalist_emails WHERE journalist_id = j.id) as all_emails,
       j.days_since_last_byline,
       (SELECT name FROM outlets WHERE id = j.moved_from_outlet_id) as moved_from_outlet,
-      (SELECT GROUP_CONCAT(specialism, ',') FROM journalist_specialisms WHERE journalist_id = j.id ORDER BY score DESC) as specialisms
+      (SELECT GROUP_CONCAT(specialism, ',') FROM journalist_specialisms WHERE journalist_id = j.id ORDER BY score DESC) as specialisms,
+      ${profileCols}
     FROM journalists j
     JOIN outlets o ON j.primary_outlet_id = o.id
+    ${profileJoin}
   `);
 
   if (jRows.length === 0) {
@@ -1066,6 +1097,7 @@ function loadData() {
       const r = parseRegion(obj.region);
       obj.region_top = r.top;
       obj.region_sub = r.sub;
+      try { obj.social = obj.social_links ? JSON.parse(obj.social_links) : {}; } catch (e) { obj.social = {}; }
       return obj;
     });
   }
@@ -1233,6 +1265,13 @@ function setupFilters() {
   const specs = Object.keys(specCount).sort((a, b) => specCount[b] - specCount[a]);
   populateChecks('filterSpecialism', specs, s => specCount[s], 'specialisms');
 
+  const patchCount = {};
+  for (const j of allJournalists) if (j.patch) patchCount[j.patch] = (patchCount[j.patch] || 0) + 1;
+  const patchList = Object.keys(patchCount).sort((a, b) => a.localeCompare(b));
+  populateChecks('filterPatch', patchList, p => patchCount[p], 'patches');
+  document.getElementById('cntPatchKnown').textContent = allJournalists.filter(j => j.patch).length;
+  document.getElementById('cntPatchLow').textContent = allJournalists.filter(j => j.patch_confidence === 'low').length;
+
   const confs = ['verified', 'pattern_high', 'pattern_med', 'guess'];
   populateChecks('filterConfidence', confs,
     c => allJournalists.filter(j => j.primary_confidence === c).length,
@@ -1284,6 +1323,12 @@ function setupEvents() {
   document.getElementById('movedOnly').addEventListener('change', e => {
     filters.movedOnly = e.target.checked; render();
   });
+  document.getElementById('patchKnownOnly').addEventListener('change', e => {
+    filters.patchKnownOnly = e.target.checked; render();
+  });
+  document.getElementById('patchHideLow').addEventListener('change', e => {
+    filters.patchHideLow = e.target.checked; render();
+  });
 
   document.getElementById('btnClear').addEventListener('click', clearFilters);
   document.getElementById('btnExport').addEventListener('click', exportCSV);
@@ -1317,7 +1362,8 @@ function setupEvents() {
 function clearFilters() {
   filters = {
     text: '', regions: new Set(), tiers: new Set(), classes: new Set(),
-    specialisms: new Set(), confidences: new Set(),
+    specialisms: new Set(), confidences: new Set(), patches: new Set(),
+    patchKnownOnly: false, patchHideLow: false,
     hideStale: false, hideVeryStale: true, movedOnly: false,
   };
   document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
@@ -1339,7 +1385,7 @@ function getFiltered() {
   }
   return allJournalists.filter(j => {
     if (filters.text) {
-      const blob = `${j.full_name} ${j.outlet_name} ${j.primary_email || ''} ${j.specialisms || ''} ${j.region}`.toLowerCase();
+      const blob = `${j.full_name} ${j.outlet_name} ${j.primary_email || ''} ${j.specialisms || ''} ${j.region} ${j.patch || ''} ${j.patch_region || ''} ${j.story_towns || ''} ${j.job_title || ''} ${j.bio || ''}`.toLowerCase();
       if (!blob.includes(filters.text)) return false;
     }
     if (filters.regions.size && !regionMatches(j)) return false;
@@ -1350,6 +1396,9 @@ function getFiltered() {
     if (filters.hideStale && j.days_since_last_byline != null && j.days_since_last_byline > 90) return false;
     if (filters.hideVeryStale && j.days_since_last_byline != null && j.days_since_last_byline > 180) return false;
     if (filters.movedOnly && !j.moved_from_outlet) return false;
+    if (filters.patchKnownOnly && !j.patch) return false;
+    if (filters.patchHideLow && j.patch_confidence === 'low') return false;
+    if (filters.patches.size && !filters.patches.has(j.patch)) return false;
     return true;
   });
 }
@@ -1398,6 +1447,8 @@ function summariseFilters() {
   if (filters.tiers.size) parts.push(`${filters.tiers.size} tier${filters.tiers.size > 1 ? 's' : ''}`);
   if (filters.classes.size) parts.push(`${filters.classes.size} type${filters.classes.size > 1 ? 's' : ''}`);
   if (filters.specialisms.size) parts.push(`${filters.specialisms.size} specialism${filters.specialisms.size > 1 ? 's' : ''}`);
+  if (filters.patches.size) parts.push(`${filters.patches.size} patch${filters.patches.size > 1 ? 'es' : ''}`);
+  if (filters.patchKnownOnly) parts.push('known patch only');
   if (filters.confidences.size) parts.push(`${filters.confidences.size} confidence level${filters.confidences.size > 1 ? 's' : ''}`);
   if (filters.text) parts.push(`text "${filters.text}"`);
   return parts.length ? 'Filtered by ' + parts.join(' · ') : 'No filters applied';
@@ -1406,7 +1457,7 @@ function summariseFilters() {
 function renderJournalists(data, container) {
   const headers = [
     { key: 'full_name',              label: 'Name / Outlet',     cls: 'col-name' },
-    { key: 'region',                 label: 'Region',            cls: 'col-region' },
+    { key: 'region',                 label: 'Region / Patch',    cls: 'col-region' },
     { key: 'classification',         label: 'Type',              cls: 'col-type' },
     { key: 'primary_email',          label: 'Email',             cls: 'col-email' },
     { key: 'days_since_last_byline', label: 'Last',              cls: 'col-last right' },
@@ -1431,10 +1482,11 @@ function renderJournalists(data, container) {
     // Name + outlet, with optional lead specialism inline
     const leadSpec = j.specialisms_arr[0];
     const leadSpecHtml = leadSpec ? `<span class="lead-spec" title="Specialisms: ${esc(j.specialisms_arr.join(', '))}">${esc(leadSpec)}</span>` : '';
-    html += `<td><div class="cell-name"><span class="cell-name-text" title="${esc(j.full_name)}">${esc(j.full_name)}</span>${leadSpecHtml}</div><small title="${esc(j.outlet_name)}">${esc(j.outlet_name)}</small></td>`;
+    const jobHtml = j.job_title ? `<span class="cell-job" title="${esc(j.bio || j.job_title)}">${esc(j.job_title)}</span>` : '';
+    html += `<td><div class="cell-name"><span class="cell-name-text" title="${esc(j.full_name)}">${esc(j.full_name)}</span>${leadSpecHtml}</div><small title="${esc(j.outlet_name)}">${esc(j.outlet_name)}${socialLinks(j)}</small>${jobHtml}</td>`;
     
     // Region
-    html += `<td class="cell-region" title="${esc(j.region || '')}">${esc(j.region || '—')}</td>`;
+    html += `<td class="cell-region" title="${esc(j.region || '')}">${esc(j.region || '—')}${patchHtml(j)}</td>`;
     
     // Type pill + stale/moved warnings (no fresh badges, no duplication of last-byline info)
     html += `<td><span class="pill pill-cls cls-${j.classification || 'unclear'}">${esc((j.classification || 'unclear').replace('_', ' '))}</span>${stalePill(j)}${movedPill(j)}</td>`;
@@ -1487,6 +1539,37 @@ function renderNewsrooms(data, container) {
   container.innerHTML = html;
 }
 
+const SOURCE_LABEL = { manual: 'your correction', bio: 'their own bio', stories: 'where their stories are set' };
+const SOCIAL_LABEL = { x: 'X', bluesky: 'Bsky', linkedin: 'in', muckrack: 'MR', threads: 'Th', mastodon: 'M' };
+
+function patchHtml(j) {
+  if (!j.patch) return '';
+  let why = `From ${SOURCE_LABEL[j.patch_source] || j.patch_source}`;
+  if (j.patch_source === 'stories' && j.story_patch_n) {
+    why += `: ${Math.round((j.story_patch_share || 0) * 100)}% of ${j.story_patch_n} stories with a place in the headline`;
+    if (j.story_towns) why += ` (${j.story_towns})`;
+  }
+  if (j.patch_source === 'bio' && j.bio) why += `: "${j.bio}"`;
+  const label = j.bio_url && j.patch_source === 'bio'
+    ? `<a href="${esc(j.bio_url)}" target="_blank" rel="noopener">${esc(j.patch)}</a>`
+    : esc(j.patch);
+  const conf = j.patch_confidence && j.patch_confidence !== 'high' ? ` <span class="pc">(${esc(j.patch_confidence)})</span>` : '';
+  return `<span class="cell-patch" title="${esc(why)}">Patch: ${label}${conf}</span>`;
+}
+
+function socialLinks(j) {
+  const s = j.social || {};
+  const keys = Object.keys(s).filter(k => SOCIAL_LABEL[k]);
+  if (j.bio_url && j.bio_source === 'author_page' && !keys.length) {
+    return `<span class="soc-links"><a href="${esc(j.bio_url)}" target="_blank" rel="noopener" title="Author page">bio</a></span>`;
+  }
+  if (!keys.length) return '';
+  let html = '<span class="soc-links">';
+  if (j.bio_url && j.bio_source === 'author_page') html += `<a href="${esc(j.bio_url)}" target="_blank" rel="noopener" title="Author page">bio</a>`;
+  for (const k of keys) html += `<a href="${esc(s[k])}" target="_blank" rel="noopener" title="${esc(k)}">${SOCIAL_LABEL[k]}</a>`;
+  return html + '</span>';
+}
+
 function stalePill(j) {
   // Only emit a warning for actually stale records, no badges for fresh ones.
   // Last byline column already shows the day count.
@@ -1520,6 +1603,7 @@ function exportCSV() {
     const cats = ['UK Press', (j.classification || '').replace('_', ' '), j.tier || ''].filter(Boolean).join('; ');
     const notes = [
       `Region: ${j.region || '—'}`,
+      j.patch ? `Patch: ${j.patch} (${j.patch_confidence || ''}, from ${SOURCE_LABEL[j.patch_source] || j.patch_source})` : '',
       `Bylines tracked: ${j.total_bylines}`,
       `Email confidence: ${j.primary_confidence || 'n/a'}`,
       specs ? `Specialisms: ${specs}` : '',
@@ -1528,7 +1612,7 @@ function exportCSV() {
     return [
       j.first_name || '', j.last_name || '',
       j.primary_email || '',
-      j.outlet_name, '',
+      j.outlet_name, j.job_title || '',
       cats, notes
     ];
   });

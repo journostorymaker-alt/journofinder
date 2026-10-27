@@ -8,6 +8,11 @@ on:
     - cron: '0 2 * * 2,5'
   workflow_dispatch:
 
+# Only one workflow writes the database at a time
+concurrency:
+  group: database-writer
+  cancel-in-progress: false
+
 jobs:
   scrape:
     runs-on: ubuntu-latest
@@ -41,12 +46,20 @@ jobs:
         id: scrape
         continue-on-error: true
         run: python scraper/scrape.py
-        timeout-minutes: 180
+        # Raised from 180: some runs were being cut off before every outlet
+        # was done. Public repos have no monthly Actions minute limit.
+        timeout-minutes: 300
 
       - name: Run consolidation
         if: always()
         continue-on-error: true
         run: python scraper/consolidate.py
+
+      - name: Update patches from story locations
+        if: always()
+        continue-on-error: true
+        working-directory: scraper
+        run: python enrich_profiles.py --stories-only
 
       - name: Print summary
         if: always()

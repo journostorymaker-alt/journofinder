@@ -8,6 +8,7 @@ name: Refresh Dashboard
 #   dashboard without waiting for the next scheduled scrape.
 # - You edited outlets.py and want the new email patterns applied right away.
 # - You changed consolidate.py and want to see the new logic applied.
+# - You added a hand correction to patch_overrides.txt.
 # - You want to test something without burning a full 3-hour scrape.
 #
 # What it doesn't do:
@@ -20,6 +21,10 @@ name: Refresh Dashboard
 
 on:
   workflow_dispatch:
+
+concurrency:
+  group: database-writer
+  cancel-in-progress: false
 
 jobs:
   refresh:
@@ -38,7 +43,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install --quiet beautifulsoup4 lxml requests
+          pip install --quiet beautifulsoup4 lxml requests feedparser
 
       - name: Verify required files are present
         run: |
@@ -49,6 +54,10 @@ jobs:
       - name: Run consolidation
         working-directory: scraper
         run: python consolidate.py
+
+      - name: Update patches (stories and patch_overrides.txt)
+        working-directory: scraper
+        run: python enrich_profiles.py --stories-only
 
       - name: Copy database into dashboard folder
         run: |

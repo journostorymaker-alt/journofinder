@@ -1,0 +1,16 @@
+# Hand corrections for journalists' working patches.
+#
+# One journalist per line:
+#   Full Name | Patch | Job title (optional)
+#
+# Examples:
+#   Jane Smith | Lincolnshire | Agriculture reporter
+#   John Brown | Scotland
+#   Sam Jones | | Health correspondent     (job title only, patch left as worked out)
+#
+# Patch can be any of the patch areas in places.py (Lincolnshire, Norfolk,
+# Highlands, Greater Manchester...) or a region (Scotland, Wales, North East,
+# South West...). Anything else is shown as you typed it.
+#
+# These always win over what the tool works out. After editing, run the
+# "Refresh Dashboard" workflow on GitHub to see the change.

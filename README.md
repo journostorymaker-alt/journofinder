@@ -33,6 +33,20 @@ journofinder/
 └── README.md
 ```
 
+## Working patches and bios
+
+`scraper/enrich_profiles.py` works out each journalist's working patch and job
+title. It only uses work sources and never records where anyone lives.
+
+1. **Stories**: where their stories are set, read from headlines we already hold. Free, runs after every scrape.
+2. **Author pages**: their bio and job title from their outlet's own author page, plus links to their professional social profiles.
+3. **Bluesky**: their public Bluesky bio, kept only if it clearly matches (same name, and it names their outlet or says they're a journalist).
+4. **Web search** (optional): only if a `BRAVE_API_KEY` secret is added. Reads search result snippets. Never fetches LinkedIn, X or Muck Rack pages directly.
+
+The "Find patches and bios" workflow runs on Wednesdays and Sundays, so it never clashes with the scrape. Each run checks as many people as it can in about four hours and carries on next time. Bios are rechecked every 90 days.
+
+The dashboard shows the patch under the region, with how sure it is. Hover to see why. Fix any wrong ones in `scraper/patch_overrides.txt`, then run "Refresh Dashboard".
+
 ## Setup
 
 ### One-time
