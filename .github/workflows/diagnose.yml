@@ -35,13 +35,11 @@ jobs:
           python diagnose.py "${ARGS[@]}" || true
       - name: Save report to diagnostics branch
         run: |
-          cp diagnostics.txt /tmp/diagnostics.txt
+          cp diagnostics.txt /tmp/diagnostics.txt || echo "no report written" > /tmp/diagnostics.txt
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git fetch origin diagnostics || true
-          git checkout -B diagnostics
-          git rm -rq --cached . >/dev/null
+          git switch --orphan diagnostics-tmp
           cp /tmp/diagnostics.txt diagnostics.txt
           git add diagnostics.txt
           git commit -q -m "Diagnostics $(date -u +%Y-%m-%dT%H:%M)"
-          git push -f origin diagnostics
+          git push -f origin diagnostics-tmp:diagnostics
