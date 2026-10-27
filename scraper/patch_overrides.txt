@@ -14,3 +14,5 @@
 #
 # These always win over what the tool works out. After editing, run the
 # "Refresh Dashboard" workflow on GitHub to see the change.
+Tom Clarke | | Science and technology editor, Sky News
+Dan Cairns | | News reporter, Sky News

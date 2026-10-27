@@ -724,6 +724,9 @@ def _merge_into(conn, keep_id, drop_id):
     conn.execute("DELETE FROM journalist_profiles WHERE name_normalised = ?", (drop_norm,))
 
 
+CLASHES = set()
+
+
 def load_known_staff():
     """known_staff.txt lines: Full Name | Outlet | Job title | Patch (optional)"""
     out = {}
@@ -736,11 +739,18 @@ def load_known_staff():
         parts = [p.strip() for p in line.split("|")] + ["", "", ""]
         if not parts[0] or not parts[1]:
             continue
-        out[scrape._normalise_name(parts[0])] = {
-            "name": parts[0], "outlet": parts[1],
-            "job": parts[2] or None, "patch": parts[3] or None,
-        }
-    return out
+        norm = scrape._normalise_name(parts[0])
+        entry = {"name": parts[0], "outlet": parts[1], "job": parts[2] or None, "patch": parts[3] or None}
+        if norm in out and out[norm] and out[norm]["outlet"] != entry["outlet"]:
+            # Same name listed at two outlets: two different people. The finder
+            # can only hold one per name, so leave both alone rather than guess.
+            CLASHES.add(f"{parts[0]} ({out[norm]['outlet']} / {entry['outlet']})")
+            out[norm] = None
+            continue
+        if norm in out and out[norm] is None:
+            continue
+        out[norm] = entry
+    return {k: v for k, v in out.items() if v}
 
 
 def apply_known_staff(conn):
@@ -805,6 +815,8 @@ def apply_known_staff(conn):
             if _same_person_name(r["name_normalised"], norm):
                 _merge_into(conn, keep["id"], r["id"])
                 merged += 1
+    if CLASHES:
+        print(f"  Same name at two outlets, left alone: {', '.join(sorted(CLASHES))}", flush=True)
     print(f"Known staff: {len(staff)} listed, {added} added, {renamed + merged} merged with a short/full-name twin, "
           f"{moved} moved to their listed outlet"
           + (f", {len(clashes)} not moved (recent stories elsewhere, maybe a namesake): {', '.join(clashes)}"

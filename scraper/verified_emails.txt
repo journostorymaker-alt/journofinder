@@ -40,3 +40,4 @@ Steve Bird | The Telegraph | steve.bird@telegraph.co.uk
 Steven Morris | The Guardian | steven.morris@theguardian.com
 Daisy Graham-Brown | Daily Mail | daisy.graham-brown@dailymail.co.uk
 Adam Vaughan | The Times | adam.vaughan@thetimes.co.uk
+Hannah Evans | The Sunday Times | hannah.evans@sunday-times.co.uk
