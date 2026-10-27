@@ -44,7 +44,7 @@ OUTLETS = [
     # NATIONAL BROADCAST
     # =========================================================================
     {"name": "BBC News", "domain": "bbc.co.uk", "tier": "broadcast", "region": "UK", "group": "BBC", "email_pattern": "{first}.{last}@bbc.co.uk|{first}.{last}@bbc.com", "team_urls": [], "rss": ["http://feeds.bbci.co.uk/news/rss.xml"]},
-    {"name": "ITV News (National)", "domain": "itv.com", "tier": "broadcast", "region": "UK", "group": "ITV", "email_pattern": "{first}.{last}@itv.com|{first}.{last}@itn.co.uk", "team_urls": ["https://www.itv.com/news/meet-the-team"], "rss": []},
+    {"name": "ITV News (National)", "domain": "itv.com", "tier": "broadcast", "region": "UK", "group": "ITV", "email_pattern": "{first}.{last}@itn.co.uk", "team_urls": ["https://www.itv.com/news/meet-the-team"], "rss": []},
     {"name": "ITV News London", "domain": "itv.com", "tier": "broadcast", "region": "London", "group": "ITV", "email_pattern": "{first}.{last}@itv.com", "team_urls": [], "rss": []},
     {"name": "ITV News Granada", "domain": "itv.com", "tier": "broadcast", "region": "North West", "group": "ITV", "email_pattern": "{first}.{last}@itv.com", "team_urls": [], "rss": []},
     {"name": "ITV News Tyne Tees", "domain": "itv.com", "tier": "broadcast", "region": "North East", "group": "ITV", "email_pattern": "{first}.{last}@itv.com", "team_urls": [], "rss": []},
