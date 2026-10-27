@@ -1,0 +1,159 @@
+======================================================================
+The Independent  (independent.co.uk)
+  feed https://www.independent.co.uk/news/uk/rss -> 200, 84893 bytes, 74 links
+  feed https://independent.co.uk/sitemap_news.xml -> 404, 117078 bytes, 2 links, redirected to https://www.independent.co.uk/sitemap_news.xml
+  feed https://independent.co.uk/news-sitemap.xml -> 404, 117078 bytes, 2 links, redirected to https://www.independent.co.uk/news-sitemap.xml
+  feed https://independent.co.uk/sitemap.xml -> 200, 2011535 bytes, 11699 links, redirected to https://www.independent.co.uk/sitemap.xml
+  article https://www.independent.co.uk/news/uk/rss
+    robots allows: True; -> 200, 83445 bytes
+    scraper's byline reader finds: []
+    (no byline clues found)
+  article https://www.independent.co.uk/news/uk/home-news/halloween-pumpkins-rats-carving-weather-b3074295.html
+    robots allows: True; -> 200, 235308 bytes
+    scraper's byline reader finds: ['Mike Taylor']
+    ld+json author: {"@type":"Person","name":"Mike Taylor","url":"https://www.independent.co.uk/author/mike-taylor-0"}
+    meta article:author_name: Mike Taylor
+======================================================================
+The Mirror  (mirror.co.uk)
+  feed https://www.mirror.co.uk/news/?service=rss -> 200, 34364 bytes, 25 links
+  feed https://mirror.co.uk/sitemap_news.xml -> 404, 766292 bytes, 17 links, redirected to https://www.mirror.co.uk/sitemap_news.xml
+  feed https://mirror.co.uk/news-sitemap.xml -> 404, 766292 bytes, 17 links, redirected to https://www.mirror.co.uk/news-sitemap.xml
+  feed https://mirror.co.uk/sitemap.xml -> 404, 766292 bytes, 17 links, redirected to https://www.mirror.co.uk/sitemap.xml
+  article https://www.mirror.co.uk/money/budget-predictions-2026-burnham-tax-37815559
+    robots allows: True; -> 200, 665090 bytes
+    scraper's byline reader finds: ['Dave Burke', 'Alexander Brown']
+    meta author: Dave Burke
+    meta author: Alexander Brown
+    meta article:author: https://www.mirror.co.uk/authors/dave-burke/
+    meta article:author: https://www.mirror.co.uk/authors/alexander-brown/
+    html <div class=Byline_byline-container__K_Owl>: Add to preferred sources Comments Money Dave Burke Political Correspondent and Alexander Brown Assistant Political Edito
+    html <span class=Byline_byline-content-wrapper__Imque>: Money Dave Burke Political Correspondent and Alexander Brown Assistant Political Editor 15:45, 27 Oct 2026
+    html <div class=Byline_author-badge-date-wrapper__Q7jj1>: Money Dave Burke Political Correspondent and Alexander Brown Assistant Political Editor 15:45, 27 Oct 2026
+    html <div class=Byline_author-and-badge-wrapper__2dsv1>: Money Dave Burke Political Correspondent and Alexander Brown Assistant Political Editor
+    html <div class=Authors_authors-container__wVWas>: Dave Burke Political Correspondent and Alexander Brown Assistant Political Editor
+    html <a class=AuthorLink_author-link__rg5qj>: Dave Burke
+  article https://www.mirror.co.uk/news/world-news/killer-cannibal-death-penalty-uganda-37815113
+    robots allows: True; -> 200, 600142 bytes
+    scraper's byline reader finds: ['Liam Doyle']
+    meta author: Liam Doyle
+    meta article:author: https://www.mirror.co.uk/authors/liam-doyle/
+    html <div class=Byline_byline-container__K_Owl>: Add to preferred sources News Liam Doyle 15:17, 27 Oct 2026
+    html <span class=Byline_byline-content-wrapper__Imque>: News Liam Doyle 15:17, 27 Oct 2026
+    html <div class=Byline_author-badge-date-wrapper__Q7jj1>: News Liam Doyle 15:17, 27 Oct 2026
+    html <div class=Byline_author-and-badge-wrapper__2dsv1>: News Liam Doyle
+    html <div class=Authors_authors-container__wVWas>: Liam Doyle
+    html <a class=AuthorLink_author-link__rg5qj>: Liam Doyle
+======================================================================
+Metro  (metro.co.uk)
+  feed https://metro.co.uk/feed/ -> 200, 338747 bytes, 21 links
+  feed https://metro.co.uk/sitemap_news.xml -> 404, 121132 bytes, 4 links
+  feed https://metro.co.uk/news-sitemap.xml -> 200, 137245 bytes, 190 links
+  feed https://metro.co.uk/sitemap.xml -> 200, 1311 bytes, 0 links
+  article https://metro.co.uk/2026/10/27/monty-python-legend-eric-idle-83-cancels-tour-when-doctors-talk-must-listen-29743962/
+    robots allows: True; -> 200, 310715 bytes
+    scraper's byline reader finds: ['Brooke Ivey Johnson']
+    ld+json author: {"@type":"Person","name":"Brooke Ivey Johnson","url":"https:\/\/metro.co.uk\/author\/brooke-johnson\/"}
+    html <a class=author-avatar>: 
+    html <a class=author-name>: Brooke Ivey Johnson
+    html <span class=article-card__author>: By Emily Bashforth
+    html <span class=article-card__author>: By Caroline Westbrook
+    html <span class=article-card__author>: By Tori Brazier
+    html <span class=article-card__author>: By Danni Scott
+    html <span class=article-card__author>: By Rebecca Cook
+    html <span class=article-card__author>: By Joel Harley
+    inline json: brooke ivey johnson
+  article https://metro.co.uk/2026/10/27/daft-punk-return-lego-form-new-set-surprising-events-teased-29743860/
+    robots allows: True; -> 200, 307152 bytes
+    scraper's byline reader finds: []
+    ld+json author: {"@type":"Person","name":"GameCentral","url":"https:\/\/metro.co.uk\/author\/gamecentral-ukmetro\/"}
+    html <a class=author-avatar>: 
+    html <a class=author-name>: GameCentral
+    html <span class=article-card__author>: By Emily Bashforth
+    html <span class=article-card__author>: By Adam Starkey
+    html <span class=article-card__author>: By Adam Starkey
+    html <span class=article-card__author>: By Michael Beckwith
+    html <span class=article-card__author>: By Michael Beckwith
+    html <span class=article-card__author>: By Myles Goode
+    inline json: gamecentral
+======================================================================
+The i Paper  (inews.co.uk)
+  feed https://inews.co.uk/feed -> 200, 123344 bytes, 10 links
+  feed https://inews.co.uk/sitemap_news.xml -> 404, 196693 bytes, 8 links
+  feed https://inews.co.uk/news-sitemap.xml -> 404, 196693 bytes, 8 links
+  feed https://inews.co.uk/sitemap.xml -> 200, 351617 bytes, 0 links
+  article https://inews.co.uk/news/migrant-rescue-patrol-harrowing-reality-people-smuggling-4823980
+    robots allows: True; -> 200, 462007 bytes
+    scraper's byline reader finds: ['Molly Blackall']
+    ld+json author: {"name":"Molly Blackall","@id":"https:\/\/inews.co.uk\/#\/schema\/person\/image\/fda6d28c9b2cbda79d45c55287ff533d","url":"https:\/\/inews.co.uk\/author\/molly-blackall"}
+    ld+json author: [{"@type":"Person","name":"Molly Blackall"}]
+    meta author: Molly Blackall
+    html <div class=inews__post-byline inews__post-byline--primary inews__post-b>: Molly Blackall Global Affairs Correspondent
+    html <div class=inews__post-byline__avatar>: 
+    html <div class=inews__post-byline__author-description>: Molly Blackall Global Affairs Correspondent
+    html <span class=inews__post-byline__author-name>: Molly Blackall
+    html <span class=inews__post-byline__author-job-title>: Global Affairs Correspondent
+    html <div class=wp-block-group inews--shorts-card--byline is-content-justifi>: Dr Mark Galeotti Historian and lecturer specialising in Russian crime and security affairs
+    html <figure class=wp-block-image size-large inews--shorts-card--byline_image>: 
+  article https://inews.co.uk/news/town-spending-money-social-care-face-tax-rises-4848808
+    robots allows: True; -> 200, 449995 bytes
+    scraper's byline reader finds: ['Alannah Francis']
+    ld+json author: {"name":"Alannah Francis","@id":"https:\/\/inews.co.uk\/#\/schema\/person\/image\/df3504bc324f32a8f99e758160667680","url":"https:\/\/inews.co.uk\/author\/alannah-francis"}
+    ld+json author: [{"@type":"Person","name":"Alannah Francis"}]
+    meta author: Alannah Francis
+    html <div class=inews__post-byline inews__post-byline--primary inews__post-b>: Alannah Francis Senior Reporter
+    html <div class=inews__post-byline__avatar>: 
+    html <div class=inews__post-byline__author-description>: Alannah Francis Senior Reporter
+    html <span class=inews__post-byline__author-name>: Alannah Francis
+    html <span class=inews__post-byline__author-job-title>: Senior Reporter
+    html <div class=wp-block-group inews--shorts-card--byline is-content-justifi>: Dr Mark Galeotti Historian and lecturer specialising in Russian crime and security affairs
+    html <figure class=wp-block-image size-large inews--shorts-card--byline_image>: 
+======================================================================
+The Sun  (thesun.co.uk)
+  feed https://www.thesun.co.uk/feed/ -> 200, 96175 bytes, 30 links
+  feed https://thesun.co.uk/sitemap_news.xml -> 404, 352254 bytes, 49 links
+  feed https://thesun.co.uk/news-sitemap.xml -> 200, 354131 bytes, 672 links
+  feed https://thesun.co.uk/sitemap.xml -> 200, 434575 bytes, 0 links
+  article https://www.thesun.co.uk/sport/40825537/harry-kane-beats-yamal-ballon-dor-dazn-tv-reaction/
+    robots allows: False; -> 200, 616762 bytes
+    scraper's byline reader finds: ['Tony Robertson']
+    ld+json author: [{"@type":"Person","name":"Tony Robertson","sameAs":"https:\/\/www.thesun.co.uk\/author\/tony-robertson\/","jobTitle":"Digital Sports Reporter","authorDesk":"Sport"}]
+    meta article:author: 161385360554578
+    html <div class=byline meta meta--byline>: Tony Robertson , Digital Sports Reporter
+    html <div class=byline__author>: Tony Robertson , Digital Sports Reporter
+    html <div class=date meta meta--byline date--updated>: Published: 15:54, 27 Oct 2026 | Updated: 15:55, 27 Oct 2026
+  article https://www.thesun.co.uk/sport/40822091/jeremy-doku-james-hill-fantasy-football-deep-dive/
+    robots allows: False; -> 200, 700809 bytes
+    scraper's byline reader finds: ['Nick Elliott']
+    ld+json author: [{"@type":"Person","name":"Nick Elliott","sameAs":"https:\/\/www.thesun.co.uk\/author\/nelliott\/","authorDesk":"Betting & Gaming"}]
+    meta article:author: 161385360554578
+    html <div class=byline meta meta--byline>: Nick Elliott
+    html <div class=byline__author>: Nick Elliott
+    html <div class=date meta meta--byline>: Published: 15:50, 27 Oct 2026
+======================================================================
+Farmers Weekly  (fwi.co.uk)
+  feed https://fwi.co.uk/sitemap_news.xml -> 404, 101373 bytes, 3 links, redirected to https://www.fwi.co.uk/sitemap_news.xml
+  feed https://fwi.co.uk/news-sitemap.xml -> 404, 109746 bytes, 3 links, redirected to https://www.fwi.co.uk/news-sitemap.xml
+  feed https://fwi.co.uk/sitemap.xml -> 200, 21273 bytes, 0 links, redirected to https://www.fwi.co.uk/sitemap_index.xml
+  homepage -> 200, 412582 bytes
+  article https://fwi.co.uk/news/farm-policy
+    robots allows: True; -> 200, 147471 bytes
+    scraper's byline reader finds: []
+    html <div class=arrowlist-card advert-author pm-card business-card>: BUSINESS Defra: Information on funding in 2020 and beyond On Friday 31 January, the UK left the EU and embarked on a tra
+    html <div class=author_image>: 
+    html <div class=card-info author_info>: BUSINESS Defra: Information on funding in 2020 and beyond On Friday 31 January, the UK left the EU and embarked on a tra
+  article https://fwi.co.uk/news/farm-policy/government-signals-end-to-co2-stunning-of-pigs?fw_source=home_latestnews
+    robots allows: True; -> 200, 335386 bytes
+    scraper's byline reader finds: ['Anne Dunn']
+    ld+json author: {"@id":"https://www.fwi.co.uk/#/schema/person/9491642075b75eb2f660d636b85638cb"}
+    meta gwa_author: anne dunn
+    html <div class=author-meta>: Anne Dunn 26 October 2026 https://www.fwi.co.uk
+    html <span class=author-name>: Anne Dunn
+    html <div class=author-meta>: Anne Dunn 26 October 2026
+    html <span class=author-name>: Anne Dunn
+=== Real scraper test (scratch copy, nothing saved) ===
+The Independent: ok, 39 bylines. Sample: ['Mike Taylor', 'Bryony Gooch', 'Athena Stavrou', 'Harriette Boucher', 'David Lynch', 'Alex Sebastian', 'Jill Lawless', 'Tom Wilkinson', 'Sophie Robinson', 'Alex Ross', 'Amy-Clare Martin', 'Tony Jones']
+The Mirror: ok, 26 bylines. Sample: ['Anders Anglesey', 'Dave Burke', 'Alexander Brown', 'Liam Doyle', 'Bradley Jolly', 'Ashley Cowburn', 'Charlotte Smith', 'Joe Smith', 'Dan Warburton', 'Berk Uyal', 'Ethan Evans', 'Jeremy Armstrong']
+Metro: ok, 20 bylines. Sample: ['Brooke Ivey Johnson', 'Caroline Westbrook', 'Courtney Pochin', 'Noora Mykkanen', 'Alana Anderson', 'Milo Pope', 'John Dunne', 'Sarah Hooper', 'Danni Scott', 'Tori Brazier', 'Steve Charnock', 'Phil Haigh']
+The i Paper: ok, 10 bylines. Sample: ['Molly Blackall', 'Alannah Francis', 'Adam James Pollock', 'Joe Palmer', 'Ella Whelan', 'Sarah Carson', 'Pete Hall', 'Emily Braeger', 'Kieron Monks', 'Catherine Renton']
+The Sun: no_bylines, 0 bylines. Sample: []
+Farmers Weekly: ok, 11 bylines. Sample: ['James Andrews', 'Anne Dunn', 'Crop Watch agronomists', 'Richard Allison', 'Rhian Price', 'Piers Welkin', 'Peter Hill', 'Adam Clarke', 'Louise Impey']
