@@ -14,7 +14,7 @@ Steps, cheapest first:
                  links to their professional social profiles.
   3. Bluesky   - searches Bluesky's public profile search by name and keeps
                  the bio only when it clearly matches (same name, and the bio
-                 names their outlet or says they are a journalist).
+                 names their outlet).
   4. Web       - OPTIONAL. Only runs if a BRAVE_API_KEY is set. Searches
                  "Name" "Outlet" and reads the result snippets (LinkedIn
                  and Muck Rack headlines show up there). We never fetch
@@ -515,8 +515,8 @@ def enrich_bluesky(conn, person):
         if any(t in desc for t in terms):
             best = a
             break
-    if not best and len(same_name) == 1 and JOURNO_WORDS.search(same_name[0].get("description") or ""):
-        best = same_name[0]
+    # We only accept a Bluesky bio that names their outlet. A bio that just
+    # says "journalist" is often a side job or a different person.
     bio = job = url = None
     social = {}
     if best:
