@@ -585,7 +585,8 @@ def read_search_result(res, person):
         job = None
         if len(parts) >= 3 and JOURNO_WORDS.search(parts[1]):
             job = parts[1]
-        bio = re.split(r"As seen in:", desc)[0].strip(" .") if desc else None
+        bio = re.split(r"As seen in:", desc)[0] if desc else None
+        bio = re.sub(r"^.*?Learn more about Muck Rack\W*", "", bio or "").strip(" .") or None
         bio = bio if bio and JOURNO_WORDS.search(bio) else None
         return (3, short_bio(bio), job, url) if (job or bio) else None
 
