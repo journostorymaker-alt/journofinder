@@ -527,6 +527,8 @@ tbody td {
 .soc-links a:hover { color:var(--navy); }
 .patch-list { max-height: 15rem; overflow-y: auto; }
 #outletSearch { margin-bottom: 0.4rem; }
+.alt-email { font-size: 0.72rem; color: var(--txl); margin-top: 0.1rem; }
+.alt-email a { color: var(--txm); }
 .show-more { display: flex; align-items: center; gap: 1rem; padding: 1rem; font-size: 0.82rem; color: var(--txm); flex-wrap: wrap; }
 .found-pill { background: var(--grey); color: var(--txm); text-decoration: none; margin-left: 0.25rem; }
 .found-pill:hover { color: var(--navy); }
@@ -1084,6 +1086,7 @@ function loadData() {
       (SELECT email FROM journalist_emails WHERE journalist_id = j.id AND is_primary = 1 LIMIT 1) as primary_email,
       (SELECT confidence FROM journalist_emails WHERE journalist_id = j.id AND is_primary = 1 LIMIT 1) as primary_confidence,
       (SELECT GROUP_CONCAT(email || '|' || confidence, ';;') FROM journalist_emails WHERE journalist_id = j.id) as all_emails,
+      (SELECT email FROM journalist_emails WHERE journalist_id = j.id AND source LIKE 'name_variant%' LIMIT 1) as alt_email,
       j.days_since_last_byline,
       (SELECT name FROM outlets WHERE id = j.moved_from_outlet_id) as moved_from_outlet,
       (SELECT GROUP_CONCAT(specialism, ',') FROM journalist_specialisms WHERE journalist_id = j.id ORDER BY score DESC) as specialisms,
@@ -1543,7 +1546,7 @@ function renderJournalists(data, container) {
       const _ve_cellCls = _ve_status === 'verified' ? 'email-verified' : (_ve_status === 'bounced' ? 'email-bounced' : '');
       const _ve_label = _ve_status === 'verified' ? '<span class="email-status-label">✓ verified</span>' : (_ve_status === 'bounced' ? '<span class="email-status-label">✗ bounced</span>' : '');
       const _ve_buttons = `<span class="verify-btns"><button class="verify-btn btn-verify" data-vr-action="verify" data-vr-name="${esc(j.full_name)}" data-vr-outlet="${esc(j.outlet_name)}" data-vr-email="${esc(j.primary_email)}" title="Mark this email as verified working">✓</button><button class="verify-btn btn-bounce" data-vr-action="bounce" data-vr-name="${esc(j.full_name)}" data-vr-outlet="${esc(j.outlet_name)}" data-vr-email="${esc(j.primary_email)}" title="Mark this email as bounced/wrong">✗</button></span>`;
-      html += `<td class="cell-email ${_ve_cellCls}"><div><a href="mailto:${esc(j.primary_email)}" title="${esc(j.primary_email)}">${esc(j.primary_email)}</a> <span class="pill conf-pill conf-${j.primary_confidence}">${esc((j.primary_confidence || '').replace('_', ' '))}</span>${_ve_label}</div>${_ve_buttons}</td>`;
+      html += `<td class="cell-email ${_ve_cellCls}"><div><a href="mailto:${esc(j.primary_email)}" title="${esc(j.primary_email)}">${esc(j.primary_email)}</a> <span class="pill conf-pill conf-${j.primary_confidence}">${esc((j.primary_confidence || '').replace('_', ' '))}</span>${_ve_label}</div>${j.alt_email && _ve_status !== 'verified' ? `<div class="alt-email" title="Same person under the other form of their first name. Try this if the first one bounces.">or <a href="mailto:${esc(j.alt_email)}">${esc(j.alt_email)}</a></div>` : ''}${_ve_buttons}</td>`;
     } else {
       html += `<td class="cell-email" style="color:var(--txl)">—</td>`;
     }

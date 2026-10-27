@@ -37,6 +37,7 @@ the classification logic without re-scraping.
 from collections import Counter, defaultdict
 from pathlib import Path
 from db import get_conn
+from names import other_forms
 
 
 # Load excluded names — guest contributors who aren't journalists
@@ -491,6 +492,18 @@ def consolidate():
                             (journalist_id, email, confidence, source, is_primary)
                         VALUES (?, ?, ?, ?, ?)
                     """, (jid, email, conf, source, 1 if i == 0 else 0))
+                # Andy Davies may well be andrew.davies@ (and the reverse).
+                # Keep the other form as a backup, never as the main guess.
+                for other in other_forms(j["first_name"]):
+                    pats = [p for p in (outlet["email_pattern"] or "").split("|") if "{" in p]
+                    if pats:
+                        alt = _format_pattern(pats[0].strip(), other, j["last_name"])
+                        if alt:
+                            conn.execute("""
+                                INSERT OR IGNORE INTO journalist_emails
+                                    (journalist_id, email, confidence, source, is_primary)
+                                VALUES (?, ?, 'pattern_med', ?, 0)
+                            """, (jid, alt, f"name_variant:{other}"))
         
         # ===== STEP 1.5: Apply verified emails from verified_emails.txt =====
         # These are emails the user has confirmed work (e.g., from sent

@@ -696,21 +696,7 @@ def load_search_first():
 
 KNOWN_STAFF_FILE = Path(__file__).parent / "known_staff.txt"
 
-# Short and full forms of first names. Lists like the Parliament register use
-# the full form ("Timothy Baker") while outlets use the short one ("Tim Baker").
-NICKNAMES = {
-    "tom": "thomas", "tim": "timothy", "ben": "benjamin", "sam": "samuel",
-    "dan": "daniel", "nick": "nicholas", "rob": "robert", "bob": "robert",
-    "alex": "alexander", "ali": "alison", "liz": "elizabeth", "beth": "elizabeth",
-    "jim": "james", "jamie": "james", "mike": "michael", "chris": "christopher",
-    "will": "william", "bill": "william", "ed": "edward", "ted": "edward",
-    "fred": "frederick", "harry": "henry", "jon": "jonathan", "jo": "joanna",
-    "kate": "katherine", "katie": "katherine", "becky": "rebecca", "andy": "andrew",
-    "matt": "matthew", "pete": "peter", "steve": "stephen", "tony": "anthony",
-    "rich": "richard", "dick": "richard", "jen": "jennifer", "abi": "abigail",
-    "nat": "natalie", "charlie": "charles", "greg": "gregory", "dave": "david",
-    "phil": "philip", "joe": "joseph", "josh": "joshua", "zach": "zachary",
-}
+from names import NICKNAMES  # noqa: E402
 
 
 def _same_person_name(a, b):
