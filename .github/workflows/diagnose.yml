@@ -28,6 +28,12 @@ jobs:
         working-directory: scraper
         env:
           OUTLETS: ${{ github.event.inputs.outlets }}
+          RAW: '1'
+          EXTRA_FEEDS: >-
+            https://www.fwi.co.uk/feed https://www.fwi.co.uk/news/feed
+            https://www.mirror.co.uk/news/rss.xml https://www.mirror.co.uk/rss.xml
+            https://metro.co.uk/news/feed/ https://inews.co.uk/news/feed
+            https://www.thesun.co.uk/news/feed/ https://www.independent.co.uk/rss
         run: |
           IFS=',' read -ra NAMES <<< "$OUTLETS"
           ARGS=()

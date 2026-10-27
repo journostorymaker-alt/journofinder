@@ -25,6 +25,8 @@ from outlets import OUTLETS  # noqa: E402
 from db import get_conn  # noqa: E402
 
 REPORT = Path(__file__).parent.parent / "diagnostics.txt"
+import os
+RAW = os.environ.get("RAW") == "1"
 
 
 def get(url):
@@ -68,13 +70,16 @@ def diagnose(outlet, out):
     rp, _ = scrape._get_robots(outlet["domain"].split("/")[0])
     feeds = list(outlet.get("rss") or [])
     base = "https://" + outlet["domain"].split("/")[0]
+    feeds += [x for x in os.environ.get("EXTRA_FEEDS", "").split() if outlet["domain"].split("/")[0].split(".")[-2] in x]
     feeds += [base + p for p in ("/sitemap_news.xml", "/news-sitemap.xml", "/sitemap.xml")]
     arts = []
-    for f in feeds[:4]:
+    for f in feeds[:6]:
         status, text, final = get(f)
         n = len(article_links_from_feed(text)) if isinstance(status, int) else 0
         out.append(f"  feed {f} -> {status}, {len(text)} bytes, {n} links"
                    + (f", redirected to {final}" if final != f else ""))
+        if RAW and isinstance(status, int) and text:
+            out.append("    first 500 chars: " + re.sub(r"\s+", " ", text[:500]))
         if status == 200 and n and not arts:
             arts = article_links_from_feed(text)[:12]
     if not arts:
@@ -95,6 +100,9 @@ def diagnose(outlet, out):
             out.append(f"    scraper's byline reader finds: {names}")
             for c in byline_clues(html)[:10]:
                 out.append(f"    {c}")
+            if RAW:
+                for m in list(re.finditer(r"author|byline|contributor", html, re.I))[:12]:
+                    out.append("    raw: ..." + re.sub(r"\s+", " ", html[max(0, m.start()-80):m.end()+160]) + "...")
             shown += 1
 
 
