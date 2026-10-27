@@ -24,9 +24,9 @@ on:
         required: false
         default: '240'
       web_queries:
-        description: 'Web searches this run (max 50, needs BRAVE_API_KEY secret). 0 = off.'
+        description: 'Web searches this run (max 100, and 900 a month). 0 = off.'
         required: false
-        default: '25'
+        default: '90'
 
 # Only one workflow writes the database at a time
 concurrency:
@@ -61,7 +61,7 @@ jobs:
           python enrich_profiles.py \
             --limit "${{ github.event.inputs.limit || '0' }}" \
             --minutes "${{ github.event.inputs.minutes || '240' }}" \
-            --web-queries "${{ github.event.inputs.web_queries || '25' }}"
+            --web-queries "${{ github.event.inputs.web_queries || '90' }}"
 
       - name: Copy database into dashboard folder
         run: |

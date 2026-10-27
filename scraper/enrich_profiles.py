@@ -62,10 +62,13 @@ OVERRIDES_FILE = Path(__file__).parent / "patch_overrides.txt"
 RECHECK_DAYS = 90            # re-read a journalist's bio every 3 months
 ACTIVE_DAYS = 180            # only spend web requests on people active recently
 BIO_MAX = 280
-# Hard ceiling on paid web searches per run, whatever the workflow asks for.
-# 25 a run, twice a week, is about 200 a month: well inside Brave's free
-# monthly credit (about 1,000 searches), so it should cost nothing.
-MAX_WEB_PER_RUN = 50
+# Paid web search limits. Brave's free monthly credit covers about 1,000
+# searches. The search step runs at most 10 times a month (Wednesdays and
+# Sundays), so 90 a run fits. The monthly cap is the real safety net: once
+# 900 searches have been logged this calendar month, no more run until the
+# 1st, however many runs or manual tests happen.
+MAX_WEB_PER_RUN = 100
+MAX_WEB_PER_MONTH = 900
 MIN_LOCATED_STORIES = 3      # need at least this many located stories
 MIN_LOCATED_NATIONAL = 5     # national reporters need more, as one-off trips are common
 STORY_PATCH_SHARE = 0.45     # top area must hold this share of located stories
@@ -808,7 +811,14 @@ def main():
         # Web search goes before Bluesky so a long Bluesky step can never
         # squeeze it out. It is only a handful of searches.
         key = os.environ.get("BRAVE_API_KEY")
-        n_web = min(args.web_queries, MAX_WEB_PER_RUN)
+        with get_conn() as conn:
+            used = conn.execute("""
+                SELECT COUNT(*) FROM scrape_log
+                WHERE url LIKE 'brave:%' AND scraped_at >= date('now', 'start of month')
+            """).fetchone()[0]
+        left = max(0, MAX_WEB_PER_MONTH - used)
+        n_web = min(args.web_queries, MAX_WEB_PER_RUN, left)
+        print(f"Web searches used this month: {used} of {MAX_WEB_PER_MONTH}. This run: {n_web}", flush=True)
         if key and n_web > 0:
             run_step("Web search", "web_checked_at", enrich_web, n_web,
                      time.time() + 15 * 60, key, gaps_first=True)
