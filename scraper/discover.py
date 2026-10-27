@@ -84,6 +84,23 @@ TARGETS = {
     "ENDS Report": (["ENDS Report", "ENDS"], 0),
 }
 
+# The outlet's X handle, as journalists write it in their bios. Outlets
+# listed here also get an X search.
+X_HANDLES = {
+    "ITV News (National)": "@itvnews",
+    "Sky News": "@SkyNews",
+    "Channel 4 News": "@Channel4News",
+    "Channel 5 News": "@5_News",
+    "LBC": "@LBC",
+    "The Times": "@thetimes",
+    "The Sunday Times": "@thesundaytimes",
+    "Financial Times": "@FT",
+    "The Sun": "@TheSun",
+    "Daily Mail": "@DailyMailUK",
+    "Farmers Weekly": "@FarmersWeekly",
+    "ENDS Report": "@ENDSreport",
+}
+
 # Extra words added to the search for global outlets, so we only find
 # their UK-based staff
 EXTRA_TERMS = {
@@ -119,10 +136,15 @@ def queries_for(outlet, phrases):
     main = phrases[0]
     extra = (" " + EXTRA_TERMS[outlet]) if outlet in EXTRA_TERMS else ""
     roles = "(reporter OR correspondent OR editor OR presenter OR journalist OR producer)"
-    return [
+    qs = [
         f'site:linkedin.com/in "{main}" {roles}{extra}',
         f'site:muckrack.com "{main}"{extra}',
     ]
+    if outlet in X_HANDLES:
+        # On-air correspondents often have no LinkedIn or Muck Rack profile,
+        # but nearly all have an X bio like "Health Editor @itvnews".
+        qs.append(f'site:x.com "{X_HANDLES[outlet]}" (correspondent OR editor OR presenter OR reporter){extra}')
+    return qs
 
 
 def parse_result(res, outlet, phrases):
@@ -152,6 +174,22 @@ def parse_result(res, outlet, phrases):
         first_outlet = re.split(r",| and ", job_line)[0]
         if not any(p.lower() in first_outlet.lower() for p in phrases):
             return None
+    elif host in ("x.com", "twitter.com") and u.path.count("/") == 1 and len(u.path) > 2:
+        # Title: "Jane Smith (@janesmith) / X"   Preview: their bio
+        name = re.sub(r"\s*\(@?\w+\).*$", "", title).strip()
+        name = re.sub(r"\s*(/|on)\s*X\s*$", "", name).strip()
+        bio = re.sub(r"\s+", " ", desc)
+        handle = X_HANDLES.get(outlet, "").lower()
+        # The bio must name the outlet (by handle or name) next to a job
+        if not (handle and handle in bio.lower()) and not any(p.lower() in bio.lower() for p in phrases):
+            return None
+        # Job line is the bio sentence that names the outlet
+        job_line = next((sent for sent in re.split(r"(?<=[.!?|•·])\s+|\s+[|•·]\s+", bio)
+                         if (handle and handle in sent.lower()) or any(p.lower() in sent.lower() for p in phrases)), "")
+        if handle and handle in job_line.lower():
+            # "@itvnews" counts as the outlet name for the checks below
+            job_line = re.sub(re.escape(handle), phrases[0], job_line, flags=re.I)
+        job_line = job_line[:120]
     else:
         return None
 
