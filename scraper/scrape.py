@@ -54,7 +54,10 @@ DEFAULT_HEADERS = {
     "User-Agent": USER_AGENT,
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
     "Accept-Language": "en-GB,en;q=0.9",
-    "Accept-Encoding": "gzip, deflate, br",
+    # No "br": several sites (Mirror, Metro, i, Sun) now answer in brotli
+    # when offered it, and requests can't unpack that without an extra
+    # library, so their feeds arrived as gibberish. gzip works everywhere.
+    "Accept-Encoding": "gzip, deflate",
     "Connection": "keep-alive",
     "Upgrade-Insecure-Requests": "1",
     "Sec-Fetch-Dest": "document",
@@ -440,10 +443,34 @@ def _strategy_rss(outlet_data, max_articles):
                         "url": entry["link"],
                         "title": entry.get("title", ""),
                         "date": entry.get("published", ""),
+                        "feed_authors": _feed_entry_authors(entry),
                     })
         except Exception:
             continue
     return article_urls
+
+
+def _feed_entry_authors(entry):
+    """Author names given in the feed itself (dc:creator, <author>, or an
+    /author/ link in the summary). Used when the article page hides the
+    byline from us, as The Independent's now does."""
+    names = []
+    for a in entry.get("authors") or []:
+        if isinstance(a, dict) and a.get("name"):
+            names.append(a["name"])
+    if not names and entry.get("author"):
+        names.append(entry["author"])
+    if not names:
+        summary = entry.get("summary", "") or ""
+        names += re.findall(r'href="[^"]*/(?:author|authors)/[^"]+"[^>]*>([^<]{3,60})</a>', summary)[:2]
+    out = []
+    for n in names:
+        for part in re.split(r"\s*(?:,|\band\b|&)\s*", n):
+            part = re.sub(r"^by\s+", "", part.strip(), flags=re.I)
+            part = re.sub(r"\s*\(.*?\)\s*$", "", part)
+            if "@" not in part and _looks_like_real_name(part):
+                out.append(part)
+    return out
 
 
 # =============================================================================
@@ -680,24 +707,22 @@ def scrape_outlet(outlet_row):
     article_urls = []
     strategy_used = "none"
     
-    article_urls = _strategy_rss(outlet_data, MAX_ARTICLES_PER_OUTLET)
-    if article_urls:
-        strategy_used = "rss"
-    
-    if not article_urls:
-        article_urls = _strategy_sitemap(outlet_data, MAX_ARTICLES_PER_OUTLET)
-        if article_urls:
-            strategy_used = "sitemap"
-    
-    if not article_urls:
-        article_urls = _strategy_authors(outlet_data, MAX_ARTICLES_PER_OUTLET)
-        if article_urls:
-            strategy_used = "authors"
-    
-    if not article_urls:
-        article_urls = _strategy_homepage(outlet_data, MAX_ARTICLES_PER_OUTLET)
-        if article_urls:
-            strategy_used = "homepage"
+    # Outlets can set their own strategy order and a pattern that real
+    # article links match (e.g. Farmers Weekly, whose sitemap is mostly
+    # landing pages but whose homepage links straight to stories).
+    strategies = {
+        "rss": _strategy_rss, "sitemap": _strategy_sitemap,
+        "authors": _strategy_authors, "homepage": _strategy_homepage,
+    }
+    order = outlet_data.get("strategies") or ["rss", "sitemap", "authors", "homepage"]
+    article_re = re.compile(outlet_data["article_regex"]) if outlet_data.get("article_regex") else None
+    for name in order:
+        found = strategies[name](outlet_data, MAX_ARTICLES_PER_OUTLET * (3 if article_re else 1))
+        if article_re:
+            found = [a for a in found if article_re.search(a["url"])]
+        if found:
+            article_urls, strategy_used = found, name
+            break
     
     seen_urls = set()
     deduped = []
@@ -713,6 +738,8 @@ def scrape_outlet(outlet_row):
         if not html:
             continue
         names = _extract_byline_from_article(html, art["url"])
+        if not names:
+            names = art.get("feed_authors") or []
         if not names:
             continue
         title = art.get("title") or ""

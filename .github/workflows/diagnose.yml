@@ -28,17 +28,37 @@ jobs:
         working-directory: scraper
         env:
           OUTLETS: ${{ github.event.inputs.outlets }}
-          RAW: '1'
-          EXTRA_FEEDS: >-
-            https://www.fwi.co.uk/feed https://www.fwi.co.uk/news/feed
-            https://www.mirror.co.uk/news/rss.xml https://www.mirror.co.uk/rss.xml
-            https://metro.co.uk/news/feed/ https://inews.co.uk/news/feed
-            https://www.thesun.co.uk/news/feed/ https://www.independent.co.uk/rss
+          RAW: '0'
         run: |
           IFS=',' read -ra NAMES <<< "$OUTLETS"
           ARGS=()
           for n in "${NAMES[@]}"; do n="$(echo "$n" | xargs)"; [ -n "$n" ] && ARGS+=("$n"); done
           python diagnose.py "${ARGS[@]}" || true
+          # Also run the real scraper on those outlets against a scratch copy
+          # of the database, and add what it finds to the report
+          cp ../data/journalists.db /tmp/scratch.db
+          python - "${ARGS[@]}" <<'PY' >> ../diagnostics.txt 2>&1 || true
+          import sys, db
+          from pathlib import Path
+          db.DB_PATH = Path("/tmp/scratch.db")
+          import scrape
+          scrape.get_conn = db.get_conn
+          print("\n=== Real scraper test (scratch copy, nothing saved) ===")
+          with db.get_conn() as c:
+              rows = [c.execute("SELECT * FROM outlets WHERE name = ?", (n,)).fetchone() for n in sys.argv[1:]]
+          for r in rows:
+              if r is None:
+                  continue
+              try:
+                  st, n = scrape.scrape_outlet(r)
+                  with db.get_conn() as c:
+                      names = [x[0] for x in c.execute(
+                          "SELECT DISTINCT j.full_name FROM bylines b JOIN journalists j ON j.id=b.journalist_id "
+                          "WHERE b.outlet_id=? AND b.seen_at >= datetime('now','-1 hour') LIMIT 12", (r["id"],))]
+                  print(f"{r['name']}: {st}, {n} bylines. Sample: {names}")
+              except Exception as e:
+                  print(f"{r['name']}: FAILED {e}")
+          PY
       - name: Save report to diagnostics branch
         run: |
           cp diagnostics.txt /tmp/diagnostics.txt || echo "no report written" > /tmp/diagnostics.txt

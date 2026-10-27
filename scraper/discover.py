@@ -71,6 +71,7 @@ TARGETS = {
     "The Sunday Times": (["The Sunday Times", "Sunday Times"], 0),
     "Financial Times": (["Financial Times"], 1),
     "The Sun": (["The Sun"], 0),
+    "Daily Mail": (["Daily Mail", "MailOnline", "Mail on Sunday"], 1),
     "Reuters UK": (["Reuters"], 0),   # searches add "London", see EXTRA_TERMS
     # Trade and specialist titles that matter for GBF
     "Farmers Weekly": (["Farmers Weekly"], 0),
@@ -87,6 +88,7 @@ EXTRA_TERMS = {
 NOT_THIS_OUTLET = {
     "The Sun": re.compile(r"Sun(day)? (Post|Herald|Mail|Express|Mirror|Times)|Morning Star", re.I),
     "The Times": re.compile(r"(Sunday|Financial|Glasgow|Hereford|Wiltshire|Irish|New York|Los Angeles|Byline|Shetland|Eastern Daily|Daily) Times|Times Higher|Times Educational|TES\b|Times Radio", re.I),
+    "Daily Mail": re.compile(r"Hull Daily Mail|Daily Mail (and|&) General Trust|Mail Metro Media", re.I),
     "ITV News (National)": re.compile(r"ITV (News )?(London|Granada|Tyne Tees|Calendar|Anglia|Central|Meridian|West Country|Border|Wales|Cymru)|ITV Studios|ITV Sport|ITVX", re.I),
 }
 

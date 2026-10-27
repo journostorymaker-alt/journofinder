@@ -264,7 +264,7 @@ OUTLETS = [
     # =========================================================================
     {"name": "ENDS Report", "domain": "endsreport.com", "tier": "specialist", "region": "UK", "group": "Haymarket", "email_pattern": "{first}.{last}@haymarket.com", "team_urls": [], "rss": []},
     {"name": "Resource (waste/recycling)", "domain": "resource.co", "tier": "specialist", "region": "UK", "group": "Resource", "email_pattern": "{first}@resource.co", "team_urls": [], "rss": []},
-    {"name": "Farmers Weekly", "domain": "fwi.co.uk", "tier": "specialist", "region": "UK", "group": "Mark Allen Group", "email_pattern": "{first}.{last}@markallengroup.com|{first}.{last}@rbi.co.uk", "team_urls": [], "rss": []},
+    {"name": "Farmers Weekly", "domain": "fwi.co.uk", "tier": "specialist", "region": "UK", "group": "Mark Allen Group", "email_pattern": "{first}.{last}@markallengroup.com|{first}.{last}@rbi.co.uk", "team_urls": [], "rss": [], "strategies": ["homepage", "sitemap"], "article_regex": r"fwi\.co\.uk/[a-z-]+/[a-z0-9-]+/[a-z0-9-]{15,}"},
     {"name": "The Grocer", "domain": "thegrocer.co.uk", "tier": "specialist", "region": "UK", "group": "William Reed", "email_pattern": "{first}.{last}@thegrocer.co.uk|{first}.{last}@william-reed.com", "team_urls": [], "rss": []},
     {"name": "Fish Farmer Magazine", "domain": "fishfarmermagazine.com", "tier": "specialist", "region": "UK", "group": "Special Publications", "email_pattern": "editor@fishfarmer-magazine.com", "team_urls": [], "rss": []},
     {"name": "DeSmog UK", "domain": "desmog.com", "tier": "specialist", "region": "UK", "group": "DeSmog", "email_pattern": "{first}@desmog.com", "team_urls": ["https://www.desmog.com/team/"], "rss": ["https://www.desmog.com/feed/"]},
