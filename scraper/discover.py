@@ -127,7 +127,7 @@ def search(api_key, q, offset=0):
     with get_conn() as conn:
         conn.execute("INSERT INTO scrape_log (outlet_id, url, status, bylines_found, notes) "
                      "VALUES (NULL, ?, ?, ?, ?)",
-                     (f"brave-discover:{q}"[:300], f"http_{r.status_code}", len(results), note))
+                     (f"brave-discover:{q}#p{offset}"[:300], f"http_{r.status_code}", len(results), note))
     time.sleep(1.1)
     return results
 
@@ -293,9 +293,24 @@ def main():
         print("No BRAVE_API_KEY set. Nothing searched.")
         return
 
+    # Never repeat a search run in the last 60 days: it would just return
+    # the same people and waste free searches.
+    with get_conn() as conn:
+        done = {r[0] for r in conn.execute(
+            "SELECT url FROM scrape_log WHERE url LIKE 'brave-discover:%' "
+            "AND scraped_at >= datetime('now', '-60 days')")}
+    def already(q, page):
+        key = f"brave-discover:{q}"[:300]
+        return f"{key}#p{page}"[:300] in done or key in done
+    skipped = [p for p in plan if already(p[1], p[2])]
+    plan = [p for p in plan if not already(p[1], p[2])]
+    if skipped:
+        print(f"Skipping {len(skipped)} searches already run in the last 60 days")
     # Spread the budget so every outlet gets its first page before any
     # outlet gets a second page.
     plan.sort(key=lambda p: p[2])
+    budget = min(budget, len(plan))
+    print(f"Running {budget} new searches")
     totals = {}
     for outlet, q, page in plan[:budget]:
         results = search(key, q, offset=page)
