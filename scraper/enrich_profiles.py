@@ -670,6 +670,21 @@ def save_bio(conn, name_norm, bio, job, source, bio_url, author_url, social, che
     """, (bio, job, source, bio_url, p, pr, name_norm))
 
 
+SEARCH_FIRST_FILE = Path(__file__).parent / "search_first.txt"
+
+
+def load_search_first():
+    """Names to web-search before anyone else, one per line."""
+    if not SEARCH_FIRST_FILE.exists():
+        return set()
+    names = set()
+    for line in SEARCH_FIRST_FILE.read_text(encoding="utf-8").splitlines():
+        line = line.split("|")[0].strip()
+        if line and not line.startswith("#"):
+            names.add(scrape._normalise_name(line))
+    return names
+
+
 def load_overrides():
     """patch_overrides.txt lines: Full Name | Patch | Job title (optional) | note"""
     out = {}
@@ -733,6 +748,22 @@ def queue(conn, check_col, limit, gaps_first=False):
     already been tried, and those still with no bio or job title come first,
     so the free searches go where they help most."""
     if gaps_first:
+        # 1. Names in search_first.txt (hand-picked, searched straight away)
+        picked = []
+        wanted = load_search_first()
+        if wanted:
+            for r in conn.execute(f"""
+                SELECT j.id, j.full_name, j.name_normalised, o.name AS outlet_name, o.domain
+                FROM journalists j JOIN outlets o ON o.id = j.primary_outlet_id
+                LEFT JOIN journalist_profiles p ON p.name_normalised = j.name_normalised
+                WHERE p.{check_col} IS NULL OR p.{check_col} < datetime('now', ?)
+            """, (f"-{RECHECK_DAYS} days",)).fetchall():
+                if r["name_normalised"] in wanted:
+                    picked.append(r)
+        # 2. Everyone else, least sure first:
+        #    no patch > low-confidence patch > medium > high,
+        #    and within that people with no bio or job title first,
+        #    then the busiest and most recently active.
         rows = conn.execute(f"""
             SELECT j.id, j.full_name, j.name_normalised, o.name AS outlet_name, o.domain
             FROM journalists j
@@ -741,11 +772,20 @@ def queue(conn, check_col, limit, gaps_first=False):
             WHERE COALESCE(j.days_since_last_byline, 0) <= ?
               AND p.author_checked_at IS NOT NULL
               AND (p.{check_col} IS NULL OR p.{check_col} < datetime('now', ?))
-            ORDER BY (p.bio IS NOT NULL OR p.job_title IS NOT NULL),
-                     p.{check_col} IS NOT NULL, j.total_bylines DESC
+            ORDER BY CASE
+                       WHEN p.patch IS NULL THEN 0
+                       WHEN p.patch_confidence = 'low' THEN 1
+                       WHEN p.patch_confidence = 'medium' THEN 2
+                       ELSE 3 END,
+                     (p.bio IS NOT NULL OR p.job_title IS NOT NULL),
+                     p.{check_col} IS NOT NULL,
+                     COALESCE(j.days_since_last_byline, 999) <= 30 DESC,
+                     j.total_bylines DESC
             LIMIT ?
         """, (ACTIVE_DAYS, f"-{RECHECK_DAYS} days", limit)).fetchall()
-        return list(rows)
+        seen = {r["name_normalised"] for r in picked}
+        out = picked + [r for r in rows if r["name_normalised"] not in seen]
+        return out[:limit]
     rows = conn.execute(f"""
         SELECT j.id, j.full_name, j.name_normalised, o.name AS outlet_name, o.domain
         FROM journalists j

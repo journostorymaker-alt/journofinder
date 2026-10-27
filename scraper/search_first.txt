@@ -1,0 +1,10 @@
+# Journalists to look up first in the web search.
+#
+# One name per line, spelled as it appears on the dashboard. For example:
+#   Jane Smith
+#   John Brown
+#
+# Use it before a pitch: put in the people you're about to contact and the
+# next run (Wednesday or Sunday) searches them before anyone else. Names that
+# have been searched in the last 90 days are skipped, so you can leave old
+# names in here without wasting searches.
