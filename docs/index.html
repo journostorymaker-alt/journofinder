@@ -526,6 +526,8 @@ tbody td {
 .soc-links a { color:var(--txl); text-decoration:none; margin-right:0.25rem; font-weight:700; }
 .soc-links a:hover { color:var(--navy); }
 .patch-list { max-height: 15rem; overflow-y: auto; }
+#outletSearch { margin-bottom: 0.4rem; }
+.show-more { display: flex; align-items: center; gap: 1rem; padding: 1rem; font-size: 0.82rem; color: var(--txm); flex-wrap: wrap; }
 .found-pill { background: var(--grey); color: var(--txm); text-decoration: none; margin-left: 0.25rem; }
 .found-pill:hover { color: var(--navy); }
 .cell-region {
@@ -908,6 +910,12 @@ footer {
       </div>
 
       <div class="fgroup">
+        <div class="flabel">Outlet</div>
+        <input type="text" id="outletSearch" placeholder="Type to find an outlet…">
+        <div class="checks patch-list" id="filterOutlet"></div>
+      </div>
+
+      <div class="fgroup">
         <div class="flabel">Region <span class="flabel-actions">
           <button class="flabel-mini" id="regionExpandAll">Expand</button>
           <button class="flabel-mini" id="regionCollapseAll">Collapse</button>
@@ -995,6 +1003,7 @@ let filters = {
   specialisms: new Set(),
   confidences: new Set(),
   patches: new Set(),
+  outlets: new Set(),
   patchKnownOnly: false,
   patchHideLow: false,
   hideStale: false,
@@ -1100,6 +1109,7 @@ function loadData() {
       obj.region_top = r.top;
       obj.region_sub = r.sub;
       try { obj.social = obj.social_links ? JSON.parse(obj.social_links) : {}; } catch (e) { obj.social = {}; }
+      obj._blob = `${obj.full_name} ${obj.outlet_name} ${obj.primary_email || ''} ${obj.specialisms || ''} ${obj.region} ${obj.patch || ''} ${obj.patch_region || ''} ${obj.story_towns || ''} ${obj.job_title || ''} ${obj.bio || ''}`.toLowerCase();
       return obj;
     });
   }
@@ -1125,7 +1135,11 @@ function loadData() {
 
   const journalistCount = (db.exec('SELECT COUNT(*) FROM journalists')[0]?.values[0]?.[0]) || 0;
   const outletCount = (db.exec('SELECT COUNT(*) FROM outlets')[0]?.values[0]?.[0]) || 0;
-  const bylineCount = (db.exec('SELECT COUNT(*) FROM bylines')[0]?.values[0]?.[0]) || 0;
+  const meta = {};
+  try { (db.exec('SELECT key, value FROM dashboard_meta')[0]?.values || []).forEach(([k, v]) => meta[k] = v); } catch (e) {}
+  let bylineCount = Number(meta.bylines || 0);
+  if (!bylineCount) { try { bylineCount = db.exec('SELECT COUNT(*) FROM bylines')[0]?.values[0]?.[0] || 0; } catch (e) {} }
+  window.__jfUpdated = meta.updated || null;
   const regionCount = (db.exec('SELECT COUNT(DISTINCT region) FROM outlets')[0]?.values[0]?.[0]) || 0;
 
   setStat('statJournalists', journalistCount);
@@ -1143,8 +1157,8 @@ function setStat(id, n) {
 }
 
 function updateLastUpdated() {
-  const r = db.exec('SELECT MAX(scraped_at) FROM scrape_log');
-  const ts = r[0]?.values[0]?.[0];
+  let ts = window.__jfUpdated;
+  if (!ts) { try { ts = db.exec('SELECT MAX(scraped_at) FROM scrape_log')[0]?.values[0]?.[0]; } catch (e) {} }
   if (ts) {
     const d = new Date(ts);
     document.getElementById('lastUpdated').textContent =
@@ -1267,6 +1281,18 @@ function setupFilters() {
   const specs = Object.keys(specCount).sort((a, b) => specCount[b] - specCount[a]);
   populateChecks('filterSpecialism', specs, s => specCount[s], 'specialisms');
 
+  const outletCount = {};
+  for (const j of allJournalists) outletCount[j.outlet_name] = (outletCount[j.outlet_name] || 0) + 1;
+  const outletList = Object.keys(outletCount).sort((a, b) => a.localeCompare(b));
+  populateChecks('filterOutlet', outletList, o => outletCount[o], 'outlets');
+  document.getElementById('outletSearch').addEventListener('input', e => {
+    const q = e.target.value.toLowerCase();
+    document.querySelectorAll('#filterOutlet label').forEach(l => {
+      const cb = l.querySelector('input');
+      l.style.display = (!q || cb.value.toLowerCase().includes(q) || cb.checked) ? '' : 'none';
+    });
+  });
+
   const patchCount = {};
   for (const j of allJournalists) if (j.patch) patchCount[j.patch] = (patchCount[j.patch] || 0) + 1;
   const patchList = Object.keys(patchCount).sort((a, b) => a.localeCompare(b));
@@ -1301,9 +1327,11 @@ function populateChecks(containerId, items, countFn, filterKey, labelFn) {
 }
 
 function setupEvents() {
+  let searchTimer = null;
   document.getElementById('filterSearch').addEventListener('input', e => {
-    filters.text = e.target.value.toLowerCase();
-    render();
+    clearTimeout(searchTimer);
+    const v = e.target.value.toLowerCase();
+    searchTimer = setTimeout(() => { filters.text = v; render(); }, 250);
   });
 
   document.querySelectorAll('input[data-filter-key]').forEach(cb => {
@@ -1364,7 +1392,7 @@ function setupEvents() {
 function clearFilters() {
   filters = {
     text: '', regions: new Set(), tiers: new Set(), classes: new Set(),
-    specialisms: new Set(), confidences: new Set(), patches: new Set(),
+    specialisms: new Set(), confidences: new Set(), patches: new Set(), outlets: new Set(),
     patchKnownOnly: false, patchHideLow: false,
     hideStale: false, hideVeryStale: true, movedOnly: false,
   };
@@ -1373,6 +1401,8 @@ function clearFilters() {
     else cb.checked = false;
   });
   document.getElementById('filterSearch').value = '';
+  const os = document.getElementById('outletSearch');
+  if (os) { os.value = ''; document.querySelectorAll('#filterOutlet label').forEach(l => l.style.display = ''); }
   render();
 }
 
@@ -1387,8 +1417,7 @@ function getFiltered() {
   }
   return allJournalists.filter(j => {
     if (filters.text) {
-      const blob = `${j.full_name} ${j.outlet_name} ${j.primary_email || ''} ${j.specialisms || ''} ${j.region} ${j.patch || ''} ${j.patch_region || ''} ${j.story_towns || ''} ${j.job_title || ''} ${j.bio || ''}`.toLowerCase();
-      if (!blob.includes(filters.text)) return false;
+      if (!j._blob.includes(filters.text)) return false;
     }
     if (filters.regions.size && !regionMatches(j)) return false;
     if (filters.tiers.size && !filters.tiers.has(j.tier)) return false;
@@ -1401,6 +1430,7 @@ function getFiltered() {
     if (filters.patchKnownOnly && !j.patch) return false;
     if (filters.patchHideLow && j.patch_confidence === 'low') return false;
     if (filters.patches.size && !filters.patches.has(j.patch)) return false;
+    if (filters.outlets.size && !filters.outlets.has(j.outlet_name)) return false;
     return true;
   });
 }
@@ -1419,7 +1449,11 @@ function regionMatches(item) {
   return false;
 }
 
-function render() {
+const PAGE_ROWS = 250;
+let shownRows = PAGE_ROWS;
+
+function render(keepPage) {
+  if (!keepPage) shownRows = PAGE_ROWS;
   const data = getFiltered();
   data.sort((a, b) => {
     const av = a[sortBy.col]; const bv = b[sortBy.col];
@@ -1439,8 +1473,17 @@ function render() {
     return;
   }
 
-  if (activeTab === 'journalists') renderJournalists(data, c);
-  else renderNewsrooms(data, c);
+  const page = data.slice(0, shownRows);
+  if (activeTab === 'journalists') renderJournalists(page, c);
+  else renderNewsrooms(page, c);
+  if (data.length > page.length) {
+    const more = document.createElement('div');
+    more.className = 'show-more';
+    more.innerHTML = `<button class="btn btn-secondary">Show ${Math.min(PAGE_ROWS, data.length - page.length)} more</button>
+      <span>Showing ${page.length.toLocaleString()} of ${data.length.toLocaleString()}. Copy Emails and Export CSV include all ${data.length.toLocaleString()}.</span>`;
+    more.querySelector('button').addEventListener('click', () => { shownRows += PAGE_ROWS; render(true); });
+    c.appendChild(more);
+  }
 }
 
 function summariseFilters() {
@@ -1449,6 +1492,7 @@ function summariseFilters() {
   if (filters.tiers.size) parts.push(`${filters.tiers.size} tier${filters.tiers.size > 1 ? 's' : ''}`);
   if (filters.classes.size) parts.push(`${filters.classes.size} type${filters.classes.size > 1 ? 's' : ''}`);
   if (filters.specialisms.size) parts.push(`${filters.specialisms.size} specialism${filters.specialisms.size > 1 ? 's' : ''}`);
+  if (filters.outlets.size) parts.push(`${filters.outlets.size} outlet${filters.outlets.size > 1 ? 's' : ''}`);
   if (filters.patches.size) parts.push(`${filters.patches.size} patch${filters.patches.size > 1 ? 'es' : ''}`);
   if (filters.patchKnownOnly) parts.push('known patch only');
   if (filters.confidences.size) parts.push(`${filters.confidences.size} confidence level${filters.confidences.size > 1 ? 's' : ''}`);
@@ -1741,7 +1785,7 @@ init();
     updatePanel();
     
     // Re-render the table so the row colour updates
-    if (typeof render === 'function') render();
+    if (typeof render === 'function') render(true);
   }
   
   document.addEventListener('click', handleVerifyClick);
@@ -1780,7 +1824,7 @@ init();
       localStorage.removeItem(STORAGE_KEY);
       updatePanel();
       hideExportModal();
-      if (typeof render === 'function') render();
+      if (typeof render === 'function') render(true);
     }
   }
   

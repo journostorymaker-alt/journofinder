@@ -57,7 +57,7 @@ jobs:
           git reset --hard origin/main
           mkdir -p docs/data
           cp /tmp/data.db data/journalists.db
-          cp /tmp/data.db docs/data/journalists.db
+          python scraper/build_dashboard_db.py
           git add data/journalists.db docs/data/journalists.db
           git diff --cached --quiet && exit 0
           git commit -m "Found missing journalists: $(date -u +%Y-%m-%d)"

@@ -696,6 +696,47 @@ def load_search_first():
 
 KNOWN_STAFF_FILE = Path(__file__).parent / "known_staff.txt"
 
+# Short and full forms of first names. Lists like the Parliament register use
+# the full form ("Timothy Baker") while outlets use the short one ("Tim Baker").
+NICKNAMES = {
+    "tom": "thomas", "tim": "timothy", "ben": "benjamin", "sam": "samuel",
+    "dan": "daniel", "nick": "nicholas", "rob": "robert", "bob": "robert",
+    "alex": "alexander", "ali": "alison", "liz": "elizabeth", "beth": "elizabeth",
+    "jim": "james", "jamie": "james", "mike": "michael", "chris": "christopher",
+    "will": "william", "bill": "william", "ed": "edward", "ted": "edward",
+    "fred": "frederick", "harry": "henry", "jon": "jonathan", "jo": "joanna",
+    "kate": "katherine", "katie": "katherine", "becky": "rebecca", "andy": "andrew",
+    "matt": "matthew", "pete": "peter", "steve": "stephen", "tony": "anthony",
+    "rich": "richard", "dick": "richard", "jen": "jennifer", "abi": "abigail",
+    "nat": "natalie", "charlie": "charles", "greg": "gregory", "dave": "david",
+    "phil": "philip", "joe": "joseph", "josh": "joshua", "zach": "zachary",
+}
+
+
+def _same_person_name(a, b):
+    """True if two normalised names differ only by short/full first name."""
+    pa, pb = a.split(), b.split()
+    if len(pa) < 2 or len(pb) < 2 or pa[-1] != pb[-1] or pa[1:-1] != pb[1:-1]:
+        return False
+    fa, fb = pa[0], pb[0]
+    if fa == fb:
+        return True
+    full = lambda f: NICKNAMES.get(f, f)
+    return full(fa) == full(fb) or fa.startswith(fb) and len(fb) >= 3 or fb.startswith(fa) and len(fa) >= 3
+
+
+def _merge_into(conn, keep_id, drop_id):
+    """Move everything from one journalist record to another, then delete it."""
+    for t in ("bylines", "journalist_specialisms"):
+        conn.execute(f"UPDATE OR IGNORE {t} SET journalist_id = ? WHERE journalist_id = ?", (keep_id, drop_id))
+        conn.execute(f"DELETE FROM {t} WHERE journalist_id = ?", (drop_id,))
+    conn.execute("UPDATE OR IGNORE journalist_emails SET journalist_id = ? WHERE journalist_id = ? "
+                 "AND confidence = 'verified'", (keep_id, drop_id))
+    conn.execute("DELETE FROM journalist_emails WHERE journalist_id = ?", (drop_id,))
+    drop_norm = conn.execute("SELECT name_normalised FROM journalists WHERE id = ?", (drop_id,)).fetchone()[0]
+    conn.execute("DELETE FROM journalists WHERE id = ?", (drop_id,))
+    conn.execute("DELETE FROM journalist_profiles WHERE name_normalised = ?", (drop_norm,))
+
 
 def load_known_staff():
     """known_staff.txt lines: Full Name | Outlet | Job title | Patch (optional)"""
@@ -722,7 +763,7 @@ def apply_known_staff(conn):
     no stories there in the last 90 days (otherwise it may be a different
     person with the same name, and we say so)."""
     staff = load_known_staff()
-    added = moved = 0
+    added = moved = renamed = 0
     clashes = []
     for norm, p in staff.items():
         o = conn.execute("SELECT id, region, tier FROM outlets WHERE name = ?", (p["outlet"],)).fetchone()
@@ -732,6 +773,20 @@ def apply_known_staff(conn):
         j = conn.execute("SELECT id, primary_outlet_id, days_since_last_byline FROM journalists "
                          "WHERE name_normalised = ?", (norm,)).fetchone()
         if not j:
+            # Same person under a short/full first name at the same outlet?
+            # Rename that record to the name the outlet uses, keeping its history.
+            twin = next((r for r in conn.execute(
+                "SELECT id, name_normalised FROM journalists WHERE primary_outlet_id = ?", (o["id"],))
+                if _same_person_name(r["name_normalised"], norm)), None)
+            if twin:
+                first, last = scrape._split_name(p["name"])
+                conn.execute("UPDATE journalists SET full_name = ?, name_normalised = ?, first_name = ?, "
+                             "last_name = ? WHERE id = ?", (p["name"], norm, first, last, twin["id"]))
+                conn.execute("UPDATE journalist_profiles SET name_normalised = ? WHERE name_normalised = ?",
+                             (norm, twin["name_normalised"]))
+                renamed += 1
+                j = True
+        if not j:
             first, last = scrape._split_name(p["name"])
             conn.execute("""
                 INSERT INTO journalists (full_name, name_normalised, first_name, last_name,
@@ -739,7 +794,7 @@ def apply_known_staff(conn):
                 VALUES (?, ?, ?, ?, ?, 'unclear', 0, ?, ?)
             """, (p["name"], norm, first, last, o["id"], o["region"], o["tier"]))
             added += 1
-        elif j["primary_outlet_id"] != o["id"]:
+        elif j is not True and j["primary_outlet_id"] != o["id"]:
             busy_elsewhere = conn.execute("""
                 SELECT COUNT(*) FROM bylines WHERE journalist_id = ? AND outlet_id != ?
                 AND COALESCE(NULLIF(article_date, ''), seen_at) >= date('now', '-90 days')
@@ -752,7 +807,20 @@ def apply_known_staff(conn):
             moved += 1
         if not conn.execute("SELECT 1 FROM journalist_profiles WHERE name_normalised = ?", (norm,)).fetchone():
             conn.execute("INSERT INTO journalist_profiles (name_normalised) VALUES (?)", (norm,))
-    print(f"Known staff: {len(staff)} listed, {added} added, {moved} moved to their listed outlet"
+    # Tidy twins already created at the same outlet (e.g. from an earlier run)
+    merged = 0
+    for norm, p in staff.items():
+        keep = conn.execute("SELECT j.id, j.primary_outlet_id FROM journalists j WHERE name_normalised = ?",
+                            (norm,)).fetchone()
+        if not keep:
+            continue
+        for r in conn.execute("SELECT id, name_normalised FROM journalists WHERE primary_outlet_id = ? AND id != ?",
+                              (keep["primary_outlet_id"], keep["id"])).fetchall():
+            if _same_person_name(r["name_normalised"], norm):
+                _merge_into(conn, keep["id"], r["id"])
+                merged += 1
+    print(f"Known staff: {len(staff)} listed, {added} added, {renamed + merged} merged with a short/full-name twin, "
+          f"{moved} moved to their listed outlet"
           + (f", {len(clashes)} not moved (recent stories elsewhere, maybe a namesake): {', '.join(clashes)}"
              if clashes else ""), flush=True)
 

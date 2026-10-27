@@ -66,7 +66,7 @@ jobs:
       - name: Copy database into dashboard folder
         run: |
           mkdir -p docs/data
-          cp data/journalists.db docs/data/journalists.db
+          python scraper/build_dashboard_db.py
 
       - name: Commit and push results
         run: |
@@ -78,7 +78,7 @@ jobs:
           git fetch origin main
           git reset --hard origin/main
           cp /tmp/out/data.db data/journalists.db
-          cp /tmp/out/data.db docs/data/journalists.db
+          python scraper/build_dashboard_db.py
           git add data/journalists.db docs/data/journalists.db
           if git diff --cached --quiet; then
             echo "Nothing changed"

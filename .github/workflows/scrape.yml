@@ -87,7 +87,7 @@ jobs:
         run: |
           if [ -f data/journalists.db ]; then
             mkdir -p docs/data
-            cp data/journalists.db docs/data/journalists.db
+            python scraper/build_dashboard_db.py
             echo "Copied database ($(du -h data/journalists.db | cut -f1))"
           else
             echo "No database to copy"
@@ -119,7 +119,7 @@ jobs:
           if [ -f /tmp/scrape-output/docs-data.db ]; then
             cp /tmp/scrape-output/docs-data.db docs/data/journalists.db
           else
-            cp /tmp/scrape-output/data.db docs/data/journalists.db
+            python scraper/build_dashboard_db.py
           fi
 
           git add data/journalists.db docs/data/journalists.db

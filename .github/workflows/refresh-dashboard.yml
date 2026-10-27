@@ -62,7 +62,7 @@ jobs:
       - name: Copy database into dashboard folder
         run: |
           mkdir -p docs/data
-          cp data/journalists.db docs/data/journalists.db
+          python scraper/build_dashboard_db.py
           ls -la docs/data/
 
       - name: Commit changes
