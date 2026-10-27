@@ -101,6 +101,19 @@ X_HANDLES = {
     "ENDS Report": "@ENDSreport",
 }
 
+# Extra, narrower searches for outlets where the general ones only reach
+# the first 20 people. Each returns a different slice.
+EXTRA_QUERIES = {
+    "ITV News (National)": [
+        'site:x.com "@itvnews" editor',
+        'site:x.com "@itvnews" correspondent',
+        'site:x.com "@itvnews" presenter',
+        'site:x.com "ITV News at Ten" OR "ITV Evening News" OR "ITV Lunchtime News"',
+        'site:muckrack.com "ITV News" correspondent',
+        'site:muckrack.com "ITV News" editor',
+    ],
+}
+
 # Extra words added to the search for global outlets, so we only find
 # their UK-based staff
 EXTRA_TERMS = {
@@ -144,6 +157,7 @@ def queries_for(outlet, phrases):
         # On-air correspondents often have no LinkedIn or Muck Rack profile,
         # but nearly all have an X bio like "Health Editor @itvnews".
         qs.append(f'site:x.com "{X_HANDLES[outlet]}" (correspondent OR editor OR presenter OR reporter){extra}')
+    qs += EXTRA_QUERIES.get(outlet, [])
     return qs
 
 
@@ -190,6 +204,13 @@ def parse_result(res, outlet, phrases):
             # "@itvnews" counts as the outlet name for the checks below
             job_line = re.sub(re.escape(handle), phrases[0], job_line, flags=re.I)
         job_line = job_line[:120]
+        # Regional programme mentioned anywhere in the bio: not national staff
+        if outlet in NOT_THIS_OUTLET and NOT_THIS_OUTLET[outlet].search(bio.replace("@", " ")):
+            return None
+        if outlet == "ITV News (National)" and re.search(
+                r"itvlondon|granada|anglia|itvcalendar|itvcentral|meridian|tynetees|westcountry|itvborder|itvwales|channel 5|5_news",
+                bio, re.I):
+            return None
     else:
         return None
 
