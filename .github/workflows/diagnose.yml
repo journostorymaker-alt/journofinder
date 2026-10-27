@@ -1,0 +1,47 @@
+name: Diagnose outlets
+
+# Manual only. Checks why named outlets return no bylines and saves a
+# plain report to the "diagnostics" branch (diagnostics.txt).
+# Does not touch the database.
+
+on:
+  workflow_dispatch:
+    inputs:
+      outlets:
+        description: 'Outlet names, separated by commas (blank = every national or broadcast outlet with 0 bylines last run)'
+        required: false
+        default: ''
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests beautifulsoup4 feedparser
+      - name: Run diagnosis
+        working-directory: scraper
+        env:
+          OUTLETS: ${{ github.event.inputs.outlets }}
+        run: |
+          IFS=',' read -ra NAMES <<< "$OUTLETS"
+          ARGS=()
+          for n in "${NAMES[@]}"; do n="$(echo "$n" | xargs)"; [ -n "$n" ] && ARGS+=("$n"); done
+          python diagnose.py "${ARGS[@]}" || true
+      - name: Save report to diagnostics branch
+        run: |
+          cp diagnostics.txt /tmp/diagnostics.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin diagnostics || true
+          git checkout -B diagnostics
+          git rm -rq --cached . >/dev/null
+          cp /tmp/diagnostics.txt diagnostics.txt
+          git add diagnostics.txt
+          git commit -q -m "Diagnostics $(date -u +%Y-%m-%dT%H:%M)"
+          git push -f origin diagnostics
