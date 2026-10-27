@@ -546,6 +546,56 @@ def enrich_bluesky(conn, person):
 # Step 4: optional web search (Brave)
 # =============================================================================
 
+
+# Which kinds of search result are worth reading, best first. Article pages
+# are skipped: their previews are about the story, not the journalist.
+def read_search_result(res, person):
+    """Turn one search result into (rank, bio, job title, url), or None."""
+    url = res.get("url", "")
+    u = urlparse(url)
+    host = u.netloc.lower().replace("www.", "").replace("uk.", "")
+    path = u.path.rstrip("/")
+    title_raw = BeautifulSoup(res.get("title", ""), "html.parser").get_text(" ")
+    desc_raw = BeautifulSoup(res.get("description", ""), "html.parser").get_text(" ")
+    if scrape._normalise_name(person["full_name"]) not in scrape._normalise_name(title_raw):
+        return None  # the result must be about this person by name
+    desc = re.sub(r"\s+", " ", SNIPPET_JUNK.sub(" ", desc_raw)).strip(" .·")
+    name_re = re.escape(person["full_name"])
+
+    if host.endswith("linkedin.com") and path.startswith("/in/"):
+        # "Jane Smith - Reporter - Eastern Daily Press | LinkedIn"
+        t = re.sub(r"\s*[|·-]\s*LinkedIn.*$", "", title_raw, flags=re.I)
+        t = re.sub(r"^\s*" + name_re + r"\s*[-–|:,]?\s*", "", t, flags=re.I).strip(" -–|")
+        job = t if t and JOURNO_WORDS.search(t) else job_title_from(desc)
+        bio = desc if JOURNO_WORDS.search(desc or "") else None
+        return (1, short_bio(bio), job, url) if (job or bio) else None
+
+    if host in ("x.com", "twitter.com") and path.count("/") == 1:
+        # profile page, not a single post. Preview text is their X bio.
+        bio = desc if JOURNO_WORDS.search(desc or "") else None
+        return (2, short_bio(bio), job_title_from(bio), url) if bio else (9, None, None, url)
+
+    if host == "bsky.app" and path.startswith("/profile/") and path.count("/") == 2:
+        bio = desc if JOURNO_WORDS.search(desc or "") else None
+        return (2, short_bio(bio), job_title_from(bio), url) if bio else (9, None, None, url)
+
+    if host == "muckrack.com" and path.count("/") == 1:
+        # "Jane Smith's Profile | Eastern Daily Press Journalist | Muck Rack"
+        parts = [p.strip() for p in title_raw.split("|")]
+        job = None
+        if len(parts) >= 3 and JOURNO_WORDS.search(parts[1]):
+            job = parts[1]
+        bio = re.split(r"As seen in:", desc)[0].strip(" .") if desc else None
+        bio = bio if bio and JOURNO_WORDS.search(bio) else None
+        return (3, short_bio(bio), job, url) if (job or bio) else None
+
+    if host.endswith(person["domain"] or "~") and re.search(r"/(author|authors|profile|staff|people)/", path + "/"):
+        bio = desc if JOURNO_WORDS.search(desc or "") else None
+        return (4, short_bio(bio), job_title_from(bio), url) if bio else None
+
+    return None
+
+
 def enrich_web(conn, person, api_key):
     import requests
     q = f'"{person["full_name"]}" "{person["outlet_name"]}"'
@@ -561,27 +611,19 @@ def enrich_web(conn, person, api_key):
     # Keep a record of every paid search so we can see it working (or not)
     conn.execute("INSERT INTO scrape_log (outlet_id, url, status, bylines_found, notes) VALUES (NULL, ?, ?, ?, ?)",
                  (f"brave:{person['full_name']}", status, len(results), note))
-    surname = person["full_name"].split()[-1].lower()
-    bio = job = url = None
+    best = None  # (rank, bio, job, url)
     social = {}
     for res in results:
-        host = urlparse(res.get("url", "")).netloc.lower().replace("www.", "")
-        title = SNIPPET_JUNK.sub(" ", res.get("title", ""))
-        # "Jane Smith - Reporter - Eastern Daily Press" -> "Reporter - Eastern Daily Press"
-        title = re.sub(r"^\s*" + re.escape(person["full_name"]) + r"\s*(\(@?\w+\))?\s*[-–|:]\s*", "", title, flags=re.I)
-        desc = BeautifulSoup(res.get("description", ""), "html.parser").get_text(" ")
-        desc = SNIPPET_JUNK.sub(" ", desc)
-        text = re.sub(r"\s+", " ", f"{title.strip()}. {desc.strip()}").strip(" .")
-        if surname not in (res.get("title", "") + res.get("description", "")).lower():
+        cand = read_search_result(res, person)
+        if not cand:
             continue
-        if not JOURNO_WORDS.search(text):
-            continue
-        social.update(_social_from_links([res.get("url")]))
-        if not bio and (host.endswith("linkedin.com") or host.endswith("muckrack.com")
-                        or host.endswith(person["domain"] or "~")):
-            bio = short_bio(text)
-            url = res.get("url")
-            job = job_title_from(text)
+        rank, bio_txt, job_txt, link = cand
+        social.update(_social_from_links([link]))
+        if (bio_txt or job_txt) and (best is None or rank < best[0]):
+            best = (rank, bio_txt, job_txt, link)
+    bio = job = url = None
+    if best:
+        _, bio, job, url = best
     save_bio(conn, person["name_normalised"], bio, job, "web", url, None,
              social, "web_checked_at")
     time.sleep(1.1)  # stay under 1 query per second
