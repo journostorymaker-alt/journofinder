@@ -694,6 +694,69 @@ def load_search_first():
     return names
 
 
+KNOWN_STAFF_FILE = Path(__file__).parent / "known_staff.txt"
+
+
+def load_known_staff():
+    """known_staff.txt lines: Full Name | Outlet | Job title | Patch (optional)"""
+    out = {}
+    if not KNOWN_STAFF_FILE.exists():
+        return out
+    for line in KNOWN_STAFF_FILE.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        parts = [p.strip() for p in line.split("|")] + ["", "", ""]
+        if not parts[0] or not parts[1]:
+            continue
+        out[scrape._normalise_name(parts[0])] = {
+            "name": parts[0], "outlet": parts[1],
+            "job": parts[2] or None, "patch": parts[3] or None,
+        }
+    return out
+
+
+def apply_known_staff(conn):
+    """Make sure everyone in known_staff.txt is in the finder at their outlet.
+    Someone already held at another outlet is only moved if they have had
+    no stories there in the last 90 days (otherwise it may be a different
+    person with the same name, and we say so)."""
+    staff = load_known_staff()
+    added = moved = 0
+    clashes = []
+    for norm, p in staff.items():
+        o = conn.execute("SELECT id, region, tier FROM outlets WHERE name = ?", (p["outlet"],)).fetchone()
+        if not o:
+            print(f"  known_staff: outlet '{p['outlet']}' not found for {p['name']}")
+            continue
+        j = conn.execute("SELECT id, primary_outlet_id, days_since_last_byline FROM journalists "
+                         "WHERE name_normalised = ?", (norm,)).fetchone()
+        if not j:
+            first, last = scrape._split_name(p["name"])
+            conn.execute("""
+                INSERT INTO journalists (full_name, name_normalised, first_name, last_name,
+                    primary_outlet_id, classification, total_bylines, primary_region, primary_tier)
+                VALUES (?, ?, ?, ?, ?, 'unclear', 0, ?, ?)
+            """, (p["name"], norm, first, last, o["id"], o["region"], o["tier"]))
+            added += 1
+        elif j["primary_outlet_id"] != o["id"]:
+            busy_elsewhere = conn.execute("""
+                SELECT COUNT(*) FROM bylines WHERE journalist_id = ? AND outlet_id != ?
+                AND COALESCE(NULLIF(article_date, ''), seen_at) >= date('now', '-90 days')
+            """, (j["id"], o["id"])).fetchone()[0]
+            if busy_elsewhere:
+                clashes.append(p["name"])
+                continue
+            conn.execute("UPDATE journalists SET primary_outlet_id = ?, primary_region = ?, primary_tier = ? "
+                         "WHERE id = ?", (o["id"], o["region"], o["tier"], j["id"]))
+            moved += 1
+        if not conn.execute("SELECT 1 FROM journalist_profiles WHERE name_normalised = ?", (norm,)).fetchone():
+            conn.execute("INSERT INTO journalist_profiles (name_normalised) VALUES (?)", (norm,))
+    print(f"Known staff: {len(staff)} listed, {added} added, {moved} moved to their listed outlet"
+          + (f", {len(clashes)} not moved (recent stories elsewhere, maybe a namesake): {', '.join(clashes)}"
+             if clashes else ""), flush=True)
+
+
 def load_overrides():
     """patch_overrides.txt lines: Full Name | Patch | Job title (optional) | note"""
     out = {}
@@ -715,7 +778,19 @@ def load_overrides():
 
 def decide_patches(conn):
     """Pick the final patch for everyone: hand correction > own bio > stories."""
-    overrides = load_overrides()
+    overrides = {}
+    for norm, p in load_known_staff().items():
+        # Only when they are actually held at the listed outlet; a namesake
+        # elsewhere must not get this person's job title
+        at_outlet = conn.execute("""
+            SELECT 1 FROM journalists j JOIN outlets o ON o.id = j.primary_outlet_id
+            WHERE j.name_normalised = ? AND o.name = ?
+        """, (norm, p["outlet"])).fetchone()
+        if at_outlet:
+            overrides[norm] = {"patch": p["patch"], "job": p["job"]}
+    for norm, o in load_overrides().items():
+        merged = overrides.get(norm, {"patch": None, "job": None})
+        overrides[norm] = {"patch": o["patch"] or merged["patch"], "job": o["job"] or merged["job"]}
     rows = conn.execute("SELECT * FROM journalist_profiles").fetchall()
     for r in rows:
         patch = region = source = conf = None
@@ -847,6 +922,8 @@ def main():
 
     ensure_schema()
     start = time.time()
+    with get_conn() as conn:
+        apply_known_staff(conn)
 
     with get_conn() as conn:
         n = story_patches(conn)

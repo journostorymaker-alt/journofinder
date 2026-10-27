@@ -1,0 +1,136 @@
+# Staff lists pasted from outlets' own team pages.
+#
+# One person per line:  Full Name | Outlet (as in the finder) | Job title | Patch (optional)
+#
+# Every run makes sure each person is in the finder at that outlet, with
+# that job title and patch. Someone already in the finder at a different
+# outlet is only moved if they have no stories there in the last 90 days.
+
+# Sky News, from news.sky.com profiles page, pasted 27 Oct 2026
+Mark Austin | Sky News | Chief presenter, Sky News
+Anna Botting | Sky News | Chief presenter, Sky News
+Sophy Ridge | Sky News | Lead politics presenter, Sky News
+Sarah-Jane Mee | Sky News | Lead UK news presenter, Sky News
+Yalda Hakim | Sky News | Lead world news presenter, Sky News
+Wilfred Frost | Sky News | Lead Presenter - US & Business, Sky News
+Cathy Newman | Sky News | Presenter, The Cathy Newman Show, Sky News
+Gillian Joseph | Sky News | Chief presenter, Sky News
+Anna Jones | Sky News | Presenter, Sky News
+Kamali Melbourne | Sky News | Presenter, Sky News
+Samantha Washington | Sky News | Presenter, Sky News
+Trevor Phillips | Sky News | Presenter, Sky News
+Jonathan Samuels | Sky News | Presenter, Sky News
+Jayne Secker | Sky News | Presenter, Sky News
+Jacquie Beltrao | Sky News | Sports presenter, Sky News
+Niall Paterson | Sky News | Presenter, Sky News
+Barbara Serra | Sky News | Presenter, Sky News
+Gareth Barlow | Sky News | Presenter, Sky News
+Matt Barbet | Sky News | Presenter, Sky News
+Leah Boleto | Sky News | Sky News presenter, Sky News
+Mhari Aurora | Sky News | Presenter, Sky News
+Mark Kleinman | Sky News | City editor, Sky News
+Ed Conway | Sky News | Economics and data editor, Sky News
+Jason Farrell | Sky News | Home editor, Sky News
+Dominic Waghorn | Sky News | International affairs editor, Sky News
+Deborah Haynes | Sky News | Defence and Security Editor, Sky News
+Tom Clarke | Sky News | Science and technology editor, Sky News
+Katie Spencer | Sky News | Arts and entertainment correspondent, Sky News
+Paul Kelso | Sky News | Business and economics correspondent, Sky News
+Gurpreet Narwan | Sky News | Business and economics correspondent, Sky News
+Lisa Holland | Sky News | Communities correspondent, Sky News
+Martin Brunt | Sky News | Crime commentator, Sky News
+Tom Cheshire | Sky News | Data and forensics correspondent, Sky News
+Ashish Joshi | Sky News | Health correspondent, Sky News
+Laura Bundock | Sky News | Royal correspondent, Sky News
+Becky Johnson | Sky News | Social Affairs correspondent, Sky News
+Rob Harris | Sky News | Sports correspondent, Sky News
+Thomas Moore | Sky News | Science correspondent, Sky News
+Rowland Manthorpe | Sky News | Technology correspondent, Sky News
+Kirsty McCabe | Sky News | Broadcast meteorologist, Sky News
+Alex Crawford | Sky News | Special correspondent, Sky News
+Stuart Ramsay | Sky News | Chief correspondent, Sky News
+Yousra Elbagir | Sky News | Africa correspondent, Sky News
+Helen-Ann Smith | Sky News | Asia correspondent, Sky News
+Cordelia Lynch | Sky News | Asia correspondent, Sky News
+Siobhan Robbins | Sky News | Europe correspondent, Sky News
+Alistair Bunkall | Sky News | Europe correspondent, Sky News
+Adam Parsons | Sky News | Middle East correspondent, Sky News
+Ivor Bennett | Sky News | Moscow correspondent, Sky News
+Martha Kelner | Sky News | US correspondent, Sky News
+James Matthews | Sky News | US correspondent, Sky News
+Mark Stone | Sky News | US correspondent, Sky News
+Diana Magnay | Sky News | International correspondent, Sky News
+John Sparks | Sky News | International correspondent, Sky News
+Alex Rossi | Sky News | International correspondent, Sky News
+Neville Lazarus | Sky News | India reporter and producer, Sky News
+Nicole Johnston | Sky News | News correspondent, Sky News
+Tom Parmenter | Sky News | National correspondent, Sky News
+Greg Milam | Sky News | Chief North of England correspondent, Sky News | North of England
+David Blevins | Sky News | US correspondent, Sky News
+Stephen Murphy | Sky News | Ireland correspondent, Sky News | Ireland
+Lisa Dowd | Sky News | Midlands correspondent, Sky News | Midlands
+Shamaan Freeman-Powell | Sky News | Midlands correspondent, Sky News | Midlands
+Shingi Mararike | Sky News | North of England correspondent, Sky News | North of England
+Frazer Maude | Sky News | North of England correspondent, Sky News | North of England
+Katerina Vittozzi | Sky News | North of England correspondent, Sky News | North of England
+Connor Gillies | Sky News | Scotland correspondent, Sky News | Scotland
+Dan Whitehead | Sky News | West of England and Wales correspondent, Sky News | West of England & Wales
+Adele Robinson | Sky News | News correspondent, Sky News
+Sadiya Chowdhury | Sky News | News correspondent, Sky News
+Rachael Venables | Sky News | News correspondent, Sky News
+Alice Porter | Sky News | News correspondent, Sky News
+Emma Birchley | Sky News | News correspondent, Sky News
+Mollie Malone | Sky News | Home news correspondent, Sky News
+Amelia Harper | Sky News | Home news correspondent, Sky News
+Beth Rigby | Sky News | Political editor, Sky News
+Sam Coates | Sky News | Deputy political editor, Sky News
+Jon Craig | Sky News | Chief political correspondent, Sky News
+Nick Martin | Sky News | People and politics correspondent, Sky News
+Rob Powell | Sky News | Political correspondent, Sky News
+Alexandra Rogers | Sky News | Political correspondent, Sky News
+Ali Fortescue | Sky News | Political correspondent, Sky News
+Serena Barker-Singh | Sky News | Political correspondent, Sky News
+Amanda Akass | Sky News | Political correspondent, Sky News
+Bethany Minelle | Sky News | Arts and entertainment reporter, Sky News
+Gemma Peplow | Sky News | Culture and entertainment reporter, Sky News
+Victoria Seabrook | Sky News | Climate reporter, Sky News
+Sarah Taaffe-Maguire | Sky News | Business and economics reporter, Sky News
+James Sillars | Sky News | Business and economics reporter, Sky News
+Michael Drummond | Sky News | Foreign news reporter, Sky News
+Henry Vaughan | Sky News | Home affairs reporter and feature writer, Sky News
+Jenness Mitchell | Sky News | Scotland reporter, Sky News | Scotland
+Wil Longbottom | Sky News | Assistant editor, Sky News
+Isaac Moore | Sky News | Assistant editor, Sky News
+David Mercer | Sky News | Assistant editor, Sky News
+Rebecca Harty | Sky News | Assistant editor, Sky News
+Alison Chung | Sky News | Assistant Editor, Sky News
+Josephine Franks | Sky News | Curation Editor, Sky News
+Philip Whiteside | Sky News | Chief sub-editor, Sky News
+James Robinson | Sky News | News reporter, Sky News
+Alix Culbertson | Sky News | Political reporter, Sky News
+Tim Baker | Sky News | Political reporter, Sky News
+Ben Bloch | Sky News | Political reporter, Sky News
+Faye Brown | Sky News | Political reporter, Sky News
+Daniel Dunford | Sky News | Senior data journalist, Sky News
+Ben van der Merwe | Sky News | Data journalist, Sky News
+Joely Santa Cruz | Sky News | Data journalist, Sky News
+Kieran Devine | Sky News | Digital investigations reporter, Sky News
+Olive Enokido-Lineham | Sky News | Sky News Explains Reporter, Sky News
+Phoebe Southworth | Sky News | Multi-platform reporter, Sky News
+Jess Sharp | Sky News | Money live reporter, Sky News
+Brad Young | Sky News | Live news reporter, Sky News
+Katie Williams | Sky News | Live news reporter, Sky News
+Bhvishya Patel | Sky News | Live news reporter, Sky News
+Connor Sephton | Sky News | News reporter, Sky News
+Ian Sale | Sky News | News reporter, Sky News
+Lauren Russell | Sky News | News reporter, Sky News
+Sunita Patel-Carstairs | Sky News | News reporter, Sky News
+Samuel Osborne | Sky News | News reporter, Sky News
+Narbeh Minassian | Sky News | Chief sub-editor, live, Sky News
+Jake Levison | Sky News | News reporter, Sky News
+Russell Hope | Sky News | News reporter, Sky News
+Adam Arnold | Sky News | News reporter, Sky News
+Dan Cairns | Sky News | News reporter, Sky News
+
+# ITV News (ITN), from Rupert, 27 Oct 2026
+Chris Choi | ITV News (National) | Consumer Editor, ITN
