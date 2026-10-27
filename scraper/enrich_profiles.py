@@ -62,6 +62,10 @@ OVERRIDES_FILE = Path(__file__).parent / "patch_overrides.txt"
 RECHECK_DAYS = 90            # re-read a journalist's bio every 3 months
 ACTIVE_DAYS = 180            # only spend web requests on people active recently
 BIO_MAX = 280
+# Hard ceiling on paid web searches per run, whatever the workflow asks for.
+# 25 a run, twice a week, is about 200 a month: well inside Brave's free
+# monthly credit (about 1,000 searches), so it should cost nothing.
+MAX_WEB_PER_RUN = 50
 MIN_LOCATED_STORIES = 3      # need at least this many located stories
 MIN_LOCATED_NATIONAL = 5     # national reporters need more, as one-off trips are common
 STORY_PATCH_SHARE = 0.45     # top area must hold this share of located stories
@@ -76,7 +80,15 @@ JOURNO_WORDS = re.compile(
 PERSONAL_WORDS = re.compile(
     r"\b(live|lives|living|lived|home|born|grew up|raised|hometown|native|"
     r"originally from|wife|husband|partner|kids|children|son|daughter|mum|"
-    r"dad|mother|father|family|dog|cat|married)\b", re.I)
+    r"dad|mother|father|family|dog|cat|married|location|located)\b", re.I)
+
+# Bits of search previews that are about the person's location or the site,
+# never about their job. LinkedIn previews show "Location: <town>", which is
+# where they live, so it is cut out before anything else is read.
+SNIPPET_JUNK = re.compile(
+    r"(Location|Lives in|Based in the|Connections?|Followers?|Experience|Education)\s*:[^.|·]*[.|·]?"
+    r"|\s*[|·-]\s*LinkedIn\b.*?$|\s*/\s*X\s*$|\s*on X\b|\d[\d,.]*\+?\s*(followers|connections)(\s+on\s+(LinkedIn|X))?",
+    re.I | re.M)
 
 # Sentences about past jobs ("previously at the Manchester Evening News")
 # say nothing about the current patch.
@@ -549,8 +561,13 @@ def enrich_web(conn, person, api_key):
     social = {}
     for res in results:
         host = urlparse(res.get("url", "")).netloc.lower().replace("www.", "")
-        text = f'{res.get("title", "")}. {BeautifulSoup(res.get("description", ""), "html.parser").get_text(" ")}'
-        if surname not in text.lower():
+        title = SNIPPET_JUNK.sub(" ", res.get("title", ""))
+        # "Jane Smith - Reporter - Eastern Daily Press" -> "Reporter - Eastern Daily Press"
+        title = re.sub(r"^\s*" + re.escape(person["full_name"]) + r"\s*(\(@?\w+\))?\s*[-–|:]\s*", "", title, flags=re.I)
+        desc = BeautifulSoup(res.get("description", ""), "html.parser").get_text(" ")
+        desc = SNIPPET_JUNK.sub(" ", desc)
+        text = re.sub(r"\s+", " ", f"{title.strip()}. {desc.strip()}").strip(" .")
+        if surname not in (res.get("title", "") + res.get("description", "")).lower():
             continue
         if not JOURNO_WORDS.search(text):
             continue
@@ -657,9 +674,27 @@ def decide_patches(conn):
 # Main
 # =============================================================================
 
-def queue(conn, check_col, limit):
+def queue(conn, check_col, limit, gaps_first=False):
     """Active journalists not checked in the last RECHECK_DAYS, never-checked
-    first. Interleaved by outlet so we never hammer one site."""
+    first. Interleaved by outlet so we never hammer one site.
+
+    gaps_first: for the paid web search. Only people whose author page has
+    already been tried, and those still with no bio or job title come first,
+    so the free searches go where they help most."""
+    if gaps_first:
+        rows = conn.execute(f"""
+            SELECT j.id, j.full_name, j.name_normalised, o.name AS outlet_name, o.domain
+            FROM journalists j
+            JOIN outlets o ON o.id = j.primary_outlet_id
+            JOIN journalist_profiles p ON p.name_normalised = j.name_normalised
+            WHERE COALESCE(j.days_since_last_byline, 0) <= ?
+              AND p.author_checked_at IS NOT NULL
+              AND (p.{check_col} IS NULL OR p.{check_col} < datetime('now', ?))
+            ORDER BY (p.bio IS NOT NULL OR p.job_title IS NOT NULL),
+                     p.{check_col} IS NOT NULL, j.total_bylines DESC
+            LIMIT ?
+        """, (ACTIVE_DAYS, f"-{RECHECK_DAYS} days", limit)).fetchall()
+        return list(rows)
     rows = conn.execute(f"""
         SELECT j.id, j.full_name, j.name_normalised, o.name AS outlet_name, o.domain
         FROM journalists j
@@ -680,9 +715,9 @@ def queue(conn, check_col, limit):
     return ordered[:limit] if limit else ordered
 
 
-def run_step(label, check_col, fn, limit, deadline, *extra):
+def run_step(label, check_col, fn, limit, deadline, *extra, gaps_first=False):
     with get_conn() as conn:
-        people = queue(conn, check_col, limit)
+        people = queue(conn, check_col, limit, gaps_first=gaps_first)
     print(f"\n{label}: {len(people)} journalists queued", flush=True)
     hits = done = 0
     for person in people:
@@ -722,12 +757,16 @@ def main():
         # Split the time: author pages are the best source, so they get most of it
         author_deadline = start + args.minutes * 60 * 0.75
         run_step("Author pages", "author_checked_at", enrich_author, args.limit, author_deadline)
-        run_step("Bluesky", "bluesky_checked_at", enrich_bluesky, args.limit, deadline)
+        # Web search goes before Bluesky so a long Bluesky step can never
+        # squeeze it out. It is only a handful of searches.
         key = os.environ.get("BRAVE_API_KEY")
-        if key and args.web_queries > 0:
-            run_step("Web search", "web_checked_at", enrich_web, args.web_queries, deadline, key)
-        elif args.web_queries > 0:
-            print("Web search skipped: no BRAVE_API_KEY set", flush=True)
+        n_web = min(args.web_queries, MAX_WEB_PER_RUN)
+        if key and n_web > 0:
+            run_step("Web search", "web_checked_at", enrich_web, n_web,
+                     time.time() + 15 * 60, key, gaps_first=True)
+        elif n_web > 0:
+            print("Web search skipped: no BRAVE_API_KEY set yet", flush=True)
+        run_step("Bluesky", "bluesky_checked_at", enrich_bluesky, args.limit, deadline)
 
     with get_conn() as conn:
         decide_patches(conn)
