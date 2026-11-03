@@ -11,6 +11,10 @@ on:
         description: 'Outlet names, separated by commas (blank = every national or broadcast outlet with 0 bylines last run)'
         required: false
         default: ''
+      author_urls:
+        description: 'Author page URLs to inspect, separated by spaces (optional)'
+        required: false
+        default: ''
 
 jobs:
   diagnose:
@@ -29,11 +33,13 @@ jobs:
         env:
           OUTLETS: ${{ github.event.inputs.outlets }}
           RAW: '0'
+          AUTHOR_URLS: ${{ github.event.inputs.author_urls }}
         run: |
           IFS=',' read -ra NAMES <<< "$OUTLETS"
           ARGS=()
           for n in "${NAMES[@]}"; do n="$(echo "$n" | xargs)"; [ -n "$n" ] && ARGS+=("$n"); done
           python diagnose.py "${ARGS[@]}" || true
+          [ -n "$AUTHOR_URLS" ] && exit 0
           # Also run the real scraper on those outlets against a scratch copy
           # of the database, and add what it finds to the report
           cp ../data/journalists.db /tmp/scratch.db

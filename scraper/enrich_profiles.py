@@ -89,8 +89,12 @@ JOURNO_WORDS = re.compile(
 
 # Sentences with these words are about someone's personal life, not their
 # job. We drop them before reading any place names from a bio.
+# "live" and "home" only count as personal in phrases like "lives in" or
+# "at home". On their own they are job words: "Live News reporter",
+# "Home Affairs Editor". Those were being thrown away before 3 Nov 2026.
 PERSONAL_WORDS = re.compile(
-    r"\b(live|lives|living|lived|home|born|grew up|raised|hometown|native|"
+    r"\b(i live|lives (in|with|near)|living (in|with|near)|lived (in|with)|live (in|with|near)|"
+    r"my home|at home|home (town|is)|hometown|born|grew up|raised (in|on)|native of|"
     r"originally from|wife|husband|partner|kids|children|son|daughter|mum|"
     r"dad|mother|father|family|dog|cat|married|location|located)\b", re.I)
 
@@ -466,8 +470,16 @@ def job_title_from(text):
     work = work_sentences(text or "")
     for sent in re.split(r"(?<=[.!?|•])\s+", work):
         if JOURNO_WORDS.search(sent):
-            sent = sent.strip(" .|•")
-            return sent[:120]
+            sent = re.sub(r"^[\s\U0001F300-\U0001FAFF\u2600-\u27BF]+", "", sent)
+            # Social bios run on: cut at contact details, hashtags, emoji
+            # and "views my own" so the title is just the job
+            sent = re.split(r"\s+(?:contact|email|e-mail|dms?|insta|instagram|tips?|signal|views (?:are )?my own|"
+                            r"all views|got a story|[\w.+-]+@[\w-]+\.[\w.]+)\b"
+                            r"|\s*[|•·]\s*|[\U0001F300-\U0001FAFF\u2600-\u27BF]",
+                            sent, maxsplit=1, flags=re.I)[0]
+            sent = sent.strip(" .|•,:;-")
+            if len(sent) >= 6:
+                return sent[:120]
     return None
 
 

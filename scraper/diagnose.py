@@ -106,7 +106,40 @@ def diagnose(outlet, out):
             shown += 1
 
 
+def author_pages(urls, out):
+    """Show what an author page holds, to fix the bio reader."""
+    for u in urls:
+        status, html, final = get(u)
+        out.append("=" * 70)
+        out.append(f"AUTHOR PAGE {u} -> {status}, {len(html)} bytes")
+        if status != 200:
+            continue
+        soup = BeautifulSoup(html, "html.parser")
+        for s in soup.find_all("script", type="application/ld+json"):
+            out.append("  ld+json: " + re.sub(r"\s+", " ", (s.string or ""))[:600])
+        for m in soup.find_all("meta"):
+            k = (m.get("name") or m.get("property") or "").lower()
+            if k in ("description", "og:description", "og:title", "author"):
+                out.append(f"  meta {k}: {m.get('content', '')[:300]}")
+        for h in soup.find_all(["h1", "h2"])[:4]:
+            out.append(f"  <{h.name} class={' '.join(h.get('class') or [])}>: {h.get_text(' ', strip=True)[:100]}")
+        for el in soup.select('[class*="bio"], [class*="author"], [class*="profile"], [class*="description"]')[:12]:
+            t = el.get_text(" ", strip=True)
+            if t:
+                out.append(f"  <{el.name} class={' '.join(el.get('class') or [])[:70]}>: {t[:250]}")
+        for p in soup.find_all("p")[:6]:
+            t = p.get_text(" ", strip=True)
+            if len(t) > 30:
+                out.append(f"  <p class={' '.join(p.get('class') or [])}>: {t[:250]}")
+
+
 def main():
+    if os.environ.get("AUTHOR_URLS"):
+        out = []
+        author_pages(os.environ["AUTHOR_URLS"].split(), out)
+        REPORT.write_text("\n".join(out), encoding="utf-8")
+        print("\n".join(out))
+        return
     names = sys.argv[1:]
     if not names:
         with get_conn() as conn:
