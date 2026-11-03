@@ -1,0 +1,100 @@
+======================================================================
+AUTHOR PAGE https://www.theargus.co.uk/author/profile/321601.Annabel_Stock/ -> 200, 287018 bytes
+  ld+json:  { "@context": "http://schema.org", "@type": "WebPage", "headline": "Author | Profile | 321601.Annabel Stock Index", "url": "https://www.theargus.co.uk/author/profile/321601.Annabel_Stock/" } 
+  meta description: Journalists news from the The Argus
+  <h1 class=block-heading>: Journalist Profile
+  <h1 class=mar-journalist-details__author-name>: Annabel Stock
+  <h2 class=block-heading>: Latest articles from Annabel Stock
+  <h2 class=omnicard__headline>: 'Mystery liquid' leaking through ceiling forces Havering Museum closure
+  <section class=responsive-author-profile container>: Journalist Profile View all journalists Annabel Stock Reporter Contact me: Follow me: An NCTJ-qualified reporter covering breaking news across Newsquest's London titles. Latest articles from Annabel Stock 'Mystery liquid' leaking through ceiling forc
+  <div class=author-header>: Journalist Profile View all journalists
+  <div class=mar-journalist-details__author-meta>: Annabel Stock Reporter Contact me: Follow me:
+  <div class=mar-journalist-details__author-details>: Annabel Stock Reporter
+  <h1 class=mar-journalist-details__author-name>: Annabel Stock
+  <div class=mar-journalist-details__author-social mar-journalist-details__author-s>: Contact me: Follow me:
+  <div class=responsive-author-profile__author-bio>: An NCTJ-qualified reporter covering breaking news across Newsquest's London titles.
+  <div class=responsive-author-profile__article-list>: Latest articles from Annabel Stock 'Mystery liquid' leaking through ceiling forces Havering Museum closure Sanctuary fights to save A127 pigs from being slaughtered One in 23 Havering food businesses rated below satisfactory for food hygiene Dagenham
+  <p class=>: An NCTJ-qualified reporter covering breaking news across Newsquest's London titles.
+  <p class=ipso-copy>: This website and associated newspapers adhere to the Independent Press Standards Organisation's
+    Editors' Code of Practice. If you have a complaint about the editorial content which relates to
+    inaccuracy or intrusion, then please contact the e
+  <p class=>: © 2001-2026. The Argus is owned and operated by Newsquest Media Group Ltd, an audited local newspaper network.
+  <p class=>: Visit newsquest.co.uk to view our policies , terms and legal agreements .
+  <p class=>: The Echo Building, 18 Albert Road, Bournemouth, England BH1 1BZ. Registered in England & Wales | 01676637
+======================================================================
+AUTHOR PAGE https://www.thenorthernecho.co.uk/author/profile/322036.Joe_Willis/ -> 200, 291900 bytes
+  ld+json:  { "@context": "http://schema.org", "@type": "WebPage", "headline": "Author | Profile | 322036.Joe Willis Index", "url": "https://www.thenorthernecho.co.uk/author/profile/322036.Joe_Willis/" } 
+  meta description: Journalists news from the The Northern Echo
+  <h1 class=block-heading>: Journalist Profile
+  <h1 class=mar-journalist-details__author-name>: Joe Willis
+  <h2 class=block-heading>: Latest articles from Joe Willis
+  <h2 class=omnicard__headline>: Richmond campsite owner appeals refusals over protected ancient monument concerns
+  <section class=responsive-author-profile container>: Journalist Profile View all journalists Joe Willis Local Democracy Reporter Contact me: Follow me: Local Democracy Reporter covering North Yorkshire, including politics, planning applications and council meetings. Latest articles from Joe Willis Rich
+  <div class=author-header>: Journalist Profile View all journalists
+  <div class=mar-journalist-details__author-meta>: Joe Willis Local Democracy Reporter Contact me: Follow me:
+  <div class=mar-journalist-details__author-details>: Joe Willis Local Democracy Reporter
+  <h1 class=mar-journalist-details__author-name>: Joe Willis
+  <div class=mar-journalist-details__author-social mar-journalist-details__author-s>: Contact me: Follow me:
+  <div class=responsive-author-profile__author-bio>: Local Democracy Reporter covering North Yorkshire, including politics, planning applications and council meetings.
+  <div class=responsive-author-profile__article-list>: Latest articles from Joe Willis Richmond campsite owner appeals refusals over protected ancient monument concerns Campsite owner appeals refusals over protected ancient monument concerns Ancient North Yorkshire woodlands could get £640k boost in majo
+  <p class=>: Local Democracy Reporter covering North Yorkshire, including politics, planning applications and council meetings.
+  <p class=ipso-copy>: This website and associated newspapers adhere to the Independent Press Standards Organisation's
+    Editors' Code of Practice. If you have a complaint about the editorial content which relates to
+    inaccuracy or intrusion, then please contact the e
+  <p class=>: © 2001-2026. The Northern Echo is owned and operated by Newsquest Media Group Ltd, an audited local newspaper network.
+  <p class=>: Visit newsquest.co.uk to view our policies , terms and legal agreements .
+  <p class=>: The Echo Building, 18 Albert Road, Bournemouth, England BH1 1BZ. Registered in England & Wales | 01676637
+======================================================================
+AUTHOR PAGE https://www.edp24.co.uk/author/profile/300188.Adam_Barker/ -> 200, 272433 bytes
+  ld+json:  { "@context": "http://schema.org", "@type": "WebPage", "headline": "Author | Profile | 300188.Adam Barker Index", "url": "https://www.edp24.co.uk/author/profile/300188.Adam_Barker/" } 
+  meta description: Journalists news from the Eastern Daily Press
+  <h1 class=block-heading>: Journalist Profile
+  <h1 class=mar-journalist-details__author-name>: Adam Barker
+  <h2 class=block-heading>: Latest articles from Adam Barker
+  <h2 class=omnicard__headline>: Norwich Research Park receives almost half a billion pounds of investment in Budget
+  <section class=responsive-author-profile container>: Journalist Profile View all journalists Adam Barker Business Reporter Contact me: Adam Barker is a journalist covering business in Norfolk Latest articles from Adam Barker Norwich Research Park receives almost half a billion pounds of investment in B
+  <div class=author-header>: Journalist Profile View all journalists
+  <div class=mar-journalist-details__author-meta>: Adam Barker Business Reporter Contact me:
+  <div class=mar-journalist-details__author-details>: Adam Barker Business Reporter
+  <h1 class=mar-journalist-details__author-name>: Adam Barker
+  <div class=mar-journalist-details__author-social mar-journalist-details__author-s>: Contact me:
+  <div class=responsive-author-profile__author-bio>: Adam Barker is a journalist covering business in Norfolk
+  <div class=responsive-author-profile__article-list>: Latest articles from Adam Barker Norwich Research Park receives almost half a billion pounds of investment in Budget Entire department believed to be at risk of redundancy at firm's Norfolk headquarters Norfolk business leaders react to the Budget Th
+  <p class=>: Adam Barker is a journalist covering business in Norfolk
+  <p class=ipso-copy>: This website and associated newspapers adhere to the Independent Press Standards Organisation's
+    Editors' Code of Practice. If you have a complaint about the editorial content which relates to
+    inaccuracy or intrusion, then please contact the e
+  <p class=>: © 2001-2026. The Eastern Daily Press is owned and operated by Newsquest Media Group Ltd, an audited local newspaper network.
+  <p class=>: Visit newsquest.co.uk to view our policies , terms and legal agreements .
+  <p class=>: The Echo Building, 18 Albert Road, Bournemouth, England BH1 1BZ. Registered in England & Wales | 01676637
+======================================================================
+AUTHOR PAGE https://www.liverpoolecho.co.uk/authors/emilia-randall/ -> 200, 808692 bytes
+  meta description: Liverpool Echo, the very latest Liverpool and Merseyside news, sport, what's on, weather and travel. Plus the latest Liverpool FC and Everton FC news.
+  meta og:title: Liverpool Echo: Latest Liverpool and Merseyside news, sports and what's on
+  meta og:description: Liverpool Echo, the very latest Liverpool and Merseyside news, sport, what's on, weather and travel. Plus the latest Liverpool FC and Everton FC news.
+  <h1 class=>: Emilia Randall
+  <div class=profile-info>: Emilia Randall GAU Writer
+  <div class=topic-intro-text profile>: Based in London Topic Expertise US News, Money, Health, Lifestyle, World, Food Emilia is a GAU Writer covering anything from decades-old grim cold cases to the horror film that makes you want to leave your bedside lamp on. Emilia is based in London a
+  <div class=profile-details>: Based in London Topic Expertise US News, Money, Health, Lifestyle, World, Food
+  <div class=profile-description>: Emilia is a GAU Writer covering anything from decades-old grim cold cases to the horror film that makes you want to leave your bedside lamp on. Emilia is based in London and the main topics she focuses on are Crime, Entertainment, Food, Travel, Lifes
+  <a class=description>: Hedgehogs are facing a serious threat in the UK, with experts warning that our gardens are a significant contributing factor to the species' decline
+  <a class=description>: Robins can struggle during the colder months as insects are less available and more calories are needed to keep warm before their mating season
+  <a class=description>: The War Wagon, the Western starring John Wayne and Kirk Douglas, is being shown on Film4 today at 4.50pm and fans have declared it a favourite
+  <a class=description>: Lee Saunders of Toasty's Plumbing and Heating shares advice on checking stuck radiator valves, boiler pressure after bleeding and radiators that heat unevenly before colder weather arrives.
+  <a class=description>: Monty Don says now is the ideal time
+  <p class=>: Emilia is a GAU Writer covering anything from decades-old grim cold cases to the horror film that makes you want to leave your bedside lamp on. Emilia is based in London and the main topics she focuses on are Crime, Entertainment, Food, Travel, Lifes
+======================================================================
+AUTHOR PAGE https://www.kentlive.news/authors/chloe-holmwood/ -> 200, 417672 bytes
+  meta description: Bringing you the latest news, sport and events updates from around Kent. Including opinion, live blogs, pictures and video from the Kent Live team.
+  meta og:title: Kent Live - Latest local news, sport & business from Kent
+  meta og:description: Bringing you the latest news, sport and events updates from around Kent. Including opinion, live blogs, pictures and video from the Kent Live team.
+  <h1 class=>: Chloe Holmwood
+  <div class=profile-info>: Chloe Holmwood
+  <a class=description>: KentLive will be switched off on October 30
+  <a class=description>: The average asking price of a house with a view of the sea has risen by more than £60,000 since 2019, outpacing the rest of Britain
+  <a class=description>: This charming seaside town offers Victorian landmarks, a unique shingle-and-sand beach, and all the classic coastal delights - from fish and chips to ice cream along the promenade
+  <a class=description>: Hampton-on-Sea was once a thriving village near Herne Bay, but it was abandoned in 1916 and fell victim to coastal erosion by 1921 – all that remains of this lost village is a desolate strip of land, only visible at low tide
+  <a class=description>: The town has a strong history in defending England's shores from the French and other historic enemies
+  <a class=description>: St Andrews Lakes in Halling, Kent, is a stunning spring-fed freshwater lake with crystal-clear water, a sandy beach and a host of water sports and activities — and visitors say it feels just like a trip to the Maldives.
+  <a class=description>: The cheapest place to buy a home in Kent has been unveiled in the latest available land registry data
+  <a class=description>: Check our gadget to see the numbers at your nearest hospital
