@@ -418,6 +418,14 @@ def find_author_page(article_html, article_url, full_name):
     return info
 
 
+PUBLISHER_LAYOUTS = [
+    # Newsquest (Argus, Northern Echo, EDP, Oxford Mail...)
+    (".responsive-author-profile__author-bio", ".mar-journalist-details__author-details"),
+    # Reach (Liverpool Echo, MEN, the *Live sites...)
+    (".profile-description", ".profile-info"),
+]
+
+
 def read_author_page(html, full_name):
     """Pull bio, job title and social links from an author page."""
     soup = BeautifulSoup(html, "html.parser")
@@ -429,6 +437,21 @@ def read_author_page(html, full_name):
             out["bio"] = out["bio"] or item.get("description")
             same = item.get("sameAs") or []
             same_as += same if isinstance(same, list) else [same]
+    # Publisher layouts with no structured data. Added 3 Nov 2026 after
+    # Newsquest pages gave 14 bios from 514 author pages.
+    for bio_sel, job_sel in PUBLISHER_LAYOUTS:
+        b = soup.select_one(bio_sel)
+        if b and not out["bio"]:
+            t = b.get_text(" ", strip=True)
+            if len(t) >= 20:
+                out["bio"] = t
+        j = soup.select_one(job_sel) if job_sel else None
+        if j and not out["job_title"]:
+            t = j.get_text(" ", strip=True)
+            # The block holds "Name Job title": keep the part after the name
+            t = re.sub(r"^\s*" + re.escape(full_name) + r"\s*", "", t, flags=re.I).strip()
+            if 3 <= len(t) <= 80 and not t.lower().startswith(("contact", "follow")):
+                out["job_title"] = t
     if not out["bio"]:
         for attrs in ({"name": "description"}, {"property": "og:description"}):
             m = soup.find("meta", attrs=attrs)
