@@ -128,6 +128,7 @@ SPONSOR_RULES = [
     (r"My ?London", "MyLondon"),
     (r"Yorkshire Post", "Yorkshire Post"),
     (r"Tortoise", "Tortoise Media"),
+    (r"[Oo]pen ?[Dd]emocracy", "openDemocracy"),
     (r"Media Wales", "WalesOnline"),
 ]
 
@@ -167,10 +168,13 @@ def parse_pdf(pdf):
                           capture_output=True, text=True, check=True).stdout
     rows, cols = [], None
     for ln in text.splitlines():
-        if ln.strip().startswith("JOURNALIST") and "SPONSOR" in ln:
-            cols = (ln.index("SPONSOR"), ln.index("OTHER RELEVANT"))
+        # Heading row. Its case changed from capitals to "Journalist /
+        # Sponsor" in the 16 Nov 2026 edition, so match either.
+        up = ln.upper()
+        if up.strip().startswith("JOURNALIST") and "SPONSOR" in up:
+            cols = (up.index("SPONSOR"), up.index("OTHER RELEVANT"))
             continue
-        if not cols or not ln.strip() or "PAGE " in ln or "LIST OF JOURNALISTS" in ln:
+        if not cols or not ln.strip() or "PAGE " in up or "LIST OF JOURNALISTS" in up:
             continue
         s, o = cols
         name, sponsor, other = ln[:s].strip(), ln[s:o].strip(), ln[o:].strip()

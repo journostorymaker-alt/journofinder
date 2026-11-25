@@ -794,6 +794,17 @@ def apply_known_staff(conn):
     no stories there in the last 90 days (otherwise it may be a different
     person with the same name, and we say so)."""
     staff = load_known_staff()
+    # The lobby Register is the newer, official record of who employs a
+    # lobby journalist. Where it disagrees with a pasted staff list, it wins.
+    try:
+        lobby = {r[0]: r[1] for r in conn.execute(
+            "SELECT name_normalised, outlet FROM lobby_register WHERE status = 'current'")}
+    except Exception:
+        lobby = {}
+    overruled = [p["name"] for n, p in staff.items() if n in lobby and lobby[n] != p["outlet"]]
+    staff = {n: p for n, p in staff.items() if not (n in lobby and lobby[n] != p["outlet"])}
+    if overruled:
+        print(f"  Lobby Register overrides staff list for: {', '.join(overruled)}", flush=True)
     added = moved = renamed = 0
     clashes = []
     for norm, p in staff.items():
